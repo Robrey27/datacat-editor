@@ -32,3 +32,9 @@ yarn-error.log*
 
 .idea
 *.iml
+
+# IDS-converter (komplett ignorieren)
+IDS-converter/
+
+# IDS Backend im src-Ordner ignorieren
+/src/ids_backend/

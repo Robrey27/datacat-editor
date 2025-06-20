@@ -374,7 +374,7 @@ export function ImportView() {
         if (!nameInTags(tArr, tag)) {
           const tagId = uuidv4();
           try {
-            handleOnCreateTag(tagId, tag);
+            await handleOnCreateTag(tagId, tag);
             tArr.push({ id: tagId, name: tag });
             enqueueSnackbar(<T keyName="import.new_tag_created" params={{ tag }} />);
           } catch (e) {

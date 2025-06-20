@@ -37,7 +37,7 @@ const NameFormSet = (props: NameFormSetProps) => {
         input: { catalogEntryId, name },
       },
     });
-    enqueueSnackbar("Name hinzugefügt.");
+    enqueueSnackbar(<T keyName="name_form.added" />);
   };
 
   const handleOnUpdate = async (name: TranslationUpdateInput) => {
@@ -46,7 +46,7 @@ const NameFormSet = (props: NameFormSetProps) => {
         input: { catalogEntryId, name },
       },
     });
-    enqueueSnackbar("Name aktualisiert.");
+    enqueueSnackbar(<T keyName="name_form.updated" />);
   };
 
   const handleOnDelete = async (nameId: string) => {
@@ -55,7 +55,7 @@ const NameFormSet = (props: NameFormSetProps) => {
         input: { catalogEntryId, nameId },
       },
     });
-    enqueueSnackbar("Name gelöscht.");
+    enqueueSnackbar(<T keyName="name_form.deleted" />);
   };
 
   return (

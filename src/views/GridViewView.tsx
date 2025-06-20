@@ -553,7 +553,7 @@ const GridViewView = () => {
   };
 
   // Data processing
-  useMemo(() => {
+  useEffect(() => {
     let rows = buildRows();
 
     if (selectedTag) {
@@ -653,6 +653,9 @@ const GridViewView = () => {
     "Wert",
     "Maßeinheit",
     "Größe",
+    "Datenvorlage",
+    "Merkmalsgruppe",
+    "Referenzdokument"
   ];
 
   const filterTags = (tags: string[]) =>

@@ -8,8 +8,11 @@ COPY .env ./
 COPY tsconfig.json ./
 COPY src ./src
 COPY public ./public
+COPY index.html ./
+COPY vite.config.ts ./
+COPY vite-env.d.ts ./
 
-ENV REACT_APP_API=/graphql
+ENV VITE_API_URL=/graphql
 
 EXPOSE 3000
 CMD ["npm", "start"]

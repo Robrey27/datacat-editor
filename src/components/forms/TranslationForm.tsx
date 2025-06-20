@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Controller, useForm} from "react-hook-form";
 import TextField, {TextFieldProps} from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import {defaultFormFieldOptions} from "../../hooks/useFormStyles";
 import { styled } from "@mui/material/styles";
 import InlineButtonGroup from "./InlineButtonGroup";
@@ -121,6 +122,18 @@ const TranslationForm = (props: TranslationFormProps) => {
                             {...TextFieldProps}
                             {...textFieldProps}
                             error={!!errors.value}
+                            InputProps={{
+                                ...textFieldProps.InputProps,
+                                endAdornment: !isEditMode ? (
+                                    <Button
+                                        size="small"
+                                        onClick={onEdit}
+                                        sx={{ ml: 1 }}
+                                    >
+                                        Bearbeiten
+                                    </Button>
+                                ) : undefined
+                            }}
                         />
                     )}
                 />

@@ -258,9 +258,9 @@ export function ImportViewExcel() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     handleImportEntities(); // Erste Funktion aufrufen
-    importExcelData(); // Danach die Excel-Daten importieren
-    await importEntities(entityExcelData); // Pass the argument to the function
-    importRelations(relationExcelData); // Pass the argument to the function
+    await importExcelData(); // await hinzufügen
+    await importEntities(entityExcelData); // await hinzufügen
+    await importRelations(relationExcelData); // await hinzufügen
   };
 
   const isIdRequired = (entityIndex: number): boolean => {
@@ -1322,7 +1322,7 @@ export function ImportViewExcel() {
           size="small"
           onChange={handleImportTagChange}
           value={importTag}
-          sx={{ mb: 0.5, width: "200px" }}
+          sx={{ mb: 0.5, width: "200px" }} // Einheitliche Breite
         />
       </ButtonWrapper>
       
