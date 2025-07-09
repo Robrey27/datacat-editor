@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { styled } from "@mui/material/styles"; 
-import CssBaseline from "@mui/material/CssBaseline";
-import AppDrawer from "./components/AppDrawer";
-import BoardingView from "./views/BoardingView";
-import { AppBar } from "./components/AppBar";
-import { useRoutes } from "react-router-dom";
+import React, { Suspense, useState } from "react";
+import { Routes, Route, useRoutes } from "react-router-dom";
+import { Box, CircularProgress, CssBaseline, Toolbar, Container, Paper, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import useAuthContext from "./hooks/useAuthContext";
-import { Toolbar, Container, Paper, Box } from "@mui/material";
-import Footer from "./components/Footer";
+import BoardingView from "./views/BoardingView";
 import ConfirmationView from "./views/ConfirmationView";
+import AppDrawer from "./components/AppDrawer";
 import ProfileFormView from "./views/forms/ProfileFormView";
 import HierarchyView from "./views/HierarchyView";
-import useGridStyles from "./hooks/useGridStyle";
+import { AppBar } from "./components/AppBar";
+import Footer from "./components/Footer";
 import { HomePanel } from "./components/HomePanel";
 import { VerificationView } from "./views/VerificationView";
 import { ExportView } from "./views/ExportView";
@@ -44,8 +42,26 @@ const GraphiQLPaper = styled(Paper)(({ theme }) => ({
   height: "100%",
 }));
 
+// Nur ein einfacher Loading-Spinner für die initiale App-Ladung
+const InitialLoadingFallback = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  minHeight: "100vh",
+  backgroundColor: theme.palette.background.default,
+}));
+
+const InitialLoader = () => (
+  <InitialLoadingFallback>
+    <CircularProgress size={60} />
+    <Typography variant="h6" sx={{ mt: 2, color: "text.secondary" }}>
+      datacat wird geladen...
+    </Typography>
+  </InitialLoadingFallback>
+);
+
 export default function Layout() {
-  const gridStyles = useGridStyles();
   const { token } = useAuthContext();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -71,13 +87,12 @@ export default function Layout() {
       path: "/",
       element: (
         <Container maxWidth="md">
-          <Paper className={gridStyles.paper} variant="outlined">
+          <Paper variant="outlined">
             <HomePanel />
           </Paper>
         </Container>
       ),
     },
-    { path: "/profile", element: <ProfileFormView /> },
     { path: "/search", element: <HierarchyView /> },
     { path: "/audit", element: <VerificationView /> },
     {
@@ -102,6 +117,7 @@ export default function Layout() {
     },
     { path: "/tagview", element: <TagView /> },
     { path: "/gridview", element: <GridViewView /> },
+    { path: "/profile", element: <ProfileFormView /> },
     // Integration of catalog entry routes
     ...catalogEntryRoutes,
     // Optional: Fallback route
@@ -110,6 +126,7 @@ export default function Layout() {
 
   const routing = useRoutes(appRoutes);
 
+  // Authentifiziert - zeige AppDrawer mit allen Views
   return (
     <Root>
       <CssBaseline />

@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { Paper, Typography, Tabs, Tab, Stack, Box } from "@mui/material";
-import LoginForm from "../components/LoginForm";
-import SignupForm from "../components/SignupForm";
+import React, { useState, lazy, Suspense } from "react";
+import { Paper, Typography, Tabs, Tab, Stack, Box, CircularProgress } from "@mui/material";
 import useAuthContext from "../hooks/useAuthContext";
 import { useSnackbar } from "notistack";
 import { styled } from "@mui/material/styles";
 import PetsIcon from "@mui/icons-material/Pets";
-import IntroPanel from "../components/IntroPanel";
 import { T } from "@tolgee/react";
-import LanguageSwitcher from "../components/LanguageSwitcher";
+
+// Lazy load heavy components
+const LoginForm = lazy(() => import("../components/LoginForm"));
+const SignupForm = lazy(() => import("../components/SignupForm"));
+const IntroPanel = lazy(() => import("../components/IntroPanel"));
+const LanguageSwitcher = lazy(() => import("../components/LanguageSwitcher"));
 
 // Replace makeStyles with styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -19,6 +21,12 @@ const LanguageSwitcherBox = styled(Box)({
   display: "flex",
   justifyContent: "flex-end",
 });
+
+const LoadingSpinner = () => (
+  <Box display="flex" justifyContent="center" p={2}>
+    <CircularProgress size={24} />
+  </Box>
+);
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -80,11 +88,13 @@ export default function BoardingView() {
                 <T keyName="boarding.welcome">Willkommen beim datacat editor</T>
               </Typography>
               <LanguageSwitcherBox>
-                <LanguageSwitcher
-                  textColor="black"
-                  dropdownColor="black"
-                  borderColor="black"
-                />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <LanguageSwitcher
+                    textColor="black"
+                    dropdownColor="black"
+                    borderColor="black"
+                  />
+                </Suspense>
               </LanguageSwitcherBox>
             </Stack>
           </StyledPaper>
@@ -98,7 +108,9 @@ export default function BoardingView() {
         >
           {/* Linke Spalte - IntroPanel */}
           <Box sx={{ flex: 7 }}>
-            <IntroPanel />
+            <Suspense fallback={<LoadingSpinner />}>
+              <IntroPanel />
+            </Suspense>
           </Box>
 
           {/* Rechte Spalte - Login/Signup */}
@@ -127,7 +139,9 @@ export default function BoardingView() {
                     sich beim Editor anzumelden.
                   </T>
                 </Typography>
-                <LoginForm onLogin={handleLogin} />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <LoginForm onLogin={handleLogin} />
+                </Suspense>
               </TabPanel>
 
               <TabPanel value={tab} index="signup">
@@ -149,7 +163,9 @@ export default function BoardingView() {
                         Administrator.
                       </T>
                     </Typography>
-                    <SignupForm onSignup={handleSignup} />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <SignupForm onSignup={handleSignup} />
+                    </Suspense>
                   </React.Fragment>
                 )}
               </TabPanel>

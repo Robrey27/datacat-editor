@@ -284,7 +284,8 @@
     "enter_tag_name": "Bitte geben Sie einen Tag-Namen ein.",
     "tag_exists": "Tag \"{tag}\" ist bereits vorhanden.",
     "tag_added_success": "Tag \"{tag}\" erfolgreich hinzugefügt.",
-    "tag_added_error": "Fehler beim Hinzufügen des Tags \"{tag}\"."
+    "tag_added_error": "Fehler beim Hinzufügen des Tags \"{tag}\".",
+    "system_tag_error": "Das Tag '{tag}' ist ein System-Tag und kann nicht manuell angelegt werden."
   },
   "hierarchy": {
     "error": "Beim Aufrufen des Merkmalsbaums ist ein Fehler aufgetreten.",
@@ -300,6 +301,7 @@
   },
   "grid_view": {
     "loading": "Tabelleninhalte werden geladen",
+    "loading_table_contents": "Tabelleninhalte werden geladen",
     "tag_filter_title": "Filtermöglichkeit nach Tags",
     "tag_filter_placeholder": "Tag auswählen",
     "select_tag": "Tag auswählen",

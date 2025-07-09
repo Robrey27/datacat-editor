@@ -8,22 +8,20 @@ import it from "../translation/it.json";
 import nl from "../translation/nl.json";
 import zh from "../translation/zh.json";
 
+// Konfiguration basierend auf Umgebung
+const isDevelopment = process.env.NODE_ENV === 'development';
+const defaultLanguage = localStorage.getItem("language") || "de";
+
 export const tolgee = Tolgee()
   .use(FormatSimple())
-  .use(DevTools())
+  .use(isDevelopment ? DevTools() : undefined)
   .init({
-    apiUrl: "http://localhost:3000",
-    apiKey: "dummy",
+    ...(isDevelopment && {
+      apiUrl: "http://localhost:3000",
+      apiKey: "dummy",
+    }),
     availableLanguages: ["de", "en", "es", "it", "nl", "zh"],
-    defaultLanguage: localStorage.getItem("language") || "de",
+    defaultLanguage,
     fallbackLanguage: "en",
-    // Hier werden die Übersetzungsdaten synchron bereitgestellt
-    staticData: {
-      de,
-      en,
-      es,
-      it,
-      nl,
-      zh,
-    },
+    staticData: { de, en, es, it, nl, zh },
   });

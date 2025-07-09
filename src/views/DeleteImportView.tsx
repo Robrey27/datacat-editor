@@ -53,6 +53,12 @@ export function DeleteImportView() {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  // Define system tags that cannot be deleted
+  const SYSTEM_TAGS = [
+    "Fachmodell", "Gruppe", "Klasse", "Merkmal", "Masseinheit", "Grösse", 
+    "Wert", "Maßeinheit", "Größe", "Datenvorlage", "Merkmalsgruppe", "Referenzdokument"
+  ];
+
   // Handle tag text input with proper typing
   const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -84,6 +90,16 @@ export function DeleteImportView() {
   const handleSearch = async () => {
     if (!tag.trim()) {
       setRecords([]);
+      return;
+    }
+
+    // Check if it's a system tag
+    if (SYSTEM_TAGS.includes(tag.trim())) {
+      setOutput(
+        <Alert severity="error">
+          <T keyName="tag_view.system_tag_error" params={{ tag }} />
+        </Alert>
+      );
       return;
     }
 
@@ -145,6 +161,14 @@ export function DeleteImportView() {
 
   // Open confirmation dialog before deletion
   const handleOpenDeleteDialog = () => {
+    // Double-check system tag protection before opening dialog
+    if (SYSTEM_TAGS.includes(tag.trim())) {
+      enqueueSnackbar(
+        <T keyName="tag_view.system_tag_error" params={{ tag }} />,
+        { variant: "error" }
+      );
+      return;
+    }
     setIsDeleteDialogOpen(true);
   };
 
@@ -399,6 +423,12 @@ export function DeleteImportView() {
               value={tag}
               onChange={handleTagChange}
               disabled={isLoading || isFetching}
+              error={SYSTEM_TAGS.includes(tag.trim())}
+              helperText={
+                SYSTEM_TAGS.includes(tag.trim()) ? (
+                  <T keyName="tag_view.system_tag_error" params={{ tag }} />
+                ) : undefined
+              }
             />
           </Grid>
           <Grid>
@@ -406,7 +436,7 @@ export function DeleteImportView() {
               <Button
                 variant="contained"
                 onClick={handleSearch}
-                disabled={!tag.trim() || isLoading || isFetching}
+                disabled={!tag.trim() || isLoading || isFetching || SYSTEM_TAGS.includes(tag.trim())}
               >
                 <T keyName="delete_import_view.search_button" />
               </Button>
@@ -416,7 +446,7 @@ export function DeleteImportView() {
                 color="error"
                 startIcon={<DeleteIcon />}
                 onClick={handleOpenDeleteDialog}
-                disabled={records.length === 0 || isLoading || isFetching}
+                disabled={records.length === 0 || isLoading || isFetching || SYSTEM_TAGS.includes(tag.trim())}
               >
                 <T keyName="delete_import_view.delete_button" />
               </Button>

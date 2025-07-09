@@ -73,7 +73,7 @@ const FormSkeleton = () => (
 );
 
 const HierarchyView = () => {
-  const { loading, error, data } = usePropertyTreeQuery({
+  const { loading, error, data, refetch } = usePropertyTreeQuery({
     fetchPolicy: "cache-and-network" // Improve performance with caching
   });
   
@@ -205,6 +205,43 @@ const HierarchyView = () => {
         );
     }
   }, [selectedConcept, loading, data, handleDelete]);
+
+  // Add this useEffect to listen for new entries and refetch the hierarchy
+  React.useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'datacat-entry-created') {
+        setTimeout(() => {
+          refetch();
+        }, 1000);
+        localStorage.removeItem('datacat-entry-created');
+      }
+    };
+
+    const handleCustomEvent = () => {
+      setTimeout(() => {
+        refetch();
+      }, 1000);
+    };
+
+    const handleFocus = () => {
+      if (localStorage.getItem('datacat-entry-created')) {
+        setTimeout(() => {
+          refetch();
+        }, 1000);
+        localStorage.removeItem('datacat-entry-created');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('datacat-entry-created', handleCustomEvent as EventListener);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('datacat-entry-created', handleCustomEvent as EventListener);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [refetch]);
 
   return (
     <Stack 

@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import 'typeface-roboto';
 import './index.css';
-import { registerSW } from 'virtual:pwa-register';
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm("Neue Version verfügbar. Seite neu laden?")) {
-      updateSW(true);
-    }
-  },
-  onOfflineReady() {
-    console.log("App ist jetzt offline verfügbar.");
-  },
-});
+// Simplified service worker registration
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('SW registered'))
+      .catch(() => console.log('SW registration failed'));
+  });
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

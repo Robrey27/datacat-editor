@@ -13,6 +13,7 @@ export default function ApiProvider(props: ApiProviderProps) {
     const headers: Record<string, string> = token ? {
         'Authorization': `Bearer ${token}`
     } : {};
+    
     const apolloClient = new ApolloClient({
         connectToDevTools: true,
         cache: new InMemoryCache({

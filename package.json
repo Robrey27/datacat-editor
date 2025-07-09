@@ -6,18 +6,18 @@
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-operations": "^4.6.1",
     "@graphql-codegen/typescript-react-apollo": "^4.3.3",
-    "@mui/icons-material": "^7.1.2",
+    "@mui/icons-material": "^7.2.0",
     "@mui/lab": "^7.0.0-beta.14",
-    "@mui/material": "^7.1.2",
+    "@mui/material": "^7.2.0",
     "@mui/styles": "^6.4.8",
-    "@mui/system": "^7.1.1",
-    "@mui/x-data-grid": "^8.5.3",
-    "@mui/x-tree-view": "^8.5.3",
+    "@mui/system": "^7.2.0",
+    "@mui/x-data-grid": "^8.7.0",
+    "@mui/x-tree-view": "^8.7.0",
     "@tolgee/core": "^6.2.6",
     "@tolgee/react": "^6.2.6",
     "@tolgee/ui": "^4.9.2",
@@ -27,17 +27,18 @@
     "@types/react-router-dom": "^5.3.3",
     "dayjs": "^1.11.13",
     "file-saver": "^2.0.5",
-    "graphiql": "^4.1.2",
+    "graphiql": "^5.0.3",
     "graphql": "^16.11.0",
     "jszip": "^3.10.1",
     "node-fetch": "^3.3.2",
     "notistack": "^3.0.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-hook-form": "^7.58.1",
-    "react-router-dom": "^7.6.2",
+    "react-hook-form": "^7.60.0",
+    "react-router-dom": "^7.6.3",
     "react-virtualized": "^9.22.6",
     "react-window": "^1.8.11",
+    "saxes": "^6.0.0",
     "typeface-roboto": "^1.1.13",
     "uuid": "^11.1.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz"
@@ -74,16 +75,28 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
     "@types/i18next": "^13.0.0",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.0.12",
     "@types/react-virtualized": "^9.22.2",
     "@types/react-window": "^1.8.8",
     "@types/uuid": "^10.0.0",
-    "@vitejs/plugin-react": "^4.5.2",
-    "knip": "^5.61.2",
+    "@vitejs/plugin-react": "^4.6.0",
+    "knip": "^5.61.3",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vite-plugin-pwa": "^1.0.0",
+    "vite": "^7.0.3",
+    "vite-plugin-pwa": "^1.0.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite-plugin-pwa@^1.0.0": {
+        "vite": "^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
+      }
+    }
+  },
+  "overrides": {
+    "vite-plugin-pwa": {
+      "vite": "^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
+    }
   }
 }

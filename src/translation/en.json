@@ -343,7 +343,8 @@
     "enter_tag_name": "Please enter a tag name.",
     "tag_exists": "Tag \"{tag}\" already exists.",
     "tag_added_success": "Tag \"{tag}\" added successfully.",
-    "tag_added_error": "Error adding tag \"{tag}\"."
+    "tag_added_error": "Error adding tag \"{tag}\".",
+    "system_tag_error": "The tag '{tag}' is a system tag and cannot be created manually."
   },
   "hierarchy": {
     "error": "An error occurred while fetching the property tree.",
@@ -359,6 +360,7 @@
   },
   "grid_view": {
     "loading": "Loading table contents",
+    "loading_table_contents": "Loading table contents",
     "tag_filter_title": "Filter by tags",
     "select_tag": "Select a tag",
     "add_tag": "Add Tag",

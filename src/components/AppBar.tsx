@@ -67,6 +67,7 @@ const AppBreadcrumbs = () => {
       'unit': 'Maßeinheiten',
       'import': 'Import',
       'export': 'Export',
+      'ids-export': 'IDS Export',
       'search': 'Suche',
       'profile': 'Profil',
       'audit': 'Prüfen',

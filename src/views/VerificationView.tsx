@@ -131,6 +131,28 @@ export function VerificationView() {
     setSelectedConcept(null);
   };
 
+  // KORRIGIERT: useEffect mit stabilen dependencies
+  useEffect(() => {
+    const titleMapping: { [key: string]: React.ReactNode } = {
+      "Fachmodelle ohne Gruppe": <T keyName="verification.category.no_model_group">Fachmodelle ohne Gruppe</T>,
+      "Gruppen ohne Klasse": <T keyName="verification.category.no_group_class">Gruppen ohne Klasse</T>,
+      "Klassen ohne Merkmale/Merkmalsgruppen": <T keyName="verification.category.no_class_properties">Klassen ohne Merkmale/Merkmalsgruppen</T>,
+      "Merkmalsgruppen ohne Merkmale": <T keyName="verification.category.no_property_group">Merkmalsgruppen ohne Merkmale</T>,
+      "Merkmale ohne Klasse oder Merkmalsgruppe": <T keyName="verification.category.no_property">Merkmale ohne Klasse oder Merkmalsgruppe</T>,
+      "Größen die keinem Merkmal zugeordnet sind": <T keyName="verification.category.no_measure">Größen ohne Merkmal</T>,
+      "Einheiten ohne Größe": <T keyName="verification.category.no_unit">Einheiten ohne Größe</T>,
+      "Werte ohne Größe": <T keyName="verification.category.no_value">Werte ohne Größe</T>,
+      "ID-Duplikate": <T keyName="verification.category.duplicate_id">ID-Duplikate</T>,
+      "Namen-Duplikate (innerhalb eines Types)": <T keyName="verification.category.duplicate_name_type">Namen-Duplikate (innerhalb eines Types)</T>,
+      "Namen-Duplikate (gesamter Datenbestand)": <T keyName="verification.category.duplicate_name_all">Namen-Duplikate (gesamter Datenbestand)</T>,
+      "Fehlende Beschreibung": <T keyName="verification.category.missing_description">Fehlende Beschreibung</T>,
+      "Fehlende Beschreibung (englisch)": <T keyName="verification.category.missing_description_en">Fehlende Beschreibung (englisch)</T>,
+      "Fehlende Namens-Übersetzung (englisch)": <T keyName="verification.category.missing_translation_en">Fehlende Namens-Übersetzung (englisch)</T>
+    };
+    
+    setTitle(titleMapping[selectCategory] || "");
+  }, [selectCategory]); // Nur selectCategory als dependency
+
   // Left column: Criteria selection
   const renderCriteriaButtons = () => (
     <StyledPaper>
@@ -222,56 +244,6 @@ export function VerificationView() {
         return null;
     }
   };
-
-  useEffect(() => {
-    switch (selectCategory) {
-      case "Fachmodelle ohne Gruppe":
-        setTitle(<T keyName="verification.category.no_model_group">Fachmodelle ohne Gruppe</T>);
-        break;
-      case "Gruppen ohne Klasse":
-        setTitle(<T keyName="verification.category.no_group_class">Gruppen ohne Klasse</T>);
-        break;
-      case "Klassen ohne Merkmale/Merkmalsgruppen":
-        setTitle(<T keyName="verification.category.no_class_properties">Klassen ohne Merkmale/Merkmalsgruppen</T>);
-        break;
-      case "Merkmalsgruppen ohne Merkmale":
-        setTitle(<T keyName="verification.category.no_property_group">Merkmalsgruppen ohne Merkmale</T>);
-        break;
-      case "Merkmale ohne Klasse oder Merkmalsgruppe":
-        setTitle(<T keyName="verification.category.no_property">Merkmale ohne Klasse oder Merkmalsgruppe</T>);
-        break;
-      case "Größen die keinem Merkmal zugeordnet sind":
-        setTitle(<T keyName="verification.category.no_measure">Größen ohne Merkmal</T>);
-        break;
-      case "Einheiten ohne Größe":
-        setTitle(<T keyName="verification.category.no_unit">Einheiten ohne Größe</T>);
-        break;
-      case "Werte ohne Größe":
-        setTitle(<T keyName="verification.category.no_value">Werte ohne Größe</T>);
-        break;
-      case "ID-Duplikate":
-        setTitle(<T keyName="verification.category.duplicate_id">ID-Duplikate</T>);
-        break;
-      case "Namen-Duplikate (innerhalb eines Types)":
-        setTitle(<T keyName="verification.category.duplicate_name_type">Namen-Duplikate (innerhalb eines Types)</T>);
-        break;
-      case "Namen-Duplikate (gesamter Datenbestand)":
-        setTitle(<T keyName="verification.category.duplicate_name_all">Namen-Duplikate (gesamter Datenbestand)</T>);
-        break;
-      case "Fehlende Beschreibung":
-        setTitle(<T keyName="verification.category.missing_description">Fehlende Beschreibung</T>);
-        break;
-      case "Fehlende Beschreibung (englisch)":
-        setTitle(<T keyName="verification.category.missing_description_en">Fehlende Beschreibung (englisch)</T>);
-        break;
-      case "Fehlende Namens-Übersetzung (englisch)":
-        setTitle(<T keyName="verification.category.missing_translation_en">Fehlende Namens-Übersetzung (englisch)</T>);
-        break;
-      default:
-        setTitle("");
-        break;
-    }
-  }, [selectCategory]);
 
   // Middle column: Result list
   const renderResultList = () => {
@@ -540,10 +512,7 @@ export function VerificationView() {
   function ThisFindMissingEnglishDescription() {
     const { loading, error, data } = useFindMissingEnglishDescriptionTreeQuery({});
     if (loading) return <LinearProgress />;
-    if (error) {
-      console.error(error.message);
-      return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
-    }
+    if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
     return (
       <FindMissingEnglishDescription
         leaves={data!.findMissingEnglishDescription.nodes}
@@ -580,29 +549,24 @@ export function VerificationView() {
   }
 
   return (
-    <Stack 
-      direction="row" 
-      spacing={2} 
-      sx={{ 
-        minHeight: 'calc(100vh - 140px)', 
-        width: '100%',
-        alignItems: 'flex-start' // Align items to the top
-      }}
-    >
+    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', gap: 2 }}>
       {/* Left column - Criteria */}
       <Box sx={{ 
-        width: '20%', 
+        width: '250px', 
         flexShrink: 0,
-        alignSelf: 'flex-start' // Don't stretch vertically
+        alignSelf: 'flex-start'
       }}>
+        <Typography variant="h5" sx={{ mb: 2 }}>
+          <T keyName="verification.title">Prüfkriterium</T>
+        </Typography>
         {renderCriteriaButtons()}
       </Box>
       
       {/* Middle column - Results */}
       <Box sx={{ 
-        width: '30%', 
+        width: '350px', 
         flexShrink: 0,
-        alignSelf: 'flex-start' // Don't stretch vertically
+        alignSelf: 'flex-start'
       }}>
         <StyledPaper>
           <Typography variant="h6">{title}</Typography>
@@ -619,14 +583,14 @@ export function VerificationView() {
       {/* Right column - Details */}
       <Box sx={{ 
         flexGrow: 1,
-        alignSelf: 'flex-start', // Don't stretch vertically
+        alignSelf: 'flex-start',
         minHeight: !selectedConcept ? 'auto' : undefined
       }}>
         <StyledPaper>
           {renderDetailView()}
         </StyledPaper>
       </Box>
-    </Stack>
+    </Box>
   );
 }
 

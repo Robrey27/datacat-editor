@@ -20,10 +20,11 @@ import {T} from "@tolgee/react";
 const DocumentForm = (props: FormProps<ExternalDocumentDetailPropsFragment>) => {
     const {id, onDelete} = props;
     const {enqueueSnackbar} = useSnackbar();
-console.log("IDDocument :" + id)
+
     // fetch domain model
     const {loading, error, data, refetch} = useGetDocumentEntryQuery({
-        fetchPolicy: "network-only",
+        fetchPolicy: "cache-first", // Verbesserte Performance
+        nextFetchPolicy: "cache-first",
         variables: {id}
     });
     let entry = data?.node as ExternalDocumentDetailPropsFragment | undefined;

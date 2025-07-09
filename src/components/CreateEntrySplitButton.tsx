@@ -28,6 +28,7 @@ import {
   ValueEntity,
 } from "../domain";
 import { T, useTolgee } from "@tolgee/react";
+import { useNavigate } from "react-router-dom";
 
 type CreateEntrySplitButtonProps = {
   ButtonGroupProps?: ButtonGroupProps;
@@ -50,36 +51,22 @@ const CreateEntrySplitButton: FC<CreateEntrySplitButtonProps> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const tolgee = useTolgee();
   const [currentLanguage, setCurrentLanguage] = useState(tolgee.getLanguage());
-
-  // Listen for language changes to force re-render
-  useEffect(() => {
-    const handleLanguageChange = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      setCurrentLanguage(customEvent.detail || tolgee.getLanguage());
-    };
-
-    window.addEventListener('languageChanged', handleLanguageChange);
-    
-    return () => {
-      window.removeEventListener('languageChanged', handleLanguageChange);
-    };
-  }, [tolgee]);
+  const navigate = useNavigate();
 
   const [create] = useCreateEntryMutation({
     update: (cache) => {
+      // Invalidiere alle relevanten Queries
       cache.modify({
         id: "ROOT_QUERY",
         fields: {
           hierarchy: (value, { DELETE }) => DELETE,
-        },
-      });
-      cache.modify({
-        id: "ROOT_QUERY",
-        fields: {
           search: (value, { DELETE }) => DELETE,
         },
       });
     },
+    // Wichtig: Nach erfolgreicher Mutation Query neu ausführen
+    refetchQueries: ["PropertyTree"],
+    awaitRefetchQueries: false,
   });
 
   const [lastUsedOption, setLastUsedOption] = React.useState(ClassEntity);
@@ -117,30 +104,58 @@ const CreateEntrySplitButton: FC<CreateEntrySplitButtonProps> = (props) => {
   };
 
   const onSubmit = async ({ id, versionId, versionDate, name, description, comment }: CreateEntryFormValues) => {
-    const catalogRecordType = input?.recordType! as unknown as SimpleRecordType;
-    const names = [{ languageTag: "de", value: name }];
-    const descriptions = description ? [{ languageTag: "de", value: description }] : [];
-    const comments = comment ? [{ languageTag: "de", value: comment }] : [];
-    const version = { versionId, versionDate };
-    const properties = {
-      id,
-      version: version,
-      names: names,
-      descriptions,
-      comments,
-    };
-    await create({
-      variables: {
-        input: {
-          catalogEntryType: catalogRecordType,
-          properties: properties,
-          tags: input?.tags,
-        },
-      },
-    });
+    try {
+      if (!input) {
+        enqueueSnackbar("Fehler: Entity-Typ konnte nicht bestimmt werden", {
+          variant: "error"
+        });
+        return;
+      }
 
-    setDialogOpen(false);
-    enqueueSnackbar(<T keyName="create_entry_split_button.create_entry" params={{ title: input!.title }} />);
+      const catalogRecordType = input.recordType as unknown as SimpleRecordType;
+      const names = [{ languageTag: "de", value: name }];
+      const descriptions = description ? [{ languageTag: "de-DE", value: description }] : [];
+      const comments = comment ? [{ languageTag: "de-DE", value: comment }] : [];
+      const version = versionId ? { versionId, versionDate } : undefined;
+      const properties = {
+        id: id || undefined,
+        version: version,
+        names: names,
+        descriptions,
+        comments,
+      };
+
+      const result = await create({
+        variables: {
+          input: {
+            catalogEntryType: catalogRecordType,
+            properties: properties,
+            tags: input.tags || [],
+          },
+        },
+      });
+
+      setDialogOpen(false);
+      enqueueSnackbar(<T keyName="create_entry_split_button.create_entry" params={{ title: input.title }} />);
+
+      // Cache-Update Signal für andere Komponenten
+      localStorage.setItem('datacat-entry-created', Date.now().toString());
+      window.dispatchEvent(new CustomEvent('datacat-entry-created', {
+        detail: { 
+          entryId: result.data?.createCatalogEntry?.catalogEntry?.id,
+          entityType: catalogRecordType 
+        }
+      }));
+
+      // Navigation zum neuen Eintrag
+      const newEntryId = result.data?.createCatalogEntry?.catalogEntry?.id;
+      if (newEntryId && input) {
+        navigate(`/${input.path}/${newEntryId}`);
+      }
+
+    } catch (error) {
+      enqueueSnackbar("Fehler beim Erstellen des Eintrags", { variant: "error" });
+    }
   };
 
   return (
@@ -205,3 +220,4 @@ const CreateEntrySplitButton: FC<CreateEntrySplitButtonProps> = (props) => {
 };
 
 export default CreateEntrySplitButton;
+

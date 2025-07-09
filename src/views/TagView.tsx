@@ -73,6 +73,11 @@ const TagView: React.FC = () => {
   const [newTagName, setNewTagName] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
+  const SYSTEM_TAGS = [
+    "Fachmodell", "Gruppe", "Klasse", "Merkmal", "Masseinheit", "Grösse", 
+    "Wert", "Maßeinheit", "Größe", "Datenvorlage", "Merkmalsgruppe", "Referenzdokument"
+  ];
+
   useEffect(() => {
     if (data) {
       setTags(data.findTags.nodes.map((tag) => tag.name));
@@ -82,6 +87,14 @@ const TagView: React.FC = () => {
   const handleAddTag = async () => {
     if (!newTagName.trim()) {
       enqueueSnackbar(<T keyName="tag_view.enter_tag_name" />, {
+        variant: "error",
+      });
+      return;
+    }
+
+    // Check if it's a system tag
+    if (SYSTEM_TAGS.includes(newTagName.trim())) {
+      enqueueSnackbar(<T keyName="tag_view.system_tag_error" params={{ tag: newTagName }} />, {
         variant: "error",
       });
       return;
@@ -141,22 +154,31 @@ const TagView: React.FC = () => {
         <T keyName="tag_view.explanation" />
       </Explanation>
       <StyledForm onSubmit={(e) => e.preventDefault()}>
-        <StyledFormControl variant="outlined">
-          <InputLabel htmlFor="new-tag" shrink={newTagName !== ""}>
-            <T keyName="tag_view.new_tag_label" />
-          </InputLabel>
-          <TextField
-            id="new-tag"
-            variant="outlined"
-            value={newTagName}
-            onChange={(e) => setNewTagName(e.target.value)}
-            InputLabelProps={{ shrink: true }}
-          />
-        </StyledFormControl>
+        <TextField
+          id="new-tag"
+          label={<T keyName="tag_view.new_tag_label" />}
+          variant="outlined"
+          value={newTagName}
+          onChange={(e) => setNewTagName(e.target.value)}
+          sx={{ minWidth: 200, marginRight: 2 }}
+          error={SYSTEM_TAGS.includes(newTagName.trim()) || tags.includes(newTagName.trim())}
+          helperText={
+            SYSTEM_TAGS.includes(newTagName.trim()) ? (
+              <T keyName="tag_view.system_tag_error" params={{ tag: newTagName }} />
+            ) : tags.includes(newTagName.trim()) ? (
+              <T keyName="tag_view.tag_exists" params={{ tag: newTagName }} />
+            ) : undefined
+          }
+        />
         <StyledButton
           variant="contained"
           color="primary"
           onClick={handleAddTag}
+          disabled={
+            !newTagName.trim() || 
+            SYSTEM_TAGS.includes(newTagName.trim()) || 
+            tags.includes(newTagName.trim())
+          }
         >
           <T keyName="tag_view.add_tag_button" />
         </StyledButton>
