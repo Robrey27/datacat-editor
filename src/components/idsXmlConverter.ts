@@ -1,10 +1,16 @@
 type IDSRequirement = {
-  type: "classification" | "attribute";
-  value: string[] | string;
+  type: "classification" | "attribute" | "property";
+  value?: string[] | string;
   modelId?: string;
-  // Optionally, add resolved names for export
   valueNames?: string[] | string;
   modelName?: string;
+  // Für property:
+  propertySet?: string;
+  baseName?: string;
+  valueList?: string[];
+  dataType?: string;
+  uri?: string;
+  cardinality?: string;
 };
 
 type IDSSpec = {
@@ -70,6 +76,34 @@ function xmlAttribute(req: IDSRequirement) {
     xml += `            </xs:restriction>\n          </ids:value>\n`;
   }
   xml += `        </ids:attribute>`;
+  return xml;
+}
+
+function xmlProperty(req: IDSRequirement) {
+  // req.propertySet, req.baseName, req.valueList, req.dataType, req.uri, req.cardinality
+  let xml = `        <ids:property`;
+  if (req.dataType) xml += ` dataType="${esc(req.dataType)}"`;
+  if (req.uri) xml += ` uri="${esc(req.uri)}"`;
+  if (req.cardinality) xml += ` cardinality="${esc(req.cardinality)}"`;
+  xml += `>\n`;
+
+  // PropertySet
+  if (req.propertySet) {
+    xml += `          <ids:propertySet>\n            <ids:simpleValue>${esc(req.propertySet)}</ids:simpleValue>\n          </ids:propertySet>\n`;
+  }
+  // baseName
+  if (req.baseName) {
+    xml += `          <ids:baseName>\n            <ids:simpleValue>${esc(req.baseName)}</ids:simpleValue>\n          </ids:baseName>\n`;
+  }
+  // value (optional, als xs:restriction)
+  if (req.valueList && req.valueList.length > 0) {
+    xml += `          <ids:value>\n            <xs:restriction base="xs:string">\n`;
+    req.valueList.forEach((val) => {
+      xml += `              <xs:enumeration value="${esc(val)}" />\n`;
+    });
+    xml += `            </xs:restriction>\n          </ids:value>\n`;
+  }
+  xml += `        </ids:property>`;
   return xml;
 }
 
@@ -156,6 +190,8 @@ export function convertToIDSXml(
           lines.push(`          </ids:value>`);
         }
         lines.push(`        </ids:attribute>`);
+      } else if (req.type === "property") {
+        lines.push(xmlProperty(req));
       }
     });
 

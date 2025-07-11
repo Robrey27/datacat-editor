@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
-import { Paper, Typography, Tabs, Tab, Stack, Box, CircularProgress } from "@mui/material";
+import { Paper, Typography, Tabs, Tab, Stack, Box } from "@mui/material";
 import useAuthContext from "../hooks/useAuthContext";
 import { useSnackbar } from "notistack";
 import { styled } from "@mui/material/styles";
@@ -21,12 +21,6 @@ const LanguageSwitcherBox = styled(Box)({
   display: "flex",
   justifyContent: "flex-end",
 });
-
-const LoadingSpinner = () => (
-  <Box display="flex" justifyContent="center" p={2}>
-    <CircularProgress size={24} />
-  </Box>
-);
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -88,7 +82,7 @@ export default function BoardingView() {
                 <T keyName="boarding.welcome">Willkommen beim datacat editor</T>
               </Typography>
               <LanguageSwitcherBox>
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={null}>
                   <LanguageSwitcher
                     textColor="black"
                     dropdownColor="black"
@@ -108,7 +102,7 @@ export default function BoardingView() {
         >
           {/* Linke Spalte - IntroPanel */}
           <Box sx={{ flex: 7 }}>
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={null}>
               <IntroPanel />
             </Suspense>
           </Box>
@@ -139,7 +133,7 @@ export default function BoardingView() {
                     sich beim Editor anzumelden.
                   </T>
                 </Typography>
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={null}>
                   <LoginForm onLogin={handleLogin} />
                 </Suspense>
               </TabPanel>
@@ -163,7 +157,7 @@ export default function BoardingView() {
                         Administrator.
                       </T>
                     </Typography>
-                    <Suspense fallback={<LoadingSpinner />}>
+                    <Suspense fallback={null}>
                       <SignupForm onSignup={handleSignup} />
                     </Suspense>
                   </React.Fragment>

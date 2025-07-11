@@ -6,7 +6,6 @@ import {
     useGetBagLazyQuery,
     useAddTagMutation,
     useFindTagsQuery,
-    useFindItemQuery, // <--- hinzufügen
 } from "../generated/types";
 import {
     Box,
@@ -21,7 +20,6 @@ import {
     Checkbox,
     SelectChangeEvent,
     LinearProgress,
-    CircularProgress,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import {
@@ -230,9 +228,8 @@ const GridViewView = () => {
         loading: propertyTreeLoading,
         error: propertyTreeError,
         data: propertyTreeData,
-        refetch: refetchPropertyTree,
     } = usePropertyTreeQuery({
-        fetchPolicy: "cache-and-network", // Bessere Cache-Strategie
+        fetchPolicy: "cache-and-network",
         notifyOnNetworkStatusChange: true
     });
     const [getBag, { error: bagError }] = useGetBagLazyQuery();
@@ -257,18 +254,10 @@ const GridViewView = () => {
     const [isTagging, setIsTagging] = useState(false);
 
     const { data, refetch } = useFindTagsQuery({ variables: { pageSize: 100 } });
-    const { data: allItemsData, loading: allItemsLoading } = useFindItemQuery({
-        variables: {
-            input: {
-                entityTypeIn: [], // alle Typen
-            },
-            pageSize: 10000,
-        },
-        fetchPolicy: "cache-and-network",
-    });
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslate();
 
+    // --- Nur noch propertyTreeData verwenden ---
     const nodes = propertyTreeData?.hierarchy?.nodes || [];
     const paths = propertyTreeData?.hierarchy?.paths || [];
 
@@ -408,24 +397,14 @@ const GridViewView = () => {
         window.location.reload();
     }, [navigate]);
 
-    // Build data rows (bleibt als useCallback, da von nodes/paths abhängt)
+    // Build data rows: Erzeugt die Zeilen für die DataGrid-Tabelle anhand der Hierarchiepfade
     const buildRows = useCallback(() => {
         const rows: any[] = [];
         const seenCombinations = new Set();
 
-        console.log("=== DEBUG GridView buildRows ===");
-        console.log("nodes.length:", nodes.length);
-        console.log("paths.length:", paths.length);
-
-        // Debug: Suche Referenzdokumente direkt in nodes
-        const documentsInNodes = nodes.filter(node => 
-            node.recordType === "ExternalDocument" || 
-            (Array.isArray(node.tags) && node.tags.some((tag: any) => tag.id === "992c8887-301e-4764-891c-ae954426fc22"))
-        );
-        console.log("GridView - Document Nodes in hierarchy.nodes:", documentsInNodes);
-
-        // 1. Normale Pfade wie bisher
-        paths.forEach((path, index) => {
+        // Für jeden Pfad eine Zeile erzeugen
+        for (let i = 0; i < paths.length; i++) {
+            const path = paths[i];
             const row: any = {
                 document: "",
                 model: "",
@@ -443,132 +422,33 @@ const GridViewView = () => {
                 },
                 recordType: "",
                 tags: [],
-                uniqueId: `path-${index}`,
+                uniqueId: `path-${i}`,
             };
 
-            path.forEach((id: string) => {
+            for (let j = 0; j < path.length; j++) {
+                const id = path[j];
                 const node = nodes.find((node) => node.id === id);
                 if (node) {
-                    [
-                        "document",
-                        "model",
-                        "group",
-                        "class",
-                        "property",
-                        "propertyGroup",
-                    ].forEach((column) => {
+                    for (const column of ["document", "model", "group", "class", "property", "propertyGroup"] as (keyof VisibleColumns)[]) {
                         const value = mapRecordTypeToColumn(node, column);
                         if (value) {
                             row[column] = value;
                             row.ids[column] = node.id;
                         }
-                    });
+                    }
                     row.recordType = node.recordType;
                     row.tags = node.tags;
                 }
-            });
+            }
 
             const combinationKey = `${row.document}-${row.model}-${row.group}-${row.class}-${row.property}-${row.propertyGroup}`;
             if (!seenCombinations.has(combinationKey)) {
                 seenCombinations.add(combinationKey);
                 rows.push(row);
             }
-        });
-
-        // 2. Verwaiste Entitäten ergänzen (nur in der richtigen Spalte!)
-        const idsInPaths = new Set(paths.flat());
-        const orphanNodes = nodes.filter(node => !idsInPaths.has(node.id));
-
-        console.log("orphanNodes.length:", orphanNodes.length);
-        console.log("orphanNodes mit Document-Tag:", orphanNodes.filter(node => 
-            Array.isArray(node.tags) && node.tags.some((tag: any) => tag.id === "992c8887-301e-4764-891c-ae954426fc22")
-        ));
-
-        orphanNodes.forEach((node) => {
-            // Finde das erste relevante Tag
-            let column: keyof VisibleColumns | undefined;
-            if (Array.isArray(node.tags)) {
-                for (const tag of node.tags) {
-                    if (TAG_TO_COLUMN[tag.id]) {
-                        column = TAG_TO_COLUMN[tag.id];
-                        break;
-                    }
-                }
-            }
-            if (!column) return; // Nur relevante Entitäten anzeigen
-
-            const row: any = {
-                document: "",
-                model: "",
-                group: "",
-                class: "",
-                property: "",
-                propertyGroup: "",
-                ids: {
-                    document: "",
-                    model: "",
-                    group: "",
-                    class: "",
-                    property: "",
-                    propertyGroup: "",
-                },
-                recordType: node.recordType,
-                tags: node.tags,
-                uniqueId: `orphan-${node.id}`,
-            };
-            row[column] = node.name || node.id;
-            row.ids[column] = node.id;
-            rows.push(row);
-        });
-
-        // IDs aller bereits in rows enthaltenen Entitäten
-        const idsInRows = new Set<string>();
-        rows.forEach(row => {
-            Object.values(row.ids).forEach((id: any) => {
-                if (id) idsInRows.add(id);
-            });
-        });
-
-        // 3. Zusätzliche orphan rows für relevante Entitäten mit Haupt-Tag (aus Query)
-        if (allItemsData?.search?.nodes) {
-            allItemsData.search.nodes.forEach((item: any) => {
-                if (idsInRows.has(item.id)) return;
-                if (!item.tags || !Array.isArray(item.tags)) return;
-                // Finde das erste relevante Tag
-                let column: keyof VisibleColumns | undefined;
-                for (const tag of item.tags) {
-                    if (TAG_TO_COLUMN[tag.id]) {
-                        column = TAG_TO_COLUMN[tag.id];
-                        break;
-                    }
-                }
-                if (!column) return;
-
-                const row: any = {
-                    document: "",
-                    model: "",
-                    group: "",
-                    class: "",
-                    property: "",
-                    propertyGroup: "",
-                    ids: {
-                        document: "",
-                        model: "",
-                        group: "",
-                        class: "",
-                        property: "",
-                        propertyGroup: "",
-                    },
-                    recordType: item.recordType,
-                    tags: item.tags,
-                    uniqueId: `allitem-${item.id}`,
-                };
-                row[column] = item.name || item.id;
-                row.ids[column] = item.id;
-                rows.push(row);
-            });
         }
 
+        // Sortiere die Zeilen für eine konsistente Anzeige
         rows.sort((a, b) => {
             if (a.document !== b.document)
                 return a.document.localeCompare(b.document);
@@ -581,18 +461,17 @@ const GridViewView = () => {
         });
 
         return rows;
-    }, [paths, nodes, mapRecordTypeToColumn, allItemsData]);
+    }, [paths, nodes, mapRecordTypeToColumn]);
 
     // Filtered rows und entityCount in einem useMemo
     const { filteredRows, entityCount, modelIds } = useMemo(() => {
         let rows = buildRows();
 
         // Tag-Filter performant mit Set
-        let tagSet: Set<string> | null = null;
         if (selectedTag) {
-            tagSet = new Set([selectedTag]);
+            const tagSet = new Set([selectedTag]);
             rows = rows.filter((row) =>
-                row.tags.some((tag: any) => tagSet!.has(tag.name))
+                row.tags.some((tag: any) => tagSet.has(tag.name))
             );
         }
 
@@ -618,7 +497,7 @@ const GridViewView = () => {
             count = uniqueValues.size;
         }
 
-        // Modell-IDs für Dokumentnamen
+        // Modell-IDs für Dokumentnamen extrahieren
         const modelIds = Array.from(
             new Set(
                 rows.map((row) => row.ids.model).filter((id: string) => id)
@@ -626,7 +505,47 @@ const GridViewView = () => {
         );
 
         return { filteredRows: rows, entityCount: count, modelIds };
-    }, [visibleColumns, propertyTreeData, selectedTag, buildRows]);
+    }, [visibleColumns, selectedTag, buildRows]);
+
+    // Tag-Query nur einmalig und bei Änderungen der Tags
+    useEffect(() => {
+        if (data) {
+            setTags(data.findTags.nodes.map((tag) => tag.name));
+        }
+    }, [data]);
+
+    // Dokumentnamen nur nachladen, wenn sich modelIds ändern
+    useEffect(() => {
+        if (modelIds.length === 0) return;
+        let isMounted = true;
+        const fetchDocumentNames = async () => {
+            const newDocumentData: {
+                [key: string]: { name: string | null; id: string | null };
+            } = {};
+
+            for (const id of modelIds) {
+                if (!documentNames[id]) {
+                    try {
+                        const response = await getBag({ variables: { id } });
+                        const documentNode =
+                          response.data?.getBag?.documentedBy?.nodes[0]?.relatingDocument;
+                        const documentName = documentNode?.name || null;
+                        const documentId = documentNode?.id || null;
+                        newDocumentData[id] = { name: documentName, id: documentId };
+                    } catch {
+                        // Fehler beim Laden ignorieren
+                    }
+                }
+            }
+
+            if (isMounted && Object.keys(newDocumentData).length > 0) {
+                setDocumentNames(prev => ({ ...prev, ...newDocumentData }));
+            }
+        };
+
+        fetchDocumentNames();
+        return () => { isMounted = false; };
+    }, [modelIds, getBag, documentNames]);
 
     // Enhanced tag adding functionality with improved tag checking
     const handleAddTag = useCallback(async () => {
@@ -767,7 +686,7 @@ const GridViewView = () => {
         (value) => !value
     ), [visibleColumns]);
 
-    // Effects für document loading und tag management - KORRIGIERT
+    // Effekte für das Nachladen von Dokumentnamen und Tags
     useEffect(() => {
         const fetchDocumentNames = async () => {
             const newDocumentData: {
@@ -784,7 +703,7 @@ const GridViewView = () => {
                         const documentId = documentNode?.id || null;
                         newDocumentData[id] = { name: documentName, id: documentId };
                     } catch (error) {
-                        // Error handling ohne console.log
+                        // Fehler beim Laden ignorieren
                     }
                 }
             }
@@ -798,12 +717,6 @@ const GridViewView = () => {
             fetchDocumentNames();
         }
     }, [modelIds, getBag, documentNames]);
-
-    useEffect(() => {
-        if (data) {
-            setTags(data.findTags.nodes.map((tag) => tag.name));
-        }
-    }, [data]);
 
     // Memoized values
     const columns: GridColDef[] = useMemo(() => [
@@ -1016,10 +929,10 @@ const GridViewView = () => {
   ], [visibleColumns, documentNames, handleOnSelect, t]);
 
   // Show loading spinner while data is being fetched
-  if (propertyTreeLoading || allItemsLoading) {
-    return <LoadingSpinner message={t("grid_view.loading_table_contents")} />;
+  if (propertyTreeLoading) {
+    return <LoadingSpinner message={t("grid_view.loading_table_contents")} fullscreen={true} />;
   }
-  
+
   if (propertyTreeError)
     return <Typography>Error: {propertyTreeError.message}</Typography>;
   if (bagError) return <Typography>Error: {bagError.message}</Typography>;

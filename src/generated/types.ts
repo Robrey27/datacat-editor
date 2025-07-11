@@ -3482,3 +3482,37 @@ query findExportCatalogItemsRelationships {
     }
   }
   }`;
+
+  // Neue Query für Merkmalsgruppen (PropertyGroups)
+export const FindPropertyGroupsDocument = gql`
+  query FindPropertyGroups($tagId: ID!) {
+    search(input: { entityTypeIn: [Nest], tagged: [$tagId] }, pageSize: 100) {
+      nodes {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export type FindPropertyGroupsQueryVariables = {
+  tagId: string;
+};
+
+export type FindPropertyGroupsQuery = {
+  search: {
+    nodes: Array<{
+      id: string;
+      name?: string;
+    }>;
+  };
+};
+
+export function useFindPropertyGroupsQuery(
+  baseOptions: Apollo.QueryHookOptions<FindPropertyGroupsQuery, FindPropertyGroupsQueryVariables>
+) {
+  return Apollo.useQuery<FindPropertyGroupsQuery, FindPropertyGroupsQueryVariables>(
+    FindPropertyGroupsDocument,
+    baseOptions
+  );
+}
