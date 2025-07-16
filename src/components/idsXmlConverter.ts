@@ -7,6 +7,7 @@ type IDSRequirement = {
   // Für property:
   propertySet?: string;
   baseName?: string;
+  baseNames?: string[]; // Für Enumeration von Merkmalen
   valueList?: string[];
   dataType?: string;
   uri?: string;
@@ -41,7 +42,8 @@ function xmlClassification(req: IDSRequirement) {
   // req.valueNames: string[] | string
   // req.modelName: string
   let xml = `        <ids:classification>\n`;
-  // Value (enumeration list)
+  
+  // Value (enumeration list) - nur wenn valueNames vorhanden
   if (Array.isArray(req.valueNames) && req.valueNames.length > 0) {
     xml += `          <ids:value>\n            <xs:restriction base="xs:string">\n`;
     req.valueNames.forEach((val) => {
@@ -49,12 +51,14 @@ function xmlClassification(req: IDSRequirement) {
     });
     xml += `            </xs:restriction>\n          </ids:value>\n`;
   }
-  // System (pattern)
+  
+  // System (pattern) - immer wenn modelName vorhanden
   if (req.modelName) {
     xml += `          <ids:system>\n            <xs:restriction base="xs:string">\n`;
     xml += `              <xs:pattern value="${esc(req.modelName)}" />\n`;
     xml += `            </xs:restriction>\n          </ids:system>\n`;
   }
+  
   xml += `        </ids:classification>`;
   return xml;
 }
@@ -80,7 +84,7 @@ function xmlAttribute(req: IDSRequirement) {
 }
 
 function xmlProperty(req: IDSRequirement) {
-  // req.propertySet, req.baseName, req.valueList, req.dataType, req.uri, req.cardinality
+  // req.propertySet, req.baseName oder req.baseNames, req.valueList, req.dataType, req.uri, req.cardinality
   let xml = `        <ids:property`;
   if (req.dataType) xml += ` dataType="${esc(req.dataType)}"`;
   if (req.uri) xml += ` uri="${esc(req.uri)}"`;
@@ -91,10 +95,23 @@ function xmlProperty(req: IDSRequirement) {
   if (req.propertySet) {
     xml += `          <ids:propertySet>\n            <ids:simpleValue>${esc(req.propertySet)}</ids:simpleValue>\n          </ids:propertySet>\n`;
   }
-  // baseName
-  if (req.baseName) {
+  
+  // baseName - kann ein einzelner Name oder eine Liste für Enumeration sein
+  if ((req as any).baseNames && Array.isArray((req as any).baseNames) && (req as any).baseNames.length > 1) {
+    // Mehrere Merkmale als Enumeration
+    xml += `          <ids:baseName>\n            <xs:restriction base="xs:string">\n`;
+    (req as any).baseNames.forEach((name: string) => {
+      xml += `              <xs:enumeration value="${esc(name)}" />\n`;
+    });
+    xml += `            </xs:restriction>\n          </ids:baseName>\n`;
+  } else if ((req as any).baseNames && Array.isArray((req as any).baseNames) && (req as any).baseNames.length === 1) {
+    // Ein einzelnes Merkmal
+    xml += `          <ids:baseName>\n            <ids:simpleValue>${esc((req as any).baseNames[0])}</ids:simpleValue>\n          </ids:baseName>\n`;
+  } else if (req.baseName) {
+    // Fallback für alte Struktur
     xml += `          <ids:baseName>\n            <ids:simpleValue>${esc(req.baseName)}</ids:simpleValue>\n          </ids:baseName>\n`;
   }
+  
   // value (optional, als xs:restriction)
   if (req.valueList && req.valueList.length > 0) {
     xml += `          <ids:value>\n            <xs:restriction base="xs:string">\n`;
