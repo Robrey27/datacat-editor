@@ -1,5 +1,6 @@
-import {TablePaginationProps} from "@mui/material";
-import {Pagination} from "./usePagination";
+import { TablePaginationProps } from "@mui/material";
+import { Pagination } from "./usePagination";
+import { ChangeEvent } from "react";
 
 type UsePagingOptions = {
     totalElements?: number,
@@ -21,9 +22,8 @@ export default function usePaging(options: UsePagingOptions): Omit<TablePaginati
         labelRowsPerPage: "Anzahl:",
         rowsPerPage: pageSize,
         rowsPerPageOptions: [10, 25, 50, 100],
-        onChangeRowsPerPage: e => setPageSize(parseInt(e.target.value, 10)),
-        // onChangePage: (e, num) => setPageNumber(num)
-        onPageChange: (e, num) => setPageNumber(num)
+        onRowsPerPageChange: (e: ChangeEvent<HTMLInputElement>) => setPageSize(parseInt(e.target.value, 10)),
+        onPageChange: (e: unknown, num: number) => setPageNumber(num)
     };
 };
 

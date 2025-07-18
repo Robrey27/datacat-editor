@@ -25,7 +25,25 @@
     },
     "result": {
       "select_criteria": "Select a criterion and category.",
-      "select_entry": "Select a result from the list view to display properties."
+      "select_entry": "Select a result from the list view to display properties.",
+      "error_loading": "Error calling the verification routine.",
+      "no_issues_found": "No issues found",
+      "success_messages": {
+        "all_property_groups_have_properties": "All property groups have at least one property assigned.",
+        "all_properties_have_parent": "All properties are assigned to a class or property group.",
+        "all_models_have_groups": "All domain models have at least one group assigned.",
+        "all_groups_have_classes": "All groups have at least one class assigned.",
+        "all_classes_have_properties": "All classes have at least one property or property group assigned.",
+        "all_measures_have_properties": "All measures are assigned to at least one property.",
+        "all_units_have_measures": "All units are assigned to a measure.",
+        "all_values_have_measures": "All values are assigned to a measure.",
+        "all_ids_unique": "All IDs are unique - no duplicates found.",
+        "all_names_unique_per_type": "All names are unique within their type.",
+        "all_names_unique_globally": "All names are unique throughout the entire dataset.",
+        "all_have_description": "All elements have a description.",
+        "all_have_english_description": "All elements have English descriptions.",
+        "all_have_english_translation": "All elements have English name translations."
+      }
     },
     "edit": {
       "group": "Edit group",
@@ -395,7 +413,36 @@
     "tags_added_with_existing": "Added tag to {added} entries. {existing} entries already had this tag.",
     "tags_added_count": "Added tag to {count} entries.",
     "no_tags_to_add": "No tags needed to be added.",
-    "tags_adding_failed": "Failed to add tags."
+    "tags_adding_failed": "Failed to add tags.",
+    "loading_hierarchy_data": "Loading hierarchy data...",
+    "show_only_documents_tooltip": "Shows only the external documents column",
+    "show_only_models_tooltip": "Shows only the domain models column",
+    "show_only_groups_tooltip": "Shows only the groups column",
+    "show_only_classes_tooltip": "Shows only the classes column",
+    "show_only_properties_tooltip": "Shows only the properties column",
+    "show_only_property_groups_tooltip": "Shows only the property groups column",
+    "show_all_columns_tooltip": "Shows all columns again",
+    "refresh": "Refresh",
+    "refresh_data_tooltip": "Manually reload data",
+    "refreshing_data": "Refreshing data...",
+    "data_refreshed": "Data refreshed successfully.",
+    "refresh_failed": "Refresh failed.",
+    "error_fetching_latest_tags": "Error fetching latest tags.",
+    "tags_adding_failed_count": "Failed to add {count} tags.",
+    "search_placeholder": "Search in table...",
+    "total_entries": "total entries",
+    "selected": "selected",
+    "export_csv": "CSV Export",
+    "export_csv_tooltip": "Download table data as CSV file",
+    "export_success": "CSV export downloaded successfully",
+    "table_density": "Table density",
+    "density_large": "Large",
+    "density_medium": "Medium",
+    "density_small": "Small",
+    "rows_per_page": "Rows per page:",
+    "of": "of",
+    "more_than": "more than",
+    "multiselect_help": "Multi-select: Ctrl + Click"
   },
   "error":{
     "error": "An error occurred..."
@@ -517,5 +564,101 @@
     "delete_button": "Delete",
     "reset_button": "Reset",
     "description": "The tolerance of a value can be specified in absolute and percentage terms."
+  },
+  "ids_export": {
+    "tag_filter": {
+      "classes": "Tag filter for classes:",
+      "properties": "Tag filter for properties:"
+    },
+    "actions": {
+      "add_all_with_tag": "Add all with tag \"{tag}\"",
+      "add_all": "All",
+      "select_all": "Select all"
+    },
+    "success_messages": {
+      "auto_save_found": "Auto-saved data found. You can restore it via 'Save & Load'.",
+      "property_set_created": "IFC Propertyset \"{name}\" was successfully created and is immediately available.",
+      "specification_loaded": "Specification was successfully loaded.",
+      "ids_generated": "IDS file was successfully generated and can now be downloaded.",
+      "ids_downloaded": "IDS file was successfully downloaded.",
+      "ids_data_loaded": "IDS data was successfully loaded."
+    },
+    "error_messages": {
+      "login_required": "Please log in to create an IDS file."
+    },
+    "notifications": {
+      "classes_with_tag_added": "{count} classes with tag '{tag}' were added.",
+      "no_classes_with_tag": "No classes with tag '{tag}' found.",
+      "properties_with_tag_added": "{count} properties with tag '{tag}' were added.",
+      "no_properties_with_tag": "No properties with tag '{tag}' found."
+    },
+    "labels": {
+      "local_created": "Locally created",
+      "classification_system_select": "Select classification system",
+      "select_model_from_datacat": "Select model from datacat",
+      "select_classes_optional": "Select classes (optional)",
+      "search_classes": "Search classes...",
+      "property_group_select": "Property Group (PropertySet)",
+      "select_property_group": "Select property group",
+      "loading_property_groups": "Loading property groups...",
+      "no_property_groups_found": "No property groups found",
+      "create_new_property_set": "Create new IFC Propertyset (Property Group)",
+      "uri_automatic": "URI (automatic)",
+      "select_properties": "Select properties",
+      "search_properties": "Search properties...",
+      "select_all_properties": "Select all",
+      "model_class_select": "Select model/reference document",
+      "class_select": "Select class",
+      "ifc_class_placeholder": "Please enter IFC class (e.g. IFCWALL)",
+      "search_values": "Search values..."
+    },
+    "buttons": {
+      "select_facet": "Please select facet",
+      "property": "Property",
+      "classification": "Classification",
+      "attribute": "Attribute", 
+      "select_all_properties": "Select all",
+      "select_all_values": "Select all"
+    },
+    "value_labels": {
+      "values_for": "Values for"
+    }
+  },
+  "create_property_set": {
+    "title": "Create new IFC Propertyset (Property Group)",
+    "labels": {
+      "property_set_name": "IFC Propertyset name",
+      "description_optional": "Description (optional)",
+      "assign_properties": "Assign properties",
+      "select_properties": "Select properties"
+    },
+    "placeholders": {
+      "property_set_example": "e.g. Geometric Properties",
+      "description_text": "Description of the IFC Propertyset...",
+      "search_and_select": "Search and select properties..."
+    },
+    "info": {
+      "selection_help": "Select from the existing properties in datacat those that should belong to this new IFC Propertyset. This Propertyset will only be used locally for IDS creation and will not be saved in the datacat property server."
+    },
+    "tag_filter": {
+      "properties": "Tag filter for properties:",
+      "all": "All"
+    },
+    "actions": {
+      "add_all_with_tag": "Add all with tag \"{tag}\"",
+      "cancel": "Cancel",
+      "create": "Create IFC Propertyset",
+      "creating": "Creating..."
+    },
+    "notifications": {
+      "properties_with_tag_added": "{count} properties with tag \"{tag}\" added",
+      "no_properties_with_tag": "No properties with tag \"{tag}\" found",
+      "name_required": "Please enter a name for the new IFC Propertyset.",
+      "created_successfully": "Propertyset \"{name}\" was successfully created locally.",
+      "creation_error": "Creation error: {error}"
+    },
+    "status": {
+      "properties_selected": "{count} propert{plural} selected"
+    }
   }
 }

@@ -1,5 +1,5 @@
 import {GraphiQL} from "graphiql";
-import "graphiql/graphiql.css";
+import "graphiql/style.css";
 import useGraphiQLFetcher from "./hooks/useGraphiQLFetcher";
 import { useEffect } from "react";
 
@@ -14,45 +14,27 @@ if (typeof window !== "undefined") {
     };
 }
 
-const graphiqlStyles = `
-.graphiql-wrapper {
-  height: 100vh;
-  width: 100%;
-}
-`;
-
 export default function GraphiQLEditor() {
     const graphiqlFetcher = useGraphiQLFetcher();
     
     useEffect(() => {
-        // Create style element
-        const styleEl = document.createElement('style');
-        styleEl.textContent = graphiqlStyles;
-        document.head.appendChild(styleEl);
-        
         // Force window resize to make GraphiQL adjust to its container
         const resizeEvent = window.setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
         }, 100);
         
-        // Cleanup when component unmounts
         return () => {
-            document.head.removeChild(styleEl);
             clearTimeout(resizeEvent);
         };
     }, []);
     
     return (
-        <div className="graphiql-wrapper">
+        <div style={{ height: '100vh', width: '100%' }}>
             <GraphiQL 
                 fetcher={graphiqlFetcher}
                 defaultEditorToolsVisibility={true}
                 isHeadersEditorEnabled={true}
                 shouldPersistHeaders={true}
-                dangerouslyAssumeSchemaIsValid={true}
-                defaultTabs={[{query: "", variables: "", headers: ""}]}
-                aria-label="GraphiQL IDE"
-                showPersistHeadersSettings={false}
             />
         </div>
     );

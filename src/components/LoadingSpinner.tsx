@@ -2,7 +2,9 @@ import React from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const LoadingContainer = styled(Box)<{ fullscreen?: boolean }>(({ theme, fullscreen }) => ({
+const LoadingContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'fullscreen',
+})<{ fullscreen?: boolean }>(({ theme, fullscreen }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",

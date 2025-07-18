@@ -4,6 +4,24 @@ import App from './App';
 import 'typeface-roboto';
 import './index.css';
 
+// Suppress extension-related errors in development
+if (process.env.NODE_ENV === 'development') {
+  // Filter out known browser extension errors
+  const originalError = console.error;
+  console.error = (...args) => {
+    const message = args[0];
+    if (typeof message === 'string' && (
+      message.includes('message channel closed') ||
+      message.includes('Extension context invalidated') ||
+      message.includes('Could not establish connection')
+    )) {
+      // Suppress browser extension errors
+      return;
+    }
+    originalError.apply(console, args);
+  };
+}
+
 // Simplified service worker registration
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {

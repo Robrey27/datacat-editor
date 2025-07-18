@@ -43,7 +43,8 @@ interface SaveLoadDialogProps {
   currentIDSTitle: string;
   currentSpecRows: any[];
   currentSpec?: any;
-  onLoadIDS: (idsTitle: string, specRows: any[]) => void;
+  currentLocalPropertySets?: Map<string, any[]>; // Neue Eigenschaft
+  onLoadIDS: (idsTitle: string, specRows: any[], localPropertySets?: Record<string, any[]>) => void;
   onLoadSpec: (spec: any) => void;
   mode: 'ids' | 'specification';
 }
@@ -54,6 +55,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
   currentIDSTitle,
   currentSpecRows,
   currentSpec,
+  currentLocalPropertySets,
   onLoadIDS,
   onLoadSpec,
   mode: initialMode
@@ -86,7 +88,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
 
   const handleSaveIDS = () => {
     const name = saveName.trim() || currentIDSTitle || 'Unbenannte IDS';
-    saveIDSData(name, currentIDSTitle, currentSpecRows);
+    saveIDSData(name, currentIDSTitle, currentSpecRows, currentLocalPropertySets);
     setSaveName('');
     loadSavedData();
   };
@@ -100,7 +102,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
   };
 
   const handleLoadIDS = (item: SavedIDSData) => {
-    onLoadIDS(item.data.idsTitle, item.data.specRows);
+    onLoadIDS(item.data.idsTitle, item.data.specRows, item.data.localPropertySets);
     onClose();
   };
 
@@ -121,7 +123,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
 
   const handleRestoreAutoSave = () => {
     if (autoSaveData) {
-      onLoadIDS(autoSaveData.data.idsTitle, autoSaveData.data.specRows);
+      onLoadIDS(autoSaveData.data.idsTitle, autoSaveData.data.specRows, autoSaveData.data.localPropertySets);
       clearAutoSavedData();
       setAutoSaveData(null);
       onClose();
@@ -223,7 +225,11 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
                   <ListItem key={item.id} divider>
                     <ListItemText
                       primary={item.name}
-                      secondary={`${formatTimestamp(item.timestamp)} • ${item.data.specRows.length} Spezifikationen`}
+                      secondary={`${formatTimestamp(item.timestamp)} • ${item.data.specRows.length} Spezifikationen${
+                        item.data.localPropertySets && Object.keys(item.data.localPropertySets).length > 0
+                          ? ` • ${Object.keys(item.data.localPropertySets).length} lokale Merkmalsgruppen`
+                          : ''
+                      }`}
                     />
                     <ListItemSecondaryAction>
                       <Button

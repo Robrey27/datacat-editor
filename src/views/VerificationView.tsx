@@ -370,6 +370,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindPropGroupWithoutPropTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findPropGroupWithoutProp.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_property_groups_have_properties">Alle Merkmalsgruppen haben mindestens ein Merkmal zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindPropGroupWithoutProp
         leaves={data!.findPropGroupWithoutProp.nodes}
@@ -383,6 +398,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindPropWithoutSubjectOrPropGroupTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findPropWithoutSubjectOrPropGroup.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_properties_have_parent">Alle Merkmale sind einer Klasse oder Merkmalsgruppe zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindPropWithoutSubjectOrPropGroup
         leaves={data!.findPropWithoutSubjectOrPropGroup.nodes}
@@ -396,6 +426,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindModelWithoutGroupTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findModelWithoutGroup.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_models_have_groups">Alle Fachmodelle haben mindestens eine Gruppe zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindModelWithoutGroup
         leaves={data!.findModelWithoutGroup.nodes}
@@ -409,6 +454,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindGroupWithoutSubjectTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findGroupWithoutSubject.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_groups_have_classes">Alle Gruppen haben mindestens eine Klasse zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindGroupWithoutSubject
         leaves={data!.findGroupWithoutSubject.nodes}
@@ -422,6 +482,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindSubjectWithoutPropTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findSubjectWithoutProp.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_classes_have_properties">Alle Klassen haben mindestens ein Merkmal oder eine Merkmalsgruppe zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindSubjectWithoutProp
         leaves={data!.findSubjectWithoutProp.nodes}
@@ -435,6 +510,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindMeasureWithoutPropTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMeasureWithoutProp.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_measures_have_properties">Alle Größen sind mindestens einem Merkmal zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMeasureWithoutProp
         leaves={data!.findMeasureWithoutProp.nodes}
@@ -448,6 +538,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindUnitWithoutMeasureTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findUnitWithoutMeasure.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_units_have_measures">Alle Einheiten sind einer Größe zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindUnitWithoutMeasure
         leaves={data!.findUnitWithoutMeasure.nodes}
@@ -461,6 +566,21 @@ export function VerificationView() {
     const { loading, error, data } = useFindValueWithoutMeasureTreeQuery({});
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findValueWithoutMeasure.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_values_have_measures">Alle Werte sind einer Größe zugeordnet.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindValueWithoutMeasure
         leaves={data!.findValueWithoutMeasure.nodes}
@@ -471,9 +591,32 @@ export function VerificationView() {
   }
 
   function ThisFindMissingEnglishName() {
-    const { loading, error, data } = useFindMissingEnglishNameTreeQuery({});
+    const { loading, error, data } = useFindMissingEnglishNameTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMissingEnglishName.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_have_english_translation">Alle Elemente haben englische Namensübersetzungen.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMissingEnglishName
         leaves={data!.findMissingEnglishName.nodes}
@@ -484,9 +627,32 @@ export function VerificationView() {
   }
 
   function ThisFindMultipleIDs() {
-    const { loading, error, data } = useFindMultipleIDsTreeQuery({});
+    const { loading, error, data } = useFindMultipleIDsTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMultipleIDs.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_ids_unique">Alle IDs sind eindeutig - keine Duplikate vorhanden.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMultipleIDs
         leaves={data!.findMultipleIDs.nodes}
@@ -497,9 +663,32 @@ export function VerificationView() {
   }
 
   function ThisFindMissingDescription() {
-    const { loading, error, data } = useFindMissingDescriptionTreeQuery({});
+    const { loading, error, data } = useFindMissingDescriptionTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMissingDescription.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_have_description">Alle Elemente haben eine Beschreibung.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMissingDescription
         leaves={data!.findMissingDescription.nodes}
@@ -510,9 +699,32 @@ export function VerificationView() {
   }
 
   function ThisFindMissingEnglishDescription() {
-    const { loading, error, data } = useFindMissingEnglishDescriptionTreeQuery({});
+    const { loading, error, data } = useFindMissingEnglishDescriptionTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMissingEnglishDescription.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_have_english_description">Alle Elemente haben englische Beschreibungen.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMissingEnglishDescription
         leaves={data!.findMissingEnglishDescription.nodes}
@@ -523,9 +735,32 @@ export function VerificationView() {
   }
 
   function ThisFindMultipleNames() {
-    const { loading, error, data } = useFindMultipleNamesTreeQuery({});
+    const { loading, error, data } = useFindMultipleNamesTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMultipleNames.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_names_unique_per_type">Alle Namen sind innerhalb ihres Typs eindeutig.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMultipleNames
         leaves={data!.findMultipleNames.nodes}
@@ -536,9 +771,32 @@ export function VerificationView() {
   }
 
   function ThisFindMultipleNamesAcrossClasses() {
-    const { loading, error, data } = useFindMultipleNamesAcrossClassesTreeQuery({});
+    const { loading, error, data } = useFindMultipleNamesAcrossClassesTreeQuery({
+        variables: { 
+            input: { 
+                nodeTypeFilter: {
+                    catalogEntryTypeIn: []
+                }
+            } 
+        }
+    });
     if (loading) return <LinearProgress />;
     if (error) return <p>Fehler beim Aufrufen der Prüfroutine.</p>;
+    
+    // Check if no results found
+    if (data && data.findMultipleNamesAcrossClasses.nodes.length === 0) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Typography variant="body1" color="success.main" sx={{ fontWeight: 'bold' }}>
+            ✓ <T keyName="verification.result.no_issues_found">Keine Probleme gefunden</T>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <T keyName="verification.result.success_messages.all_names_unique_globally">Alle Namen sind im gesamten Datenbestand eindeutig.</T>
+          </Typography>
+        </Box>
+      );
+    }
+    
     return (
       <FindMultipleNamesAcrossClasses
         leaves={data!.findMultipleNamesAcrossClasses.nodes}

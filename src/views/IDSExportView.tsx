@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import {
   Typography,
   Paper,
@@ -16,10 +16,11 @@ import {
   RadioGroup,
   FormControlLabel,
   IconButton,
+  Chip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { T } from "@tolgee/react";
-import { usePropertyTreeQuery, useFindItemQuery, useFindPropertyGroupsQuery, CatalogRecordType } from "../generated/types";
+import { T, useTranslate } from "@tolgee/react";
+import { usePropertyTreeQuery, useFindItemQuery, useFindPropertyGroupsQuery, CatalogRecordType, useFindTagsQuery } from "../generated/types";
 import { useQuery, gql } from "@apollo/client";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
@@ -33,6 +34,8 @@ import { validateWithXSDLibrary } from "../components/idsValidatorBrowser";
 import { useProfile } from "../providers/ProfileProvider";
 import { SaveLoadDialog } from "../components/SaveLoadDialog";
 import { autoSaveIDSData, getAutoSavedIDSData } from "../utils/idsStorage";
+import { CreatePropertySetDialog } from "../components/CreatePropertySetDialog";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const GROUP_TAG_ID = "5997da9b-a716-45ae-84a9-e2a7d186bcf9";
 const MODEL_TAG_ID = "6f96aaa7-e08f-49bb-ac63-93061d4c5db2";
@@ -74,8 +77,35 @@ const Container = styled(Paper)(({ theme }) => ({
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
 }));
 
+// Tag styling components (from GridViewView)
+const TagButtonContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  marginBottom: theme.spacing(1),
+  gap: theme.spacing(0.5),
+}));
+
+const TagChip = styled(Chip)(({ theme }) => ({
+  margin: theme.spacing(0.25),
+  fontSize: theme.typography.fontSize,
+  height: "32px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontWeight: "bold",
+}));
+
+const TagFilterSection = styled(Box)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  padding: theme.spacing(1),
+  backgroundColor: theme.palette.background.default,
+  borderRadius: theme.shape.borderRadius,
+  border: `1px solid ${theme.palette.divider}`,
+}));
+
 export const IDSExportView: React.FC = () => {
   const { profile } = useProfile();
+  const { t } = useTranslate();
 
   // Typen für alle Requirement-Varianten
   type PropertyRequirement = {
@@ -126,10 +156,18 @@ export const IDSExportView: React.FC = () => {
   const [saveLoadDialogOpen, setSaveLoadDialogOpen] = useState(false);
   const [saveLoadMode, setSaveLoadMode] = useState<'ids' | 'specification'>('ids');
   const [hasShownAutoSaveNotification, setHasShownAutoSaveNotification] = useState(false);
+  const [createPropertySetDialogOpen, setCreatePropertySetDialogOpen] = useState(false);
+  const [newlyCreatedPropertySets, setNewlyCreatedPropertySets] = useState<Map<string, any[]>>(new Map());
+  
+  // Tag filtering state
+  const [selectedTagForClasses, setSelectedTagForClasses] = useState<string | null>(null);
+  const [selectedTagForProperties, setSelectedTagForProperties] = useState<string | null>(null);
+  const [allTags, setAllTags] = useState<string[]>([]);
+  
   const { enqueueSnackbar } = useSnackbar();
 
   // DataCat
-  const { data, loading, error } = usePropertyTreeQuery({
+  const { data, loading, error, refetch: refetchPropertyTree } = usePropertyTreeQuery({
     fetchPolicy: "cache-first",
     nextFetchPolicy: "cache-first",
   });
@@ -139,6 +177,7 @@ export const IDSExportView: React.FC = () => {
     data: allItemsData,
     loading: allItemsLoading,
     error: allItemsError,
+    refetch: refetchAllItems,
   } = useFindItemQuery({
     variables: {
       input: {
@@ -155,6 +194,7 @@ export const IDSExportView: React.FC = () => {
     data: directQueryData,
     loading: directQueryLoading,
     error: directQueryError,
+    refetch: refetchDirectQuery,
   } = useQuery(FIND_NESTS_QUERY, {
     variables: {
       input: {
@@ -166,8 +206,14 @@ export const IDSExportView: React.FC = () => {
     errorPolicy: "all",
   });
 
-  // Merkmalsgruppen extrahieren
-  const propertyGroupOptions = useMemo(() => {
+  // Tags Query für Filterung
+  const { data: tagsData, refetch: refetchTags } = useFindTagsQuery({
+    variables: { pageSize: 100 },
+    fetchPolicy: "cache-first",
+  });
+
+  // Merkmalsgruppen extrahieren - Backend PropertySets
+  const backendPropertyGroupOptions = useMemo(() => {
     // Verwende die direkte Query für den Test
     const dataToUse = directQueryData || allItemsData;
     const errorToUse = directQueryError || allItemsError;
@@ -192,8 +238,22 @@ export const IDSExportView: React.FC = () => {
       id: n.id,
       name: n.name ?? "",
       tags: n.tags,
+      isLocal: false,
     })).sort((a: any, b: any) => (a.name || "").localeCompare(b.name || ""));
   }, [allItemsData, allItemsLoading, allItemsError, directQueryData, directQueryLoading, directQueryError]);
+
+  // Kombinierte PropertyGroup-Optionen (Backend + lokale)
+  const propertyGroupOptions = useMemo(() => {
+    const localPropertySets = Array.from(newlyCreatedPropertySets.keys()).map(name => ({
+      id: `local-${name}`,
+      name,
+      tags: [{ name: "Lokal erstellt" }], // Keep as is - this is for backend compatibility
+      isLocal: true,
+    }));
+    
+    return [...backendPropertyGroupOptions, ...localPropertySets]
+      .sort((a: any, b: any) => (a.name || "").localeCompare(b.name || ""));
+  }, [backendPropertyGroupOptions, newlyCreatedPropertySets]);
 
   // Fachmodelle extrahieren - Performance optimiert
   const modelOptions = useMemo(() => {
@@ -291,19 +351,21 @@ export const IDSExportView: React.FC = () => {
     const timeoutId = setTimeout(() => {
       // Only auto-save if there's meaningful content
       if (specRows.length > 0 || idsTitle.trim()) {
-        autoSaveIDSData(idsTitle, specRows);
+        autoSaveIDSData(idsTitle, specRows, newlyCreatedPropertySets);
       }
     }, 3000); // Auto-save after 3 seconds of inactivity
 
     return () => clearTimeout(timeoutId);
-  }, [idsTitle, specRows]);
+  }, [idsTitle, specRows, newlyCreatedPropertySets]);
 
   // Check for auto-saved data on component mount
   useEffect(() => {
     if (!hasShownAutoSaveNotification) {
       const autoSaved = getAutoSavedIDSData();
       if (autoSaved && (autoSaved.data.specRows.length > 0 || autoSaved.data.idsTitle.trim())) {
-        enqueueSnackbar("Automatisch gespeicherte Daten gefunden. Über 'Speichern & Laden' können Sie diese wiederherstellen.", { 
+        enqueueSnackbar(
+          <T keyName="ids_export.success_messages.auto_save_found" />, 
+          { 
           variant: "info",
           autoHideDuration: 8000, // Wird nach 8 Sekunden automatisch ausgeblendet
           action: (key) => (
@@ -351,6 +413,14 @@ export const IDSExportView: React.FC = () => {
         return propertyMap.get(propertySetName) || [];
       }
       
+      // Prüfe zuerst, ob es sich um eine neu erstellte PropertySet handelt
+      if (newlyCreatedPropertySets.has(propertySetName)) {
+        const localProperties = newlyCreatedPropertySets.get(propertySetName) || [];
+        propertyMap.set(propertySetName, localProperties);
+        return localProperties;
+      }
+      
+      // Suche in der bestehenden Hierarchie
       const propertyGroup = propertyGroupOptions.find((g: any) => g.name === propertySetName);
       if (!propertyGroup || !data?.hierarchy?.nodes || !data?.hierarchy?.paths) {
         propertyMap.set(propertySetName, []);
@@ -372,7 +442,7 @@ export const IDSExportView: React.FC = () => {
       propertyMap.set(propertySetName, result);
       return result;
     };
-  }, [propertyGroupOptions, data?.hierarchy?.nodes, data?.hierarchy?.paths]);
+  }, [propertyGroupOptions, data?.hierarchy?.nodes, data?.hierarchy?.paths, newlyCreatedPropertySets]);
 
   const getValuesForProperty = useMemo(() => {
     // Erstelle eine Map für bessere Performance
@@ -585,13 +655,122 @@ export const IDSExportView: React.FC = () => {
     }, [allClassOptions]
   );
 
+  // Tag filtering functionality
+  const EXCLUDED_TAGS = [
+    "Fachmodell", "Gruppe", "Klasse", "Merkmal", "Masseinheit", "Grösse",
+    "Wert", "Maßeinheit", "Größe", "Datenvorlage", "Merkmalsgruppe", "Referenzdokument"
+  ] as const;
+
+  const filterTags = useCallback((tags: string[]) =>
+    tags.filter((tag) => !EXCLUDED_TAGS.includes(tag as any)), []
+  );
+
+  // Tag handling for available tags
+  useEffect(() => {
+    if (tagsData) {
+      const availableTags = tagsData.findTags.nodes.map((tag) => tag.name);
+      setAllTags(filterTags(availableTags).sort());
+    }
+  }, [tagsData, filterTags]);
+
+  // Tag filtering handlers
+  const handleTagFilterForClasses = useCallback((tag: string | null) => {
+    setSelectedTagForClasses(tag);
+  }, []);
+
+  const handleTagFilterForProperties = useCallback((tag: string | null) => {
+    setSelectedTagForProperties(tag);
+  }, []);
+
+  // Helper function to add classes by tag
+  const addClassesByTag = useCallback((modelId: string, tagName: string, requirementIndex: number) => {
+    if (!modelId || !tagName) return;
+    
+    const classesForModel = getClassesForModel(modelId);
+    const taggedClasses = classesForModel.filter((classOption: any) => {
+      // Get node from hierarchy to check tags
+      const node = data?.hierarchy?.nodes?.find((n: any) => n.id === classOption.id);
+      if (!node?.tags) return false;
+      
+      return node.tags.some((tag: any) => tag.name === tagName || tag.id === tagName);
+    });
+
+    if (taggedClasses.length > 0) {
+      handleRequirementChange(requirementIndex, {
+        selectedClasses: taggedClasses.map((c: any) => c.id)
+      });
+      enqueueSnackbar(
+        <T keyName="ids_export.notifications.classes_with_tag_added" params={{ count: taggedClasses.length, tag: tagName }} />, 
+        { variant: "success" }
+      );
+    } else {
+      enqueueSnackbar(
+        <T keyName="ids_export.notifications.no_classes_with_tag" params={{ tag: tagName }} />, 
+        { variant: "info" }
+      );
+    }
+  }, [data?.hierarchy?.nodes, getClassesForModel, handleRequirementChange, enqueueSnackbar]);
+
+  // Helper function to add properties by tag
+  const addPropertiesByTag = useCallback((propertySetName: string, tagName: string, requirementIndex: number) => {
+    if (!propertySetName || !tagName) return;
+    
+    const properties = getPropertiesForPropertySet(propertySetName);
+    const taggedProperties = properties.filter((property: any) => {
+      const node = data?.hierarchy?.nodes?.find((n: any) => n.id === property.id);
+      if (!node?.tags) return false;
+      
+      return node.tags.some((tag: any) => tag.name === tagName || tag.id === tagName);
+    });
+
+    if (taggedProperties.length > 0) {
+      setRequirements((reqs: any) =>
+        reqs.map((r: any, i: number) => {
+          if (i !== requirementIndex || r.type !== "property") return r;
+          
+          const newBaseNames = [...(r.baseNames || [])];
+          taggedProperties.forEach((prop: any) => {
+            if (!newBaseNames.includes(prop.id)) {
+              newBaseNames.push(prop.id);
+            }
+          });
+          
+          return {
+            ...r,
+            baseNames: newBaseNames,
+          };
+        })
+      );
+      enqueueSnackbar(
+        <T keyName="ids_export.notifications.properties_with_tag_added" params={{ count: taggedProperties.length, tag: tagName }} />, 
+        { variant: "success" }
+      );
+    } else {
+      enqueueSnackbar(
+        <T keyName="ids_export.notifications.no_properties_with_tag" params={{ tag: tagName }} />, 
+        { variant: "info" }
+      );
+    }
+  }, [data?.hierarchy?.nodes, getPropertiesForPropertySet, enqueueSnackbar]);
+
   // Save/Load functionality
-  const handleLoadIDS = (loadedIDSTitle: string, loadedSpecRows: any[]) => {
+  const handleLoadIDS = (loadedIDSTitle: string, loadedSpecRows: any[], loadedLocalPropertySets?: Record<string, any[]>) => {
     setIdsTitle(loadedIDSTitle);
     setSpecRows(loadedSpecRows);
+    
+    // Lade lokale PropertySets wenn vorhanden
+    if (loadedLocalPropertySets) {
+      setNewlyCreatedPropertySets(new Map(Object.entries(loadedLocalPropertySets)));
+    } else {
+      setNewlyCreatedPropertySets(new Map());
+    }
+    
     setIsIdsGenerated(false);
     setHasShownAutoSaveNotification(true); // Reset notification flag when data is loaded
-    enqueueSnackbar("IDS Daten wurden erfolgreich geladen.", { variant: "success" });
+    enqueueSnackbar(
+      <T keyName="ids_export.success_messages.ids_data_loaded" />, 
+      { variant: "success" }
+    );
   };
 
   const handleLoadSpecification = (loadedSpec: any) => {
@@ -608,7 +787,10 @@ export const IDSExportView: React.FC = () => {
     
     // Open add mode to show the loaded specification
     setAddRowMode(true);
-    enqueueSnackbar("Spezifikation wurde erfolgreich geladen.", { variant: "success" });
+    enqueueSnackbar(
+      <T keyName="ids_export.success_messages.specification_loaded" />, 
+      { variant: "success" }
+    );
   };
 
   const getCurrentSpecificationData = () => {
@@ -623,6 +805,28 @@ export const IDSExportView: React.FC = () => {
     };
   };
 
+  // Callback für neu erstellte PropertySets
+  const handlePropertySetCreated = async (propertySetName: string, propertySetId: string, selectedProperties: any[]) => {
+    // Speichere die Properties für die neue PropertySet lokal
+    setNewlyCreatedPropertySets(prev => new Map(prev.set(propertySetName, selectedProperties)));
+    
+    enqueueSnackbar(
+      <T keyName="ids_export.success_messages.property_set_created" params={{ name: propertySetName }} />, 
+      { 
+      variant: "success",
+      autoHideDuration: 4000
+    });
+    
+    // Optional: Direkt die neue PropertySet im aktuellen Requirement setzen
+    setRequirements(prevReqs => 
+      prevReqs.map(req => 
+        req.type === "property" && !req.propertySet 
+          ? { ...req, propertySet: propertySetName, uri: getPropertySetUri(propertySetName) }
+          : req
+      )
+    );
+  };
+
   // IDS Datei erzeugen
   const handleGenerateIds = () => {
     if (specRows.length === 0) {
@@ -630,13 +834,19 @@ export const IDSExportView: React.FC = () => {
       return;
     }
     setIsIdsGenerated(true);
-    enqueueSnackbar("IDS Datei wurde erfolgreich erzeugt und kann jetzt heruntergeladen werden.", { variant: "success" });
+    enqueueSnackbar(
+      <T keyName="ids_export.success_messages.ids_generated" />, 
+      { variant: "success" }
+    );
   };
 
   // IDS Datei herunterladen
   const handleDownloadIds = async () => {
     if (!profile?.email) {
-      enqueueSnackbar("Bitte melden Sie sich an, um eine IDS-Datei zu erstellen.", { variant: "warning" });
+      enqueueSnackbar(
+        <T keyName="ids_export.error_messages.login_required" />, 
+        { variant: "warning" }
+      );
       return;
     }
     if (!isIdsGenerated) {
@@ -686,7 +896,10 @@ export const IDSExportView: React.FC = () => {
       link.click();
       link.remove();
 
-      enqueueSnackbar("IDS Datei wurde erfolgreich heruntergeladen.", { variant: "success" });
+      enqueueSnackbar(
+        <T keyName="ids_export.success_messages.ids_downloaded" />, 
+        { variant: "success" }
+      );
     } catch (e: any) {
       enqueueSnackbar("Fehler beim Validieren oder Herunterladen: " + (e?.message || e), {
         variant: "error",
@@ -972,7 +1185,7 @@ export const IDSExportView: React.FC = () => {
               <Box sx={{ mt: 2, mb: 2, position: "relative" }}>
                 <TextField
                   label="IFC Klasse"
-                  placeholder="Bitte IFC Klasse eingeben (z.B. IFCWALL)"
+                  placeholder={t("ids_export.labels.ifc_class_placeholder")}
                   value={ifcClass}
                   onChange={(e) => setIfcClass(e.target.value.toUpperCase())}
                   fullWidth
@@ -1052,24 +1265,24 @@ export const IDSExportView: React.FC = () => {
                 >
                   <FormControl sx={{ minWidth: 160 }}>
                     <InputLabel id={`req-type-label-${idx}`}>
-                      Bitte Facette wählen
+                      <T keyName="ids_export.buttons.select_facet" />
                     </InputLabel>
                     <Select
                       size="small"
                       labelId={`req-type-label-${idx}`}
                       value={req.type || ""}
-                      label="Bitte Facette wählen"
+                      label={<T keyName="ids_export.buttons.select_facet" />}
                       onChange={(e) => {
                         handleRequirementTypeChange(idx, e.target.value as any);
                       }}
                     >
                       {applicabilityType === "classification" ? [
                         // Bei Classification Applicability: Nur Attribute
-                        <MenuItem key="attribute" value="attribute">Attribute</MenuItem>
+                        <MenuItem key="attribute" value="attribute"><T keyName="ids_export.buttons.attribute" /></MenuItem>
                       ] : [
                         // Bei Type Applicability: Property und Classification
-                        <MenuItem key="property" value="property">Property</MenuItem>,
-                        <MenuItem key="classification" value="classification">Classification</MenuItem>
+                        <MenuItem key="property" value="property"><T keyName="ids_export.buttons.property" /></MenuItem>,
+                        <MenuItem key="classification" value="classification"><T keyName="ids_export.buttons.classification" /></MenuItem>
                       ]}
                     </Select>
                   </FormControl>
@@ -1079,18 +1292,18 @@ export const IDSExportView: React.FC = () => {
                       {/* Modell/Fachmodell Auswahl */}
                       <FormControl fullWidth>
                         <InputLabel id={`model-dropdown-label-req-${idx}`}>
-                          Klassifikationssystem auswählen
+                          <T keyName="ids_export.labels.classification_system_select" />
                         </InputLabel>
                         <Select
                           labelId={`model-dropdown-label-req-${idx}`}
                           value={req.value}
-                          label="Klassifikationssystem auswählen"
+                          label={<T keyName="ids_export.labels.classification_system_select" />}
                           onChange={(e) =>
                             handleRequirementChange(idx, e.target.value)
                           }
                         >
                           <MenuItem value="">
-                            <em>Fachmodell aus datacat auswählen</em>
+                            <em><T keyName="ids_export.labels.select_model_from_datacat" /></em>
                           </MenuItem>
                           {modelOptions.map((opt: any) => (
                             <MenuItem key={opt.id} value={opt.id}>
@@ -1103,6 +1316,43 @@ export const IDSExportView: React.FC = () => {
                       {/* Optionale Klassenauswahl */}
                       {req.value && (
                         <Box sx={{ position: 'relative' }}>
+                          {/* Tag Filter für Klassen */}
+                          <TagFilterSection>
+                            <Typography variant="body2" sx={{ mb: 1, fontWeight: 'bold' }}>
+                              <T keyName="ids_export.tag_filter.classes" />
+                            </Typography>
+                            <TagButtonContainer>
+                              {allTags.map((tag) => (
+                                <TagChip
+                                  key={tag}
+                                  label={tag}
+                                  clickable
+                                  size="small"
+                                  color={selectedTagForClasses === tag ? "secondary" : "default"}
+                                  onClick={() => handleTagFilterForClasses(tag)}
+                                />
+                              ))}
+                              <TagChip
+                                label={<T keyName="ids_export.actions.add_all" />}
+                                clickable
+                                size="small"
+                                color={selectedTagForClasses === null ? "secondary" : "default"}
+                                onClick={() => handleTagFilterForClasses(null)}
+                              />
+                              {selectedTagForClasses && (
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  startIcon={<AddIcon />}
+                                  onClick={() => addClassesByTag(req.value, selectedTagForClasses, idx)}
+                                  sx={{ ml: 1 }}
+                                >
+                                  <T keyName="ids_export.actions.add_all_with_tag" params={{ tag: selectedTagForClasses }} />
+                                </Button>
+                              )}
+                            </TagButtonContainer>
+                          </TagFilterSection>
+                          
                           <Autocomplete
                             multiple
                             id={`class-autocomplete-req-${idx}`}
@@ -1119,8 +1369,8 @@ export const IDSExportView: React.FC = () => {
                             renderInput={(params) => (
                               <TextField
                                 {...params}
-                                label="Klassen auswählen (optional)"
-                                placeholder="Klassen suchen..."
+                                label={<T keyName="ids_export.labels.select_classes_optional" />}
+                                placeholder={t("ids_export.labels.search_classes")}
                               />
                             )}
                             renderTags={(value, getTagProps) =>
@@ -1186,7 +1436,7 @@ export const IDSExportView: React.FC = () => {
                                 });
                               }}
                             >
-                              Alle auswählen ({getClassesForModel(req.value).length})
+                              <T keyName="ids_export.actions.select_all" /> ({getClassesForModel(req.value).length})
                             </Button>
                           )}
                         </Box>
@@ -1197,16 +1447,16 @@ export const IDSExportView: React.FC = () => {
                       <FormControl fullWidth>
                         <InputLabel id={`model-dropdown-label-attr-${idx}`}>
                           {applicabilityType === "classification" 
-                            ? "Fachmodell/Referenzdokument auswählen"
-                            : "Klasse auswählen"
+                            ? <T keyName="ids_export.labels.model_class_select" />
+                            : <T keyName="ids_export.labels.class_select" />
                           }
                         </InputLabel>
                         <Select
                           labelId={`model-dropdown-label-attr-${idx}`}
                           value={req.value || ""}
                           label={applicabilityType === "classification" 
-                            ? "Fachmodell/Referenzdokument auswählen"
-                            : "Klasse auswählen"
+                            ? <T keyName="ids_export.labels.model_class_select" />
+                            : <T keyName="ids_export.labels.class_select" />
                           }
                           onChange={(e) =>
                             handleRequirementChange(idx, e.target.value)
@@ -1215,8 +1465,8 @@ export const IDSExportView: React.FC = () => {
                           <MenuItem value="">
                             <em>
                               {applicabilityType === "classification" 
-                                ? "Fachmodell/Referenzdokument auswählen"
-                                : "Klasse auswählen"
+                                ? <T keyName="ids_export.labels.model_class_select" />
+                                : <T keyName="ids_export.labels.class_select" />
                               }
                             </em>
                           </MenuItem>
@@ -1238,53 +1488,70 @@ export const IDSExportView: React.FC = () => {
                   ) : req.type === "property" ? (
                     <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
                       {/* propertySet Auswahl */}
-                      <FormControl fullWidth sx={{ mb: 1 }}>
-                        <InputLabel id={`propertygroup-dropdown-label-${idx}`}>
-                          Merkmalsgruppe (PropertySet)
-                        </InputLabel>
-                        <Select
-                          labelId={`propertygroup-dropdown-label-${idx}`}
-                          value={req.propertySet || ""}
-                          label="Merkmalsgruppe (PropertySet)"
-                          onChange={(e) =>
-                            handleRequirementChange(idx, {
-                              ...req,
-                              propertySet: e.target.value,
-                              baseNames: [],
-                              valueMap: {},
-                            })
-                          }
-                          disabled={allItemsLoading}
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                        <FormControl fullWidth>
+                          <InputLabel id={`propertygroup-dropdown-label-${idx}`}>
+                            <T keyName="ids_export.labels.property_group_select" />
+                          </InputLabel>
+                          <Select
+                            labelId={`propertygroup-dropdown-label-${idx}`}
+                            value={req.propertySet || ""}
+                            label={<T keyName="ids_export.labels.property_group_select" />}
+                            onChange={(e) =>
+                              handleRequirementChange(idx, {
+                                ...req,
+                                propertySet: e.target.value,
+                                baseNames: [],
+                                valueMap: {},
+                              })
+                            }
+                            disabled={allItemsLoading}
+                          >
+                            <MenuItem value="">
+                              <em><T keyName="ids_export.labels.select_property_group" /></em>
+                            </MenuItem>
+                            {allItemsLoading && (
+                              <MenuItem disabled>
+                                <em><T keyName="ids_export.labels.loading_property_groups" /></em>
+                              </MenuItem>
+                            )}
+                            {propertyGroupOptions.length === 0 && !allItemsLoading && (
+                              <MenuItem disabled>
+                                <em><T keyName="ids_export.labels.no_property_groups_found" /></em>
+                              </MenuItem>
+                            )}
+                            {propertyGroupOptions.map((opt: any) => (
+                              <MenuItem key={opt.id} value={opt.name ?? ""}>
+                                {opt.name}
+                                <span style={{ color: "#888", fontSize: "0.8em", marginLeft: 8 }}>
+                                  {opt.isLocal 
+                                    ? <> [<T keyName="ids_export.labels.local_created" />]</>
+                                    : opt.tags && Array.isArray(opt.tags)
+                                    ? " [" + opt.tags.map((t: any) => t.name).join(", ") + "]"
+                                    : ""
+                                  }
+                                </span>
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        <Button
+                          variant="outlined"
+                          onClick={() => setCreatePropertySetDialogOpen(true)}
+                          sx={{ 
+                            minWidth: "auto", 
+                            height: "56px", // Match FormControl height
+                            px: 2 
+                          }}
+                          title={t("ids_export.labels.create_new_property_set")}
                         >
-                          <MenuItem value="">
-                            <em>Merkmalsgruppe auswählen</em>
-                          </MenuItem>
-                          {allItemsLoading && (
-                            <MenuItem disabled>
-                              <em>Lade Merkmalsgruppen...</em>
-                            </MenuItem>
-                          )}
-                          {propertyGroupOptions.length === 0 && !allItemsLoading && (
-                            <MenuItem disabled>
-                              <em>Keine Merkmalsgruppen gefunden</em>
-                            </MenuItem>
-                          )}
-                          {propertyGroupOptions.map((opt: any) => (
-                            <MenuItem key={opt.id} value={opt.name ?? ""}>
-                              {opt.name} {/* Debug: Zeige auch die Tags */}
-                              <span style={{ color: "#888", fontSize: "0.8em" }}>
-                                {opt.tags && Array.isArray(opt.tags)
-                                  ? " [" + opt.tags.map((t: any) => t.name).join(", ") + "]"
-                                  : ""}
-                              </span>
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                          <AddIcon />
+                        </Button>
+                      </Box>
                       {/* URI automatisch anzeigen */}
                       {req.propertySet && (
                         <TextField
-                          label="URI (automatisch)"
+                          label={<T keyName="ids_export.labels.uri_automatic" />}
                           value={getPropertySetUri(req.propertySet)}
                           fullWidth
                           sx={{ mb: 1 }}
@@ -1294,6 +1561,43 @@ export const IDSExportView: React.FC = () => {
                       {/* baseNames Auswahl (Mehrfachauswahl Merkmale) */}
                       {req.propertySet && (
                         <Box sx={{ position: 'relative', mb: 1 }}>
+                          {/* Tag Filter für Merkmale */}
+                          <TagFilterSection>
+                            <Typography variant="body2" sx={{ mb: 1, fontWeight: 'bold' }}>
+                              <T keyName="ids_export.tag_filter.properties" />
+                            </Typography>
+                            <TagButtonContainer>
+                              {allTags.map((tag) => (
+                                <TagChip
+                                  key={tag}
+                                  label={tag}
+                                  clickable
+                                  size="small"
+                                  color={selectedTagForProperties === tag ? "secondary" : "default"}
+                                  onClick={() => handleTagFilterForProperties(tag)}
+                                />
+                              ))}
+                              <TagChip
+                                label={<T keyName="ids_export.actions.add_all" />}
+                                clickable
+                                size="small"
+                                color={selectedTagForProperties === null ? "secondary" : "default"}
+                                onClick={() => handleTagFilterForProperties(null)}
+                              />
+                              {selectedTagForProperties && (
+                                <Button
+                                  size="small"
+                                  variant="outlined"
+                                  startIcon={<AddIcon />}
+                                  onClick={() => addPropertiesByTag(req.propertySet, selectedTagForProperties, idx)}
+                                  sx={{ ml: 1 }}
+                                >
+                                  <T keyName="ids_export.actions.add_all_with_tag" params={{ tag: selectedTagForProperties }} />
+                                </Button>
+                              )}
+                            </TagButtonContainer>
+                          </TagFilterSection>
+                          
                           <Autocomplete
                             multiple
                             id={`property-basenames-autocomplete-${idx}`}
@@ -1311,8 +1615,8 @@ export const IDSExportView: React.FC = () => {
                             renderInput={(params) => (
                               <TextField
                                 {...params}
-                                label="Merkmale auswählen"
-                                placeholder="Merkmale suchen..."
+                                label={<T keyName="ids_export.labels.select_properties" />}
+                                placeholder={t("ids_export.labels.search_properties")}
                               />
                             )}
                             renderTags={(value, getTagProps) =>
@@ -1379,7 +1683,7 @@ export const IDSExportView: React.FC = () => {
                                 });
                               }}
                             >
-                              Alle auswählen ({getPropertiesForPropertySet(req.propertySet ?? "").length})
+                              <T keyName="ids_export.buttons.select_all_properties" /> ({getPropertiesForPropertySet(req.propertySet ?? "").length})
                             </Button>
                           )}
                         </Box>
@@ -1412,8 +1716,8 @@ export const IDSExportView: React.FC = () => {
                                 renderInput={(params) => (
                                   <TextField
                                     {...params}
-                                    label={`Werte für ${propertyName}`}
-                                    placeholder="Werte suchen..."
+                                    label={<T keyName="ids_export.value_labels.values_for" /> + ` ${propertyName}`}
+                                    placeholder={t("ids_export.labels.search_values")}
                                   />
                                 )}
                                 renderTags={(value, getTagProps) =>
@@ -1483,7 +1787,7 @@ export const IDSExportView: React.FC = () => {
                                     });
                                   }}
                                 >
-                                  Alle auswählen ({availableValues.length})
+                                  <T keyName="ids_export.buttons.select_all_values" /> ({availableValues.length})
                                 </Button>
                               )}
                             </Box>
@@ -1666,9 +1970,18 @@ export const IDSExportView: React.FC = () => {
         currentIDSTitle={idsTitle}
         currentSpecRows={specRows}
         currentSpec={getCurrentSpecificationData()}
+        currentLocalPropertySets={newlyCreatedPropertySets}
         onLoadIDS={handleLoadIDS}
         onLoadSpec={handleLoadSpecification}
         mode={saveLoadMode}
+      />
+
+      {/* Create PropertySet Dialog */}
+      <CreatePropertySetDialog
+        open={createPropertySetDialogOpen}
+        onClose={() => setCreatePropertySetDialogOpen(false)}
+        onPropertySetCreated={handlePropertySetCreated}
+        availableTags={allTags}
       />
     </Container>
   );

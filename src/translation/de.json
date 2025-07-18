@@ -25,7 +25,25 @@
     },
     "result": {
       "select_criteria": "Prüfkriterium und Kategorie auswählen.",
-      "select_entry": "Prüfergebnis in der Listenansicht auswählen, um Eigenschaften anzuzeigen."
+      "select_entry": "Prüfergebnis in der Listenansicht auswählen, um Eigenschaften anzuzeigen.",
+      "error_loading": "Fehler beim Aufrufen der Prüfroutine.",
+      "no_issues_found": "Keine Probleme gefunden",
+      "success_messages": {
+        "all_property_groups_have_properties": "Alle Merkmalsgruppen haben mindestens ein Merkmal zugeordnet.",
+        "all_properties_have_parent": "Alle Merkmale sind einer Klasse oder Merkmalsgruppe zugeordnet.",
+        "all_models_have_groups": "Alle Fachmodelle haben mindestens eine Gruppe zugeordnet.",
+        "all_groups_have_classes": "Alle Gruppen haben mindestens eine Klasse zugeordnet.",
+        "all_classes_have_properties": "Alle Klassen haben mindestens ein Merkmal oder eine Merkmalsgruppe zugeordnet.",
+        "all_measures_have_properties": "Alle Größen sind mindestens einem Merkmal zugeordnet.",
+        "all_units_have_measures": "Alle Einheiten sind einer Größe zugeordnet.",
+        "all_values_have_measures": "Alle Werte sind einer Größe zugeordnet.",
+        "all_ids_unique": "Alle IDs sind eindeutig - keine Duplikate vorhanden.",
+        "all_names_unique_per_type": "Alle Namen sind innerhalb ihres Typs eindeutig.",
+        "all_names_unique_globally": "Alle Namen sind im gesamten Datenbestand eindeutig.",
+        "all_have_description": "Alle Elemente haben eine Beschreibung.",
+        "all_have_english_description": "Alle Elemente haben englische Beschreibungen.",
+        "all_have_english_translation": "Alle Elemente haben englische Namensübersetzungen."
+      }
     },
     "edit": {
       "group": "Gruppe bearbeiten",
@@ -336,7 +354,36 @@
     "tags_added_with_existing": "Tag zu {added} Einträgen hinzugefügt. {existing} Einträge hatten dieses Tag bereits.",
     "tags_added_count": "Tag zu {count} Einträgen hinzugefügt.",
     "no_tags_to_add": "Keine Tags zum Hinzufügen benötigt.",
-    "tags_adding_failed": "Hinzufügen von Tags fehlgeschlagen."
+    "tags_adding_failed": "Hinzufügen von Tags fehlgeschlagen.",
+    "loading_hierarchy_data": "Hierarchiedaten werden geladen...",
+    "show_only_documents_tooltip": "Zeigt nur die Spalte für Referenzdokumente an",
+    "show_only_models_tooltip": "Zeigt nur die Spalte für Fachmodelle an",
+    "show_only_groups_tooltip": "Zeigt nur die Spalte für Gruppen an",
+    "show_only_classes_tooltip": "Zeigt nur die Spalte für Klassen an",
+    "show_only_properties_tooltip": "Zeigt nur die Spalte für Merkmale an",
+    "show_only_property_groups_tooltip": "Zeigt nur die Spalte für Merkmalsgruppen an",
+    "show_all_columns_tooltip": "Zeigt alle Spalten wieder an",
+    "refresh": "Aktualisieren",
+    "refresh_data_tooltip": "Daten manuell neu laden",
+    "refreshing_data": "Daten werden aktualisiert...",
+    "data_refreshed": "Daten erfolgreich aktualisiert.",
+    "refresh_failed": "Aktualisierung fehlgeschlagen.",
+    "error_fetching_latest_tags": "Fehler beim Abrufen der neuesten Tags.",
+    "tags_adding_failed_count": "Fehler beim Hinzufügen von {count} Tags.",
+    "search_placeholder": "In Tabelle suchen...",
+    "total_entries": "Einträge gesamt",
+    "selected": "ausgewählt",
+    "export_csv": "CSV Export",
+    "export_csv_tooltip": "Tabellendaten als CSV-Datei herunterladen",
+    "export_success": "CSV-Export erfolgreich heruntergeladen",
+    "table_density": "Tabellendichte",
+    "density_large": "Groß",
+    "density_medium": "Mittel",
+    "density_small": "Klein",
+    "rows_per_page": "Zeilen pro Seite:",
+    "of": "von",
+    "more_than": "mehr als",
+    "multiselect_help": "Mehrfachauswahl: Strg + Klick"
   },
   "error":{
     "error": "An error occurred..."
@@ -518,5 +565,101 @@
     "delete_button": "Löschen",
     "reset_button": "Zurücksetzen",
     "description": "Die Toleranz eines Wertes kann absolut und prozentual angegeben werden."
+  },
+  "ids_export": {
+    "tag_filter": {
+      "classes": "Tag-Filter für Klassen:",
+      "properties": "Tag-Filter für Merkmale:"
+    },
+    "actions": {
+      "add_all_with_tag": "Alle mit Tag \"{tag}\" hinzufügen",
+      "add_all": "Alle",
+      "select_all": "Alle auswählen"
+    },
+    "success_messages": {
+      "auto_save_found": "Automatisch gespeicherte Daten gefunden. Über 'Speichern & Laden' können Sie diese wiederherstellen.",
+      "property_set_created": "IFC Propertyset \"{name}\" wurde erfolgreich erstellt und ist sofort verfügbar.",
+      "specification_loaded": "Spezifikation wurde erfolgreich geladen.",
+      "ids_generated": "IDS Datei wurde erfolgreich erzeugt und kann jetzt heruntergeladen werden.",
+      "ids_downloaded": "IDS Datei wurde erfolgreich heruntergeladen.",
+      "ids_data_loaded": "IDS Daten wurden erfolgreich geladen."
+    },
+    "error_messages": {
+      "login_required": "Bitte melden Sie sich an, um eine IDS-Datei zu erstellen."
+    },
+    "notifications": {
+      "classes_with_tag_added": "{count} Klassen mit Tag '{tag}' wurden hinzugefügt.",
+      "no_classes_with_tag": "Keine Klassen mit Tag '{tag}' gefunden.",
+      "properties_with_tag_added": "{count} Merkmale mit Tag '{tag}' wurden hinzugefügt.",
+      "no_properties_with_tag": "Keine Merkmale mit Tag '{tag}' gefunden."
+    },
+    "labels": {
+      "local_created": "Lokal erstellt",
+      "classification_system_select": "Klassifikationssystem auswählen",
+      "select_model_from_datacat": "Fachmodell aus datacat auswählen",
+      "select_classes_optional": "Klassen auswählen (optional)",
+      "search_classes": "Klassen suchen...",
+      "property_group_select": "Merkmalsgruppe (PropertySet)",
+      "select_property_group": "Merkmalsgruppe auswählen",
+      "loading_property_groups": "Lade Merkmalsgruppen...",
+      "no_property_groups_found": "Keine Merkmalsgruppen gefunden",
+      "create_new_property_set": "Neues IFC Propertyset (Merkmalsgruppe) erstellen",
+      "uri_automatic": "URI (automatisch)",
+      "select_properties": "Merkmale auswählen",
+      "search_properties": "Merkmale suchen...",
+      "select_all_properties": "Alle auswählen",
+      "model_class_select": "Fachmodell/Referenzdokument auswählen",
+      "class_select": "Klasse auswählen",
+      "ifc_class_placeholder": "Bitte IFC Klasse eingeben (z.B. IFCWALL)",
+      "search_values": "Werte suchen..."
+    },
+    "buttons": {
+      "select_facet": "Bitte Facette wählen",
+      "property": "Property",
+      "classification": "Classification", 
+      "attribute": "Attribute",
+      "select_all_properties": "Alle auswählen",
+      "select_all_values": "Alle auswählen"
+    },
+    "value_labels": {
+      "values_for": "Werte für"
+    }
+  },
+  "create_property_set": {
+    "title": "Neues IFC Propertyset (Merkmalsgruppe) erstellen",
+    "labels": {
+      "property_set_name": "Name des IFC Propertysets",
+      "description_optional": "Beschreibung (optional)",
+      "assign_properties": "Merkmale zuordnen",
+      "select_properties": "Merkmale auswählen"
+    },
+    "placeholders": {
+      "property_set_example": "z.B. Geometrische Eigenschaften",
+      "description_text": "Beschreibung des IFC Propertysets...",
+      "search_and_select": "Merkmale suchen und auswählen..."
+    },
+    "info": {
+      "selection_help": "Wählen Sie aus den vorhandenen Merkmalen in datacat diejenigen aus, die zu diesem neuen IFC Propertyset gehören sollen. Dieses Propertyset wird nur lokal für die IDS-Erstellung verwendet und nicht im datacat Merkmalsserver gespeichert."
+    },
+    "tag_filter": {
+      "properties": "Tag-Filter für Merkmale:",
+      "all": "Alle"
+    },
+    "actions": {
+      "add_all_with_tag": "Alle mit Tag \"{tag}\" hinzufügen",
+      "cancel": "Abbrechen",
+      "create": "IFC Propertyset erstellen",
+      "creating": "Erstelle..."
+    },
+    "notifications": {
+      "properties_with_tag_added": "{count} Merkmale mit Tag \"{tag}\" hinzugefügt",
+      "no_properties_with_tag": "Keine Merkmale mit Tag \"{tag}\" gefunden",
+      "name_required": "Bitte geben Sie einen Namen für das neue IfcPropertyset ein.",
+      "created_successfully": "Propertyset \"{name}\" wurde erfolgreich lokal erstellt.",
+      "creation_error": "Fehler beim Erstellen: {error}"
+    },
+    "status": {
+      "properties_selected": "{count} Merkmal{plural} ausgewählt"
+    }
   }
 }

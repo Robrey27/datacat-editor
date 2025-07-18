@@ -1,6 +1,7 @@
-import makeStyles from "@mui/styles/makeStyles";
+import { makeStyles } from "@mui/styles";
+import { Theme } from "@mui/material/styles";
 
-const useFormViewStyles = makeStyles(theme => ({
+const useFormViewStyles = makeStyles((theme: Theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",

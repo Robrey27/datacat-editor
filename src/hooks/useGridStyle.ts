@@ -1,6 +1,7 @@
-import makeStyles from "@mui/styles/makeStyles";
+import { makeStyles } from "@mui/styles";
+import { Theme } from "@mui/material/styles";
 
-const useGridStyles = makeStyles(theme => ({
+const useGridStyles = makeStyles((theme: Theme) => ({
     paper: {
         padding: theme.spacing(2),
     },
