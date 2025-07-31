@@ -19,13 +19,31 @@
       "duplicate_id": "ID duplicati",
       "duplicate_name_type": "Nomi duplicati (all'interno di un tipo)",
       "duplicate_name_all": "Nomi duplicati (intero database)",
-      "missing_description": "Descrizione mancante",
-      "missing_description_en": "Descrizione mancante (inglese)",
-      "missing_translation_en": "Traduzione del nome mancante (inglese)"
+      "missing_description": "Descrizione macate",
+      "missing_description_en": "Descrizione macate (inglese)",
+      "missing_translation_en": "Traduzione del nome macate (inglese)"
     },
     "result": {
       "select_criteria": "Seleziona criterio di verifica e categoria.",
-      "select_entry": "Seleziona il risultato della verifica nella vista a elenco per mostrare le proprietà."
+      "select_entry": "Seleziona il risultato della verifica nella vista a elenco per mostrare le proprietà.",
+      "error_loading": "Errore durate la chiamata della routine di verifica.",
+      "no_issues_found": "Nessun problema trovato",
+      "success_messages": {
+        "all_property_groups_have_properties": "Tutti i gruppi di proprietà hao almeno una proprietà assegnata.",
+        "all_properties_have_parent": "Tutte le proprietà sono assegnate a una classe o gruppo di proprietà.",
+        "all_models_have_groups": "Tutti i modelli di dominio hao almeno un gruppo assegnato.",
+        "all_groups_have_classes": "Tutti i gruppi hao almeno una classe assegnata.",
+        "all_classes_have_properties": "Tutte le classi hao almeno una proprietà o gruppo di proprietà assegnato.",
+        "all_measures_have_properties": "Tutte le misure sono assegnate ad almeno una proprietà.",
+        "all_units_have_measures": "Tutte le unità sono assegnate a una misura.",
+        "all_values_have_measures": "Tutti i valori sono assegnati a una misura.",
+        "all_ids_unique": "Tutti gli ID sono unici - nessun duplicato trovato.",
+        "all_names_unique_per_type": "Tutti i nomi sono unici all'interno del loro tipo.",
+        "all_names_unique_globally": "Tutti i nomi sono unici in tutto il làtaset.",
+        "all_have_description": "Tutti gli elementi hao una descrizione.",
+        "all_have_english_description": "Tutti gli elementi hao descrizioni inglesi.",
+        "all_have_english_translation": "Tutti gli elementi hao traduzioni inglesi del nome."
+      }
     },
     "edit": {
       "group": "Modifica gruppo",
@@ -42,7 +60,7 @@
     "about.title": "Informazioni sul progetto",
     "about.description": "La piattaforma datacat rappresenta un lavoro di ricerca interdisciplinare del dipartimento \"Geodesia e BIM\" della Facoltà di Geoinformazione dell'Università di Scienze Applicate di Dresda (HTW Dresden). La piattaforma mira a fornire componenti facili da usare e da sviluppare per l'elaborazione e la pubblicazione di sistemi di classificazione, cataloghi di tipi di oggetti e database di proprietà nel contesto del metodo BIM.",
     "components.title": "I componenti",
-    "components.description": "Attualmente, la piattaforma è divisa nei componenti principali: datacat API, un'interfaccia GraphQL auto-documentante e facile da usare per gli sviluppatori per query complesse sul catalogo dei dati, e il datacat editor, uno strumento basato su browser per navigare e modificare il database.",
+    "components.description": "Attualmente, la piattaforma è divisa nei componenti principali: datacat API, un'interfaccia GraphQL auto-documentata e facile da usare per gli sviluppatori per query complesse sul catalogo dei dati, e il datacat editor, uno strumento basato su browser per navigare e modificare il database.",
     "methodology.title": "La metodologia",
     "methodology.description": "Al centro dello sviluppo c'è uno schema dati strettamente allineato con gli standard stabiliti DIN EN ISO 12006-3 e DIN EN ISO 23387, che permetterà di mantenere anche sistemi di classificazione complessi nel catalogo. L'API è completamente agnostica rispetto alla struttura specifica del caso d'uso che verrà implementata nel proprio catalogo dati.",
     "opensource.title": "Open Source",
@@ -53,29 +71,29 @@
     "description2": "In un catalogo di dati, è possibile nominare, descrivere e categorizzare concetti come attori, attività, componenti di costruzione e proprietà in più lingue in base alla loro funzione e forma, in conformità con gli standard. Formando relazioni tra questi concetti, l'ambiente costruito può essere descritto in modo più dettagliato.",
     "description3": "Il database sviluppato è disponibile per il recupero tramite un'API per gli sviluppatori di strumenti di importazione/esportazione e plugin CAD/BIM. In futuro, verranno sviluppate routine di verifica che permetteranno di identificare incongruenze come concetti inutilizzati, possibili duplicati e traduzioni mancanti nel catalogo.",
     "description4": "datacat è sviluppato presso l'Università di Scienze Applicate di Dresda (HTW Dresden). Se sei interessato al progetto o hai domande sull'applicazione, non esitare a contattarci direttamente tramite i dati indicati di seguito.",
-    "call_to_action": "Questa è un'anteprima del software. La tua partecipazione diretta come sviluppatore open source o indirettamente fornendo feedback è molto gradita."
+    "call_to_action": "Questa è un'ateprima del software. La tua partecipazione diretta come sviluppatore open source o indirettamente fornendo feedback è molto gradita."
   },
   "profile": {
     "heading": "Modifica profilo utente",
     "update_success": "Profilo utente aggiornato!",
-    "error": "Si è verificato un errore durante l'accesso al profilo utente.",
+    "error": "Si è verificato un errore durate l'accescosì al profilo utente.",
     "form": {
       "first_name": "Nome",
       "first_name_helper": "È obbligatorio fornire il tuo nome. Verrà mostrato ad altri utenti del catalogo per attribuire voci e modifiche e facilitare la collaborazione.",
       "last_name": "Cognome",
       "last_name_helper": "È obbligatorio fornire il tuo cognome. Verrà mostrato ad altri utenti del catalogo per attribuire voci e modifiche e facilitare la collaborazione.",
       "email": "Email",
-      "email_helper": "È obbligatorio fornire un indirizzo email valido. Verrà utilizzato per convalidare il tuo account e per informarti sulle modifiche al catalogo.",
-      "organization": "Organizzazione",
-      "organization_helper": "Se applicabile, indica l'azienda, l'organizzazione o l'istituto per cui lavori."
+      "email_helper": "È obbligatorio fornire un indirizzo email valido. Verrà utilizzato per convalilàre il tuo account e per informarti sulle modifiche al catalogo.",
+      "organization": "Orgaizzazione",
+      "organization_helper": "Se applicabile, indica l'azienlà, l'orgaizzazione o l'istituto per cui laprimai."
     }
   },
   "boarding": {
     "welcome": "Benvenuto in datacat editor",
     "login_tab": "Accedi",
     "signup_tab": "Registrati",
-    "login_message": "Per favore, utilizza il tuo nome utente e la password per accedere all'editor.",
-    "signup_message": "Puoi registrarti per ottenere accesso in sola lettura al catalogo. Se desideri partecipare alla modifica del catalogo, informa l'amministratore.",
+    "login_message": "Per faprimae, utilizza il tuo nome utente e la password per accedere all'editor.",
+    "signup_message": "Puoi registrarti per ottenere accescosì in cosìla lettura al catalogo. Se desideri partecipare alla modifica del catalogo, informa l'amministratore.",
     "signup_success": "Riceverai un codice di conferma via email nei prossimi minuti, con il quale potrai attivare il tuo account.",
     "login_success": "Bentornato!"
   },
@@ -90,8 +108,8 @@
     "first_name_label": "Nome",
     "last_name_label": "Cognome",
     "email_label": "Email",
-    "email_error": "Per favore, inserisci un indirizzo email valido.",
-    "organization_label": "Azienda / Istituto",
+    "email_error": "Per faprimae, inserisci un indirizzo email valido.",
+    "organization_label": "Azienlà / Istituto",
     "signup_button": "Registrati"
   },
   "login": {
@@ -103,7 +121,7 @@
     "heading": "Importa catalogo (CSV)",
     "description": "Attraverso questa pagina è possibile importare entità e le loro relazioni. In modo simile all'esportazione, qui possono essere importati due file CSV. Un file contiene le entità nel seguente schema:",
     "entity_columns": "id;typ;tags;name;name_en;description;version;createdBy;created;lastModified;lastModifiedBy",
-    "entity_columns_note": "Le colonne contrassegnate con r devono essere compilate per ogni entità, le colonne contrassegnate con o possono contenere valori opzionali. Le altre colonne non vengono considerate durante l'importazione e possono quindi essere lasciate vuote.",
+    "entity_columns_note": "Le colonne contrassegnate con r devono essere compilate per ogni entità, le colonne contrassegnate con o possono contenere valori opzionali. Le altre colonne non vengono considerate durate l'importazione e possono quindi essere lasciate vuote.",
     "tags_note": "Affinché le entità siano visibili nell'interfaccia datacatEditor, devono avere tag della tassonomia selezionata lì. (Documento di riferimento, Modello di dominio, Gruppo, Classe, Gruppo di proprietà, Proprietà, Misura, Valore, Unità di misura)",
     "relation_columns_note": "L'altro file contiene opzionalmente le relazioni tra entità con le seguenti colonne:",
     "relation_columns": "entity1;entity1Type;relationId;relationshipType;entity2;entity2Type",
@@ -114,11 +132,11 @@
     "import_tag_label": "Tag di importazione (opzionale)",
     "csv_templates_button": "Modelli CSV",
     "no_file_selected": "Nessun file selezionato",
-    "note_entities_only": "NOTA: Verranno importate solo entità, non relazioni tra di esse!",
-    "note_relations_only": "NOTA: Verranno importate solo relazioni. Le entità devono già essere contenute nel server delle proprietà!",
+    "note_entities_only": "NOTA: Verrao importate cosìlo entità, non relazioni tra di esse!",
+    "note_relations_only": "NOTA: Verrao importate cosìlo relazioni. Le entità devono già essere contenute nel server delle proprietà!",
     "error_columns_mismatch": "I nomi delle colonne non corrispondono alla specifica.",
-    "error_creating_record": "Errore durante la creazione del record",
-    "error_creating_relationship": "Errore durante la creazione della relazione",
+    "error_creating_record": "Errore durate la creazione del record",
+    "error_creating_relationship": "Errore durate la creazione della relazione",
     "new_tag_created": "Nuovo tag creato",
     "create_tag_failed": "Creazione del nuovo tag fallita",
     "created_record": "Nuovo record creato",
@@ -126,13 +144,13 @@
   },
   "import_excel": {
     "heading": "Importa catalogo (tabella Excel)",
-    "description": "Attraverso questa pagina è possibile importare anche entità e le loro relazioni. A differenza dell'importazione CSV, è possibile utilizzare una tabella Excel esterna. Affinché l'importazione funzioni, le colonne in cui sono elencate le rispettive entità devono essere specificate correttamente: Documento di riferimento, Modello di dominio, Gruppo, Classe, Proprietà, Misura (Enum), Unità di misura e Valore.",
+    "description": "Attraverso questa pagina è possibile importare anche entità e le loro relazioni. A differenza dell'importazione CSV, è possibile utilizzare una tabella Excel esterna. Affinché l'importazione funzioni, le colonne in cui sono elencate le rispettive entità devono essere specificate correttamente: Documento di riferimento, Modello di dominio, Gruppo, Classe, Proprietà, Misura (Unità), Unità di misura e Valore.",
     "select_all": "Seleziona/deseleziona tutto",
     "label": "Etichetta:",
     "sheet": "Foglio di calcolo",
     "name": "Nome",
     "id": "ID",
-    "document": "Documenti di riferimento",
+    "document": "Docintornoenti di riferimento",
     "model": "Modelli di dominio",
     "group": "Gruppi",
     "class": "Classi",
@@ -149,8 +167,8 @@
     "rel_property_measure": "Proprietà - Misura",
     "rel_measure_unit": "Misura - Unità di misura",
     "rel_measure_value": "Misura - Valore",
-    "validation_failed": "Validazione fallita. Per favore, controlla i messaggi di errore.",
-    "validation_success": "Validazione riuscita. Ora puoi importare il file Excel.",
+    "validation_failed": "Valilàzione fallita. Per faprimae, controlla i messaggi di errore.",
+    "validation_success": "Valilàzione riuscita. Ora puoi importare il file Excel.",
     "no_file_selected": "Nessun file selezionato",
     "select_file_button": "Seleziona tabella Excel",
     "check_inputs_button": "Verifica input",
@@ -171,7 +189,7 @@
     "new_tags": "Crea nuovi tag",
     "grid_view": "Vista tabella",
     "catalog": "Catalogo",
-    "documents": "Documenti di riferimento",
+    "documents": "Docintornoenti di riferimento",
     "models": "Modelli di dominio",
     "groups": "Gruppi",
     "classes": "Classi",
@@ -180,17 +198,18 @@
     "properties": "Proprietà",
     "measures": "Misure",
     "units": "Unità di misura",
-    "values": "Valori"
+    "values": "Valori",
+    "ids_export": "Esportazione IDS"
   },
   "create_entry_form": {
     "name_label": "Nome (de)",
-    "name_helper": "Nomina il concetto nel contesto tecnico e nel modo più preciso possibile. Separa i sinonimi con un punto e virgola.",
+    "name_helper": "Nomina il concetto nel contesto tecnico e nel modo più precicosì possibile. Separa i sinonimi con un punto e virgola.",
     "description_label": "Descrizione (de)",
-    "description_helper": "Descrivi il concetto nel suo significato. Usa la descrizione specialmente per distinguerlo da concetti possibilmente nominati in modo simile ma tecnicamente diversi.",
+    "description_helper": "Descrivi il concetto nel suo significato. Usa la descrizione specialmente per distinguerlo là concetti possibilmente nominati in modo simile ma tecnicamente diversi.",
     "comment_label": "Commento (de)",
     "comment_helper": "Lascia un commento su questo concetto. Qui si possono scambiare informazioni aggiuntive tra gli editor.",
     "id_label": "ID",
-    "id_helper": "L'ID viene solitamente generato automaticamente. Un ID può essere fornito se è già stato assegnato al concetto in un contesto superiore.",
+    "id_helper": "L'ID viene cosìlitamente generato automaticamente. Un ID può essere fornito se è già stato assegnato al concetto in un contesto superiore.",
     "version_id_label": "ID versione",
     "version_date_label": "Data versione",
     "save_button": "Salva"
@@ -206,11 +225,11 @@
     "select_entry": "Seleziona {title} nella vista a elenco per mostrare le proprietà."
   },
   "document_form": {
-    "loading": "Caricamento documento di riferimento...",
+    "loading": "Caricamento docintornoento di riferimento...",
     "error": "Si è verificato un errore...",
     "update_success": "Aggiornamento riuscito.",
     "delete_success": "Documento di riferimento eliminato.",
-    "described_concepts": "Concetti descritti dal documento di riferimento",
+    "described_concepts": "Concetti descritti dal docintornoento di riferimento",
     "delete_button": "Elimina"
   },
   "domain_class_form": {
@@ -220,10 +239,10 @@
     "delete_success": "Classe eliminata.",
     "assigned_property_groups": "Gruppi di proprietà assegnati alla classe {name}",
     "assigned_properties": "Proprietà direttamente assegnate alla classe {name}",
-    "reference_documents": "che descrivono questa classe",
-    "no_reference_documents": "Non descritta da alcun documento di riferimento memorizzato nel catalogo dati",
-    "groups_using_class": "che utilizzano questa classe",
-    "no_groups_using_class": "La classe non viene utilizzata da nessun gruppo",
+    "reference_documents": "che descrilào questa classe",
+    "no_reference_documents": "Non descritta da alcun docintornoento di riferimento memorizzato nel catalogo dati",
+    "groups_using_class": "che utilizzao questa classe",
+    "no_groups_using_class": "La classe non viene utilizzata là nessun gruppo",
     "delete_button": "Elimina"
   },
   "domain_group_form": {
@@ -233,10 +252,10 @@
     "delete_success": "Gruppo eliminato.",
     "grouped_classes": "Classi raggruppate",
     "grouped_classes_description": "Classi che sono assegnate a questo gruppo.",
-    "reference_documents": "che descrivono questo gruppo",
-    "no_reference_documents": "Non descritto da alcun documento di riferimento memorizzato nel catalogo dati",
-    "domain_models_using_group": "che utilizzano questo gruppo",
-    "no_domain_models_using_group": "Il gruppo non viene utilizzato da nessun modello di dominio",
+    "reference_documents": "che descrilào questo gruppo",
+    "no_reference_documents": "Non descritto da alcun docintornoento di riferimento memorizzato nel catalogo dati",
+    "domain_models_using_group": "che utilizzao questo gruppo",
+    "no_domain_models_using_group": "Il gruppo non viene utilizzato là nessun modello di dominio",
     "delete_button": "Elimina"
   },
   "domain_model_form": {
@@ -244,38 +263,50 @@
     "error": "Si è verificato un errore...",
     "update_success": "Aggiornamento riuscito.",
     "delete_success": "Modello di dominio eliminato.",
-    "reference_documents": "che descrivono questo modello di dominio",
-    "no_reference_documents": "Non descritto da alcun documento di riferimento memorizzato nel catalogo dati",
+    "reference_documents": "che descrilào questo modello di dominio",
+    "no_reference_documents": "Non descritto da alcun docintornoento di riferimento memorizzato nel catalogo dati",
     "delete_button": "Elimina"
   },
   "delete_import_view": {
     "heading": "Elimina voci del catalogo con un tag specifico",
-    "description": "Le entità che hanno un tag specifico possono essere eliminate qui. Tutte le relazioni collegate alle entità verranno eliminate anche esse.",
+    "description": "Le entità che hao un tag specifico possono essere eliminate qui. Tutte le relazioni collegate tutti entità verranno eliminate anche esse.",
     "tag_label": "Tag",
     "delete_button": "Elimina voci del catalogo",
     "tag_not_exist": "Il tag {tag} non esiste!",
     "delete_success": "Voce del catalogo {name} eliminata",
-    "error_occurred": "Si è verificato un errore..."
+    "error_occurred": "Si è verificato un errore...",
+    "cancel": "Annulla",
+    "confirm_delete": "Sì, elimina",
+    "confirm_delete_message": "Sei sicuro di voler eliminare tutte le voci del catalogo con il tag '{{tag}}'? Questa azione non può essere aullata.",
+    "confirm_delete_message_simple": "Sei sicuro di voler eliminare tutte le voci del catalogo con il tag '{{tag}}'? Questa azione non può essere aullata.",
+    "confirm_delete_title": "Conferma eliminazione",
+    "delete_error_summary": "Voci del catalogo con tag '{{tag}}' non possono essere eliminate.",
+    "delete_summary": "Voci del catalogo con tag '{{tag}}' eliminate con succescosì.",
+    "entries_to_delete": "Voci del catalogo là eliminare trovate:",
+    "no_entries_found": "Nessuno Voci del catalogo con dem Tag '{{tag}}' trovato.",
+    "search_button": "Cercare voci del catalogo con tag",
+    "search_error": "Si è verificato un errore durate la ricerca."
   },
   "export_view": {
     "heading": "Esporta catalogo",
-    "description": "Il seguente pulsante avvia il download di un file ZIP con due file CSV al suo interno.\nIl file 'Entities.csv' contiene tutte le voci del catalogo con i loro metadati.\nNel file 'Relationships.csv' sono memorizzate le relazioni che esistono tra le voci del catalogo.\nIl file risultante è codificato in UTF-8, utilizza la virgola (,) come separatore e le virgolette doppie (\") come qualificatore di testo.\nI dati sono pronti per l'esportazione non appena il pulsante non è più disabilitato.",
+    "description": "Il seguente pulsate avvia il download di un file ZIP con due file CSV al suo interno. Il file 'Entities.csv' contiene tutte le voci del catalogo con i loro metadati. Nel file 'Relationships.csv' sono memorizzate le relazioni che esistono tra le voci del catalogo. Il file risultate è codificato in UTF-8, utilizza la virgola (,) come separatore e le virgolette doppie (\") come qualificatore di testo. I dati sono pronti per l'esportazione non appena il pulsate non è più disabilitato.",
     "export_button": "Esporta CSV"
   },
   "tag_view": {
     "heading": "Tag esistenti",
-    "explanation": "Questa pagina viene utilizzata per aggiungere nuovi tag al database. I tag possono essere utilizzati nella vista tabella per aggiungere nuovi tag alle voci esistenti.",
+    "explanation": "Questa pagina viene utilizzata per aggiungere nuovi tag al database. I tag possono essere utilizzati nella vista tabella per aggiungere nuovi tag tutti voci esistenti.",
     "new_tag_label": "Crea nuovi tag",
     "add_tag_button": "Aggiungi tag",
     "loading": "Caricamento...",
-    "error_loading": "Errore durante il caricamento dei tag: {error}",
-    "enter_tag_name": "Per favore, inserisci un nome per il tag.",
+    "error_loading": "Errore durate il caricamento dei tag: {error}",
+    "enter_tag_name": "Per faprimae, inserisci un nome per il tag.",
     "tag_exists": "Il tag \"{tag}\" esiste già.",
-    "tag_added_success": "Tag \"{tag}\" aggiunto con successo.",
-    "tag_added_error": "Errore durante l'aggiunta del tag \"{tag}\"."
+    "tag_added_success": "Tag \"{tag}\" aggiunto con succescosì.",
+    "tag_added_error": "Errore durate l'aggiunta del tag \"{tag}\".",
+    "system_tag_error": "Das Tag '{tag}' ist ein tag di sistema e non può essere creato maualmente."
   },
   "hierarchy": {
-    "error": "Si è verificato un errore durante l'accesso all'albero delle proprietà.",
+    "error": "Si è verificato un errore durate l'accescosì all'albero delle proprietà.",
     "select_concept": "Seleziona un concetto nella vista ad albero per mostrare le proprietà.",
     "edit_group": "Modifica gruppo",
     "edit_class": "Modifica classe",
@@ -291,52 +322,103 @@
     "tag_filter_title": "Opzioni di filtro per tag",
     "select_tag": "Seleziona tag",
     "add_tag": "Aggiungi tag",
-    "show_only_documents": "Mostra solo documenti di riferimento",
-    "show_only_models": "Mostra solo modelli di dominio",
-    "show_only_groups": "Mostra solo gruppi",
-    "show_only_classes": "Mostra solo classi",
-    "show_only_property_groups": "Mostra solo gruppi di proprietà",
-    "show_only_properties": "Mostra solo proprietà",
+    "show_only_documents": "Mostra cosìlo docintornoenti di riferimento",
+    "show_only_models": "Mostra cosìlo modelli di dominio",
+    "show_only_groups": "Mostra cosìlo gruppi",
+    "show_only_classes": "Mostra cosìlo classi",
+    "show_only_property_groups": "Mostra cosìlo gruppi di proprietà",
+    "show_only_properties": "Mostra cosìlo proprietà",
     "show_all": "Mostra tutto",
-    "reference_documents": "Documenti di riferimento",
+    "reference_documents": "Docintornoenti di riferimento",
     "domain_models": "Modelli di dominio",
     "groups": "Gruppi",
     "classes": "Classi",
     "property_groups": "Gruppi di proprietà",
     "properties": "Proprietà",
-    "tag_filter_placeholder": "Seleziona tag"
+    "tag_filter_placeholder": "Seleziona tag",
+    "adding_tags": "Tag diventare hinagefügt...",
+    "adding_tags_please_wait": "Tag diventare hinagefügt, si prega di attendere...",
+    "all_entries_already_tagged": "Alle {count} selezionatoen Einträge hao già il tag",
+    "data_refreshed": "Dati aggiornato con succescosì.",
+    "density_large": "Grade",
+    "density_medium": "Medio",
+    "density_small": "Piccolo",
+    "drag_to_select": "Trascina per selezionare più righe",
+    "error_fetching_latest_tags": "Errore nel recupero dei più recenti Tag.",
+    "error_updating_tags": "Errore nell'aggiornamento dei Tag.",
+    "export_csv": "Esportazione CSV",
+    "export_csv_tooltip": "Scarica i dati della tabella come file CSV",
+    "export_success": "Esportazione CSV scaricata con succescosì",
+    "for_multiple": "per Selezione multipla",
+    "for_range": "per Selezione di intervallo",
+    "loading_hierarchy_data": "Dati gerarchici in caricamento...",
+    "loading_table_contents": "Contenuti della tabella in caricamento",
+    "more_than": "più di",
+    "multiselect_help": "Selezione multipla: Ctrl + Clic",
+    "no_tags_added": "Non sono stati Tag hinagefügt.",
+    "no_tags_to_add": "Nessuno Tag necessari per l'aggiunta.",
+    "of": "di",
+    "please_select_rows": "Si prega di selezionare almeno una riga",
+    "please_select_tag": "Si prega di selezionare un tag.",
+    "refresh": "Aggiorna",
+    "refresh_data_tooltip": "Dati ricarica maualmente",
+    "refresh_failed": "Aktualisierung fallito.",
+    "refreshing_data": "Dati in aggiornamento...",
+    "rows_per_page": "Righe per pagina:",
+    "search_placeholder": "Cerca nella tabella...",
+    "selected": "selezionato",
+    "selection_help": "Aiuto selezione:",
+    "show_all_columns_tooltip": "Mostra tutti Colonne di nuovo",
+    "show_only_classes_tooltip": "Mostra cosìlo la Colonna per Classi a",
+    "show_only_documents_tooltip": "Mostra cosìlo la Colonna per Docintornoenti di riferimento a",
+    "show_only_groups_tooltip": "Mostra cosìlo la Colonna per Gruppi a",
+    "show_only_models_tooltip": "Mostra cosìlo la Colonna per Modelli specialistici a",
+    "show_only_properties_tooltip": "Mostra cosìlo la Colonna per Caratteristiche a",
+    "show_only_property_groups_tooltip": "Mostra cosìlo la Colonna per Caratteristicasgruppen a",
+    "table_density": "Tabellendichte",
+    "tag_id_not_found": "Tag ID nicht trovato",
+    "tags_added_count": "Tag a {count} Einträgen hinagefügt.",
+    "tags_added_success": "Tag con succescosì hinagefügt.",
+    "tags_added_with_existing": "Tag a {added} Einträgen hinagefügt. {existing} Einträge hatten dieses Tag bereits.",
+    "tags_added_with_skips": "Tag wurden hinagefügt. {count} Einträge wurden cosìprasprungen, weil sie làs Tag bereits avere",
+    "tags_adding_failed": "Aggiungi di Tag fallito.",
+    "tags_adding_failed_count": "Errore pressom Aggiungi di {count} Tag.",
+    "total_entries": "Einträge gesamt"
   },
-  "error":{
+  "error": {
     "error": "Si è verificato un errore..."
   },
   "document": {
     "title": "Documento di riferimento",
-    "titlePlural": "Documenti di riferimento",
-    "description": "Una voce di tipo Documento di riferimento viene utilizzata per rappresentare documenti esterni, libri o altre informazioni scritte.",
-    "loading": "Caricamento documento di riferimento...",
-    "TransferList": "Concetti descritti dal documento di riferimento ",
-    "TransferList2": ""
+    "titlePlural": "Docintornoenti di riferimento",
+    "description": "Una voce di tipo Documento di riferimento viene utilizzata per rappresentare docintornoenti esterni, libri o altre informazioni scritte.",
+    "loading": "Caricamento docintornoento di riferimento...",
+    "TransferList": "Concetti descritti dal docintornoento di riferimento",
+    "TransferList2": "concetti",
+    "delete_button": "Elimina",
+    "update_success": "Aggiornamento riuscito.",
+    "delete_success": "Documento di riferimento eliminato."
   },
   "model": {
     "title": "Modello di dominio",
     "titlePlural": "Modelli di dominio",
-    "loading": "Caricamento modello di dominio...", 
-    "TransferList": "Gruppi descritti dal modello di dominio ",
+    "loading": "Caricamento modello di dominio...",
+    "TransferList": "Gruppi descritti dal modello di dominio",
     "TransferList2": ""
   },
   "group": {
     "title": "Gruppo",
     "titlePlural": "Gruppi",
     "loading": "Caricamento gruppo...",
-    "TransferList": "Classi ",
+    "TransferList": "Classi",
     "TransferList2": "raggruppate"
   },
   "class": {
     "title": "Classe",
     "titlePlural": "Classi",
     "loading": "Caricamento classe...",
-    "TransferList": "Gruppi di proprietà assegnati ",
-    "TransferList2": "alla classe ",
+    "TransferList": "Gruppi di proprietà assegnati",
+    "TransferList2": "alla classe",
     "TransferList3": ""
   },
   "dataTemplate": {
@@ -364,10 +446,10 @@
     "titlePlural": "Valori"
   },
   "tolerance": {
-    "description": "La tolleranza di un valore può essere specificata in modo assoluto e percentuale."
+    "description": "La tolleraza di un valore può essere specificata in modo ascosìluto e percentuale."
   },
   "translation_form": {
-    "no_translations": "Nessuna traduzione disponibile ancora.",
+    "no_translations": "Nessuna traduzione disponibile acora.",
     "add_translation": "Aggiungi traduzione",
     "add_translation_title": "Aggiungi traduzione",
     "language": "Lingua",
@@ -383,9 +465,9 @@
     "description": "Informazioni tecniche sul concetto",
     "keyword": "Parole chiave",
     "created": "Creato",
-    "created_by": "Creato da",
+    "created_by": "Creato là",
     "updated": "Ultimo aggiornamento",
-    "updated_by": "Ultimo aggiornamento da"
+    "updated_by": "Ultimo aggiornamento là"
   },
   "name": {
     "title": "Nome",
@@ -397,15 +479,15 @@
   },
   "description": {
     "title": "Descrizione",
-    "description": "Caratterizza ulteriormente il concetto nella sua manifestazione e concetto di applicazione."
+    "description": "Caratterizza ulteriormente il concetto nella sua maifestazione e concetto di applicazione."
   },
-  "search":{
+  "search": {
     "search": "Cerca",
     "search_placeholder": "Cerca nel catalogo",
     "search_results": "Risultati della ricerca"
   },
   "footer": {
-    "contact": "Domande & Contatti",
+    "contact": "Domade & Contatti",
     "report_issue": "Segnala problema",
     "version": "datacat editor {version}"
   },
@@ -415,8 +497,8 @@
     "update_success": "Aggiornamento riuscito.",
     "delete_success": "Gruppo di proprietà eliminato.",
     "grouped_properties": "Proprietà raggruppate nel gruppo di proprietà",
-    "reference_documents": "che descrivono questo gruppo di proprietà",
-    "no_reference_documents": "Non descritto da alcun documento di riferimento memorizzato nel catalogo dati",
+    "reference_documents": "che descrilào questo gruppo di proprietà",
+    "no_reference_documents": "Non descritto da alcun docintornoento di riferimento memorizzato nel catalogo dati",
     "assigned_classes": "a cui è stato assegnato questo gruppo di proprietà",
     "no_assigned_classes": "Questo gruppo di proprietà non è stato assegnato a nessuna classe",
     "delete_button": "Elimina"
@@ -427,9 +509,9 @@
     "update_success": "Aggiornamento riuscito.",
     "delete_success": "Proprietà eliminata.",
     "property_measure": "Misura della proprietà",
-    "reference_documents": "che descrivono questa proprietà",
-    "no_reference_documents": "Non descritta da alcun documento di riferimento memorizzato nel catalogo dati",
-    "aggregating_property_groups": "che aggregano questa proprietà",
+    "reference_documents": "che descrilào questa proprietà",
+    "no_reference_documents": "Non descritta da alcun docintornoento di riferimento memorizzato nel catalogo dati",
+    "aggregating_property_groups": "che aggregao questa proprietà",
     "no_aggregating_property_groups": "La proprietà non viene utilizzata in nessun gruppo di proprietà",
     "assigned_classes": "a cui questa proprietà è stata assegnata direttamente",
     "no_assigned_classes": "La proprietà non è stata assegnata direttamente a nessuna classe",
@@ -442,20 +524,20 @@
     "delete_success": "Misura eliminata.",
     "applicable_units": "Unità di misura applicabili alla misura",
     "value_range": "Intervallo di valori della misura",
-    "reference_documents": "che descrivono questa misura",
-    "no_reference_documents": "Non descritta da alcun documento di riferimento memorizzato nel catalogo dati",
-    "quantified_properties": "che sono quantificate da questa misura",
-    "no_quantified_properties": "La misura non viene utilizzata da nessuna proprietà",
+    "reference_documents": "che descrilào questa misura",
+    "no_reference_documents": "Non descritta da alcun docintornoento di riferimento memorizzato nel catalogo dati",
+    "quantified_properties": "che sono quatificate là questa misura",
+    "no_quantified_properties": "La misura non viene utilizzata là nessuna proprietà",
     "delete_button": "Elimina"
   },
   "unit_form": {
     "loading": "Caricamento unità di misura...",
     "error": "Si è verificato un errore...",
     "delete_success": "Unità di misura eliminata.",
-    "reference_documents": "che descrivono questa unità",
-    "no_reference_documents": "Non descritta da alcun documento di riferimento memorizzato nel catalogo dati",
+    "reference_documents": "che descrilào questa unità",
+    "no_reference_documents": "Non descritta da alcun docintornoento di riferimento memorizzato nel catalogo dati",
     "assigned_measures": "a cui è stata assegnata questa unità",
-    "no_assigned_measures": "L'unità non viene utilizzata da nessuna misura",
+    "no_assigned_measures": "L'unità non viene utilizzata là nessuna misura",
     "delete_button": "Elimina"
   },
   "value_form": {
@@ -463,28 +545,336 @@
     "error": "Si è verificato un errore...",
     "update_success": "Aggiornamento riuscito.",
     "delete_success": "Valore eliminato.",
-    "reference_documents": "che descrivono questo valore",
-    "no_reference_documents": "Non descritto da alcun documento di riferimento memorizzato nel catalogo dati",
+    "reference_documents": "che descrilào questo valore",
+    "no_reference_documents": "Non descritto da alcun docintornoento di riferimento memorizzato nel catalogo dati",
     "assigned_measures": "a cui è stato assegnato questo valore",
-    "no_assigned_measures": "Il valore non viene utilizzato da nessuna misura",
+    "no_assigned_measures": "Il valore non viene utilizzato là nessuna misura",
     "delete_button": "Elimina"
   },
   "nominal_value_form": {
     "title": "Valore nominale",
     "role_label": "Ruolo",
-    "type_label": "Tipo di dato",
+    "type_label": "Tipo di làto",
     "value_label": "Valore",
     "updated": "Valore nominale aggiornato.",
-    "removed": "Valore nominale rimosso."
+    "removed": "Valore nominale rimoscosì."
   },
   "tolerance_form": {
-    "title": "Tolleranza",
+    "title": "Tolleraza",
     "type_label": "Tipo",
-    "lower_tolerance_label": "Tolleranza inferiore",
-    "upper_tolerance_label": "Tolleranza superiore",
+    "lower_tolerance_label": "Tolleraza inferiore",
+    "upper_tolerance_label": "Tolleraza superiore",
     "save_button": "Salva",
     "delete_button": "Elimina",
     "reset_button": "Reimposta",
-    "description": "La tolleranza di un valore può essere specificata in modo assoluto e percentuale."
+    "description": "La tolleraza di un valore può essere specificata in modo ascosìluto e percentuale."
+  },
+  "ids_export": {
+    "tag_filter": {
+      "classes": "Tag-Filter per Classi:",
+      "properties": "Tag-Filter per Caratteristiche:"
+    },
+    "actions": {
+      "add_all": "Alle",
+      "add_all_with_tag": "Alle con Tag \"{tag}\" hinafügen",
+      "select_all": "Seleziona tutto"
+    },
+    "success_messages": {
+      "auto_save_found": "Automatisch gespeicherte Dati trovato. Über 'Salva & Carica' können Sie diese wiederherstellen.",
+      "auto_saved": "Dati wurden automatisch gespeichert.",
+      "ids_data_loaded": "IDS Dati wurden con succescosì geladen.",
+      "ids_downloaded": "IDS Datei wurde con succescosì hersottogeladen.",
+      "ids_generated": "IDS Datei wurde con succescosì erzeugt e ka ora hersottogeladen diventare.",
+      "property_set_created": "IFC Set di proprietà \"{name}\" wurde con succescosì erstellt e ist cosìfort verfügbar.",
+      "specification_loaded": "Spezifikation wurde con succescosì geladen."
+    },
+    "notifications": {
+      "classes_with_tag_added": "{count} Classi con Tag '{tag}' wurden hinagefügt.",
+      "no_classes_with_tag": "Nessuno Classi con Tag '{tag}' trovato.",
+      "no_properties_with_tag": "Nessuno Caratteristiche con Tag '{tag}' trovato.",
+      "properties_with_tag_added": "{count} Caratteristiche con Tag '{tag}' wurden hinagefügt."
+    },
+    "validation": {
+      "and_more": "e weitere",
+      "errors_found": "Validierungsfehler trovato",
+      "ready_for_export": "Alle Validierungen bestaden - bereit per Export!",
+      "warnings": "Warnungen"
+    },
+    "requirements": {
+      "specifications": "Spezifikationen hinagefügt",
+      "title": "IDS Titel eingegeben",
+      "version": "Versione IDS inserita"
+    },
+    "labels": {
+      "specification_name": "Nome specifica",
+      "cardinality": "Cardinalità",
+      "instructions": "Istruzioni",
+      "applicability": "Applicabilità (Anwendbarkeit)",
+      "applicability_type": "Applicabilità",
+      "class_select": "Seleziona classe",
+      "classification": "Klassifikation (Classificazione)",
+      "classification_auto_ifcclassification": "Bei Klassifikation diventa automatisch IFCCLASSIFICATION verwendet",
+      "classification_system_select": "Seleziona sistema di classificazione",
+      "create_new_property_set": "Neues IFC Set di proprietà (Caratteristicasgruppe) erstellen",
+      "datatype_optional": "tipo di dati",
+      "edit_specification": "Specifica bearpressoten",
+      "entity_type": "Entity Typ",
+      "entity_type_select": "Seleziona tipo di entità IFC",
+      "ids_name": "IDS Name",
+      "ids_version": "Versione IDS",
+      "ids_version_description": "Inserisci la versione del tuo file IDS (es. 1.0, 2.1). Questa non è la versione dello schema.",
+      "ifc_class": "IFC Classe",
+      "ifc_class_placeholder": "Inserisci classe IFC (es. IFCWALL)",
+      "ifc_classes": "IFC Classi (Selezione multipla)",
+      "ifc_versions": "Versioni IFC (Selezione multipla)",
+      "instructions_optional": "Anweisungen (optional)",
+      "loading_property_groups": "Lade Caratteristicasgruppen...",
+      "local_created": "Lokal erstellt",
+      "material_category": "Materialkategorie",
+      "material_properties_optional": "Materialeigenschaften (optional)",
+      "material_select": "Seleziona materiale",
+      "materials": "Materialien",
+      "mechanical_properties": "Mechaische Proprietà",
+      "model_class_select": "Seleziona modello specialistico/docintornoento di riferimento",
+      "no_property_groups_found": "Nessuno Caratteristicasgruppen trovato",
+      "none": "Nessuno",
+      "optical_properties": "Optische Proprietà",
+      "predefined_type": "Predefined Type",
+      "predefined_type_optional": "Predefined Type (optional)",
+      "property_group_select": "Caratteristicasgruppe (Set di proprietà)",
+      "requirements": "Requisiti",
+      "search_classes": "Cerca classi...",
+      "search_properties": "Cerca caratteristiche...",
+      "search_values": "Cerca valori...",
+      "select_all_properties": "Seleziona tutto",
+      "select_classes_optional": "Seleziona classi (opzionale)",
+      "select_datatype": "Seleziona tipo di dati",
+      "select_model_from_datacat": "Modello specialistico datacat selezionare",
+      "select_properties": "Caratteristiche selezionare",
+      "select_property_group": "Caratteristicasgruppe selezionare",
+      "thermal_properties": "Thermische Proprietà",
+      "type_ifc_class": "Type (IFC Classe)",
+      "uri_automatic": "URI (automatisch)"
+    },
+    "placeholders": {
+      "attribute_class_search": "Classe cercare e selezionare...",
+      "attribute_model_search": "Modello specialistico cercare e selezionare...",
+      "classification_system_search": "Sistema di classificazione cercare e selezionare...",
+      "datatype_search": "Datityp cercare e selezionare...",
+      "entity_type_search": "Entity Typ cercare e selezionare...",
+      "ids_name_example": "z.B. Bradschutz-Requisiti-2024",
+      "ids_version_example": "1.0",
+      "ifc_classes_search": "IFC Classi cercare e selezionare...",
+      "ifc_versions_select": "Selezionare versioni IFC...",
+      "instructions": "Zusätzliche Anweisungen o Hinweise...",
+      "material_search": "Material cercare e selezionare...",
+      "mechanical_properties": "z.B. Elastizitätsmodul, Zugfestigkeit...",
+      "optical_properties": "z.B. Trasparenz, Reflektivität...",
+      "predefined_type": "z.B. WALL, COLUMN, BEAM...",
+      "property_set_search": "Cerca e seleziona gruppo di proprietà...",
+      "specification_name_example": "z.B. Bradschutzklassen kontrollieren",
+      "thermal_properties": "z.B. Wärmeleitfähigkeit, spezifische Wärme...",
+      "unnamed_ids": "Unbenate IDS",
+      "unnamed_specification": "Unbenate Spezifikation"
+    },
+    "buttons": {
+      "add_by_tag": "Aggiungi per tag",
+      "add_requirement": "Requisito hinafügen",
+      "create_pset": "crea nuovo Set di proprietà IFC",
+      "add_specification": "Specifica hinafügen",
+      "applicability_summary": "Applicabilità Zusammenfassung",
+      "attribute": "Attribute",
+      "cancel": "Annulla",
+      "classes": "Classi",
+      "classification": "Classificazione",
+      "classification_system": "Sistema di classificazione",
+      "download_ids": "IDS Datei hersottoladen",
+      "entity": "Entity",
+      "export_actions": "Export Aktionen",
+      "export_requirements": "Export Vorsetagen",
+      "exporting": "Exportiere...",
+      "facet": "Facette",
+      "generate_ids": "IDS Datei erzeugen",
+      "ifc_versions": "Versioni IFC",
+      "last_export": "Letzter Export",
+      "material": "Material",
+      "preview_xml": "XML Vorschau",
+      "property": "Proprietà",
+      "requirement": "Requisito",
+      "save": "Salva",
+      "save_and_load": "Salva & Carica",
+      "save_spec": "Spec speichern",
+      "select_all_properties": "Seleziona tutto",
+      "select_all_values": "Seleziona tutto",
+      "select_facet": "Si prega di selezionare sfaccettatura",
+      "type": "Typ",
+      "update": "Aggiorna"
+    },
+    "errors": {
+      "unknown_facet": "Unbekate Facette"
+    },
+    "error_messages": {
+      "login_required": "Effettuare l'accescosì per creare un file IDS."
+    },
+    "messages": {
+      "no_requirements": "Non sono acora stati aggiunti requisiti. Fare clic su uno dei pulsati cosìpra per aggiungere un requisito."
+    },
+    "tooltips": {
+      "export_disabled": "Impossibile esportare: sono necessari titolo, versione e almeno una specifica"
+    },
+    "tips": {
+      "title": "Suggerimenti di esportazione",
+      "filename_based_on_title": "Il nome del file si basa sul titolo IDS",
+      "xml_validated_before_download": "XML valilàto prima del download",
+      "save_project_before_export": "Salvare il progetto prima dell'esportazione"
+    },
+    "value_labels": {
+      "values_for": "Valori per"
+    },
+    "cardinality": {
+      "required": "richiesto",
+      "optional": "opzionale",
+      "prohibited": "proibito"
+    },
+    "material_category": {
+      "none": "Nessuna categoria",
+      "concrete": "Calcestruzzo",
+      "steel": "Acciaio",
+      "wood": "Legno",
+      "glass": "Vetro",
+      "insulation": "Icosìlamento",
+      "other": "Altro"
+    }
+  },
+  "create_property_set": {
+    "title": "Crea set di proprietà",
+    "actions": {
+      "add_all_with_tag": "[ES] Alle con Tag \"{tag}\" hinafügen",
+      "cancel": "[ES] Annulla",
+      "create": "[ES] IFC Set di proprietà erstellen",
+      "creating": "[ES] Erstelle..."
+    },
+    "help": {
+      "custom_values_format": "[ES] Mehrere Valoree attravercosì Komma trennen"
+    },
+    "info": {
+      "selection_help": "Seleziona le caratteristiche corrispondenti in datacat che dovrebbero appartenere a questo nuovo Set di proprietà IFC. Questo Set di proprietà viene utilizzato cosìlo localmente per la creazione IDS e non viene salvato nel server delle caratteristiche datacat.",
+      "values_help": "[ES] Sie können per jedes Caratteristica optional Valoree festlegen. Lassen Sie die Felder leer, se nessuno Valorebeschränkung gewünscht ist."
+    },
+    "labels": {
+      "property_set_name": "[ES] Name des IFC Set di proprietàs",
+      "description_optional": "[ES] Beschreibung (optional)",
+      "assign_properties": "[ES] Caratteristiche aordnen",
+      "select_properties": "[ES] Caratteristiche selezionare",
+      "property_values_optional": "[ES] Valoree per Caratteristiche (optional)",
+      "values_from_datacat": "[ES] Valoree DataCat selezionare:",
+      "custom_values": "[ES] Oder eigene Valoree eingeben:"
+    },
+    "notifications": {
+      "properties_with_tag_added": "[ES] {count} Caratteristiche con Tag \"{tag}\" hinagefügt",
+      "no_properties_with_tag": "[ES] Nessuno Caratteristiche con Tag \"{tag}\" trovato",
+      "name_required": "Si prega di inserire un nome per il nuovo Set di proprietà IFC.",
+      "created_successfully": "[ES] Set di proprietà \"{name}\" wurde con succescosì lokal erstellt.",
+      "creation_error": "[ES] Errore pressom Erstellen: {error}"
+    },
+    "placeholders": {
+      "property_set_example": "[ES] z.B. Geometrische Proprietà",
+      "description_text": "[ES] Beschreibung des IFC Set di proprietàs...",
+      "search_and_select": "[ES] Caratteristiche cercare e selezionare...",
+      "select_values_from_datacat": "[ES] Valoree selezionare...",
+      "enter_custom_values": "[ES] Valoree kommagetrennt eingeben..."
+    },
+    "status": {
+      "properties_selected": "[ES] {count} Caratteristica{plural} selezionato"
+    },
+    "tag_filter": {
+      "properties": "[ES] Tag-Filter per Caratteristiche:",
+      "all": "[ES] Alle"
+    }
+  },
+  "save_load_dialog": {
+    "title": "Salva/Carica sessione",
+    "buttons": {
+      "close": "Chiudi"
+    },
+    "auto_save": {
+      "found_message": "[ES] Es wurden automatisch gespeicherte Dati trovato vom {timestamp}",
+      "restore": "[ES] Wiederherstellen",
+      "discard": "[ES] Verwerfen"
+    },
+    "load_section": {
+      "title": "[ES] Carica",
+      "empty_message": "[ES] Nessuno gespeicherten Dateien trovato"
+    },
+    "save_section": {
+      "title": "[ES] Salva",
+      "name_placeholder": "[ES] Name eingeben...",
+      "save_button": "[ES] Salva"
+    },
+    "tabs": {
+      "ids_files": "[ES] IDS Dateien",
+      "specifications": "[ES] Spezifikationen"
+    }
+  },
+  "common": {
+    "close": "Chiudi",
+    "info": "Informazione"
+  },
+  "info_dialogs": {
+    "applicability": {
+      "title": "[ES] Applicabilità (Anwendbarkeit) - Aiuto",
+      "content": "[ES] Die Applicabilità defimairt, su welche BIM-Objekte sich diese Spezifikation bezieht. 🏗️ Type (IFC Classe): • Bezieht sich su bestimmte IFC-Objekttypen (z.B. Wände, Türen, Fenster) • Sie können piùere IFC-Classi selezionare • Beispiel: IFCWALL, IFCDOOR, IFCWINDOW 🏷️ Classificazione (Klassifikation): • Bezieht sich su klassifizierte Objekte (z.B. dopo DIN 276, OMNICLASS) • Verwendet IFCCLASSIFICATION als IFC-Classe • Beispiel: Objekte con bestimmten Kostengruppen o Funktionsklassen"
+    },
+    "cardinality": {
+      "title": "[ES] Cardinality (Kardinalität) - Aiuto",
+      "content": "[ES] Die Kardinalität bestimmt, ob eine Proprietà primahaden essere deve. ✅ Required (Erforderlich): • Die Proprietà MUSS primahaden essere • Objekte senza diese Proprietà sono ungültig • Stalàrd-Einstellung per die meisten Requisiti ❓ Optional (Optional): • Die Proprietà KANN primahaden essere • Wenn primahaden, deve sie den defimairten Valoreen entsprechen • Wenn nicht primahaden, ist làs Objekt nonostatedem gültig ❌ Prohibited (Verboten): • Die Proprietà DARF NICHT primahaden essere • Objekte con dieser Proprietà sono ungültig • Nützlich per Ausschluss-Regeln"
+    },
+    "classification_system": {
+      "title": "[ES] Sistema di classificazione - Aiuto",
+      "content": "Seleziona il modello specialistico o docintornoento di riferimento che definisce la classificazione. Questo può essere: • Un sistema di ripartizione dei costi (es. DIN 276) • Un sistema di classificazione funzionale • Un sistema di classificazione specifico del produttore • Un docintornoento di riferimento specifico del progetto. Il sistema selezionato viene utilizzato come 'System' nella classificazione IDS."
+    },
+    "datatype": {
+      "title": "[ES] Datityp - Aiuto",
+      "content": "[ES] Der Datityp defimairt, welche Art di Valoreen per diese Proprietà erwartet diventare. Häufige Datitypen: • IFCLABEL - Kurzer Text (z.B. Materialname) • IFCTEXT - Längerer Text (z.B. Beschreibung) • IFCBOOLEAN - Ja/Nein Valoree (z.B. Tragend) • IFCREAL - Dezivoltazahlen (z.B. U-Valore: 0.24) • IFCINTEGER - Gaze Zahlen (z.B. Anzahl: 5) • IFCLENGTHMEASURE - Längenmaße (z.B. 2.5m) • IFCAREAMEASURE - Flächenmaße (z.B. 25.5m²) Der Datityp ist optional, ma empfohlen per eine präzise Validierung."
+    },
+    "ids_name": {
+      "title": "[ES] IDS Name - Aiuto",
+      "content": "Il nome IDS è il titolo principale della tua Specifica di Consegna delle Informazioni. Questo nome viene utilizzato: • Come titolo nel file IDS-XML generato • Come nome file nel download (i caratteri speciali vengono rimossi) • Per l'identificazione nel salvataggio e caricamento. Suggerimento: Scegli un nome descrittivo come 'Verifica-Struttura-2024' o 'Requisiti-Protezione-Incendi'."
+    },
+    "ids_version": {
+      "title": "Versione IDS - Aiuto",
+      "content": "La versione IDS è il nintornoero di versione del tuo file IDS specifico (non la versione dello schema). Esempi: • '1.0' per la prima versione • '2.1' per una versione migliorata • '3.0-beta' per una versione beta. Questa versione viene salvata nell'elemento <ids:version> del file XML e aiuta nella gestione delle versioni delle tue specifiche IDS."
+    },
+    "ifc_classes": {
+      "title": "[ES] IFC Classi - Aiuto",
+      "content": "Seleziona i tipi di entità IFC ai quali si riferisce questa specifica. Classi comunemente utilizzate: • IFCWALL - Muri • IFCDOOR - Porte • IFCWINDOW - Finestre • IFCSLAB - Solai/Lastre di pavimento • IFCBEAM - Travi • IFCCOLUMN - Colonne • IFCSPACE - Spazi. Puoi selezionare più classi se gli stessi requisiti si applicao a diversi tipi di oggetti. Suggerimento: Usa la ricerca per trovare rapilàmente le classi IFC desiderate."
+    },
+    "ifc_versions": {
+      "title": "Versioni IFC - Aiuto",
+      "content": "[ES] Wählen Sie die IFC-Versionen , per die diese IDS-Spezifikation gelten cosìll. Verfügbare Versionen: • IFC2X3: Ältere Version, acora weit verbreitet • IFC4: Aktuelle Stalàrdversion • IFC4X3: Neueste Version con erweiterten Features Sie können piùere Versionen selezionare, se Ihre Spezifikation per verschiedene IFC-Versionen kompatibel ist."
+    },
+    "property_group": {
+      "title": "[ES] Caratteristicasgruppe (Set di proprietà) - Aiuto",
+      "content": "[ES] Set di proprietàs sono Gruppi di asammengehörigen Proprietà in IFC. Beispiele: • Pset_WallCommon - Allgemeine Wadeigenschaften • Pset_DoorCommon - Allgemeine Türeigenschaften • Pset_SpaceFireSafetyRequisiti - Bradschutzaforderungen per Räintornoe Sie können: • Bestehende Set di proprietàs dem Katalog selezionare • Neue Set di proprietàs con dem ➕ Button erstellen • Mehrere Proprietà einem Set di proprietà selezionare Die URI diventa automatisch generiert e verweist su die Definition im Katalog."
+    },
+    "property_values": {
+      "title": "[ES] Proprietàswerte - Aiuto",
+      "content": "[ES] Hier können Sie spezifische Valoree per die selezionatoe Proprietà defimairen. 🎯 Verwendung: • Defimairen Sie erlaubte Valoree per diese Proprietà • Selezione multipla möglich per alternative Valoree • Beispiele: REI30, REI60, REI90 per Bradschutzklassen 📋 Valoree-Unitàeration: • Alle selezionatoen Valoree diventare als erlaubte Optionen in der IDS defimairt • Das Objekt deve einen dieser Valoree avere, intorno gültig a essere • Leere Auswahl bedeutet: Beliebiger Valore ist erlaubt (cosìlo Proprietà deve primahaden essere)"
+    },
+    "requirements": {
+      "title": "[ES] Requisiti (Requisiti) - Aiuto",
+      "content": "[ES] Requisiti defimairen, welche Proprietà die selezionatoen Objekte avere müssen. 🏷️ Classificazione: • Prüft Klassifikationswerte (z.B. Kostengruppen, Funktionsklassen) • Wählen Sie làs Sistema di classificazione e optional spezifische Classi 📝 Attribute: • Prüft IFC-Attribute der Objekte • Beispiel: Name, Beschreibung, o adere direkte Objekteigenschaften 🔧 Proprietà: • Prüft Set di proprietàs e deren Proprietà • Beispiel: Feuerwiderstadsklasse, U-Valore, Materialtyp • Sie können piùere Proprietà e deren erlaubte Valoree defimairen Jede Anforderung ka als 'required' (erforderlich), 'optional' (optional) o 'prohibited' (verboten) markiert diventare."
+    },
+    "specification_name": {
+      "title": "[ES] Specifica Name - Aiuto",
+      "content": "[ES] Der Name der einzelnen Spezifikation innerhalb Ihrer IDS-Datei. Eine IDS-Datei ka piùere Spezifikationen enthalten. Jede Spezifikation prüft bestimmte Aspekte Ihrer BIM-Modelle. Beispiele: • 'Wadeigenschaften prüfen' • 'Bradschutzklassen kontrollieren' • 'Tragwerkselemente validieren' Der Name cosìllte klar beschreiben, was diese Spezifikation prüft."
+    }
+  },
+  "metadata": {
+    "defaultDescription": "Generierte IDS-Spezifikation ar Validierung di Gebäudeinformationen",
+    "defaultMilestone": "Plaung",
+    "defaultPurpose": "Entwurfsvalidierung",
+    "defaultTitle": "Neue IDS Spezifikation",
+    "untitledSpecification": "Unbenate Spezifikation"
   }
 }

@@ -13,9 +13,9 @@
       "no_class_properties": "Klassen zonder kenmerken/kenmerkgroepen",
       "no_property_group": "Kenmerkgroepen zonder kenmerken",
       "no_property": "Kenmerken zonder klasse of kenmerkgroep",
-      "no_measure": "Grootheden zonder kenmerk",
-      "no_unit": "Eenheden zonder grootheid",
-      "no_value": "Waarden zonder grootheid",
+      "no_measure": "Groothede zonder kenmerk",
+      "no_unit": "Eenhede zonder grootheid",
+      "no_value": "Waarde zonder grootheid",
       "duplicate_id": "ID-duplicaten",
       "duplicate_name_type": "Naam-duplicaten (binnen een type)",
       "duplicate_name_all": "Naam-duplicaten (volledige databestand)",
@@ -25,7 +25,25 @@
     },
     "result": {
       "select_criteria": "Selecteer verificatiecriterium en categorie.",
-      "select_entry": "Selecteer verificatieresultaat in de lijstweergave om eigenschappen te tonen."
+      "select_entry": "Selecteer verificatieresultaat in de lijstweergave om eigenschappen te tonen.",
+      "error_loading": "Fout bij het aanroepen van de verificatieroutine.",
+      "no_issues_found": "Geen problemen gevonde",
+      "success_messages": {
+        "all_property_groups_have_properties": "Alle kenmerkgroepen hebben ten minste één kenmerk toegewezen.",
+        "all_properties_have_parent": "Alle kenmerken zijn toegewezen aan een klasse of kenmerkgroep.",
+        "all_models_have_groups": "Alle vakmodellen hebben ten minste één groep toegewezen.",
+        "all_groups_have_classes": "Alle groepen hebben ten minste één klasse toegewezen.",
+        "all_classes_have_properties": "Alle klassen hebben ten minste één kenmerk of kenmerkgroep toegewezen.",
+        "all_measures_have_properties": "Alle groothede zijn toegewezen aan ten minste één kenmerk.",
+        "all_units_have_measures": "Alle eenhede zijn toegewezen aan een grootheid.",
+        "all_values_have_measures": "Alle waarde zijn toegewezen aan een grootheid.",
+        "all_ids_unique": "Alle ID's zijn uniek - geen duplicaten gevonde.",
+        "all_names_unique_per_type": "Alle namen zijn uniek binnen hun type.",
+        "all_names_unique_globally": "Alle namen zijn uniek in de gehele dataset.",
+        "all_have_description": "Alle elementen hebben een beschrijving.",
+        "all_have_english_description": "Alle elementen hebben Engelse beschrijvingen.",
+        "all_have_english_translation": "Alle elementen hebben Engelse naamvertalingen."
+      }
     },
     "edit": {
       "group": "Groep bewerken",
@@ -40,32 +58,32 @@
   "home": {
     "title": "Welkom bij datacat",
     "about.title": "Over het project",
-    "about.description": "Het datacat-platform vertegenwoordigt een projectoverschrijdend onderzoekswerk van de leerstoel \"Geodesie en BIM\" van de Faculteit Geo-informatie aan de Hogeschool voor Techniek en Economie Dresden (HTW Dresden). Het platform is gericht op het leveren van gebruikers- en ontwikkelaarsvriendelijke componenten voor het ontwikkelen en publiceren van classificatiesystemen, objecttypen catalogi en kenmerkdatabases in de context van de BIM-methode.",
+    "about.description": "Het datacat-platform vertegenwoordigt een projectoverschrijded onderzoekswerk van de leerstoel \"Geodesie en BIM\" van de Faculteit Geo-informatie aan de Hogeschool voor Techniek en Economie Dresde (HTW Dresde). Het platform is gericht op het leveren van gebruikers- en ontwikkelaarsvriendelijke componenten voor het ontwikkelen en publiceren van classificatiesystemen, objecttypen catalogi en kenmerkdatabases in de context van de BIM-methode.",
     "components.title": "De componenten",
     "components.description": "Het platform bestaat momenteel uit de kerncomponenten datacat API, een ontwikkelaarsvriendelijke, zelf-documenterende GraphQL-interface voor complexe query's op de datacatalogus, en de datacat editor, een browsergebaseerde gebruikerstool voor navigatie en bewerking van de dataset.",
     "methodology.title": "De methodologie",
-    "methodology.description": "Centraal in de ontwikkeling staat een dataschema dat nauw aansluit bij de gevestigde standaarden DIN EN ISO 12006-3 en DIN EN ISO 23387, waarmee ook complexe classificatiesystemen in de catalogus kunnen worden onderhouden. De API is volledig agnostisch ten opzichte van de toepassingsspecifieke structuur die in de eigen datacatalogus moet worden geïmplementeerd.",
+    "methodology.description": "Centraal in de ontwikkeling staat een dataschema dat nauw aansluit bij de gevestigde standaarde DIN EN ISO 12006-3 en DIN EN ISO 23387, waarmee ook complexe classificatiesystemen in de catalogus kunnen worde onderhoude. De API is volledig agnostisch ten opzichte van de toepassingsspecifieke structuur die in de eigen datacatalogus moet worde geïmplementeerd.",
     "opensource.title": "Open Source",
-    "opensource.description": "datacat wordt ontwikkeld als vrije, open-source software onder de GPLv3-licentie en kan door iedereen, ook commercieel, worden gebruikt en vermenigvuldigd. De broncode wordt gehost op GitHub. Elke vorm van ondersteuning voor het project is welkom."
+    "opensource.description": "datacat wordt ontwikkeld als vrije, open-source software onder de GPLv3-licentie en kan door iedereen, ook commercieel, worde gebruikt en vermenigvuldigd. De broncode wordt gehost op GitHub. Elke vorm van ondersteuning voor het project is welkom."
   },
   "intro": {
     "description1": "datacat editor is een webgebaseerde, open-source werktool voor het gezamenlijk ontwikkelen van datacatalogi voor de bouwindustrie. De broncode wordt beschikbaar gesteld onder de GPL v3-licentie.",
-    "description2": "In een datacatalogus kunt u concepten zoals actoren, activiteiten, bouwcomponenten en kenmerken in meerdere talen benoemen, beschrijven en categoriseren volgens hun functie en vorm in overeenstemming met de standaarden. Door relaties tussen deze concepten te vormen, kan de gebouwde omgeving nader worden beschreven.",
-    "description3": "De ontwikkelde database is beschikbaar via een API voor ontwikkelaars van import/export-tools en CAD/BIM-plugins. In de toekomst zullen verificatieroutines worden ontwikkeld waarmee inconsistenties zoals ongebruikte concepten, mogelijke duplicaten en ontbrekende vertalingen in de catalogus kunnen worden opgespoord.",
-    "description4": "datacat wordt ontwikkeld aan de Hogeschool voor Techniek en Economie Dresden (HTW Dresden). Als u meer interesse heeft in het project of vragen heeft over de toepassing, neem dan gerust direct contact met ons op via de onderstaande gegevens.",
+    "description2": "In een datacatalogus kunt u concepten zoals actoren, activiteiten, bouwcomponenten en kenmerken in meerdere talen benoemen, beschrijven en categoriseren volgens hun functie en vorm in overeenstemming met de standaarde. Door relaties tussen deze concepten te vormen, kan de gebouwde omgeving nader worde beschreven.",
+    "description3": "De ontwikkelde database is beschikbaar via een API voor ontwikkelaars van in deport/export-tools en CAD/BIM-plugins. In de toekomst totllen verificatieroutines worde ontwikkeld waarmee inconsistenties zoals ongebruikte concepten, mogelijke duplicaten en ontbrekende vertalingen in de catalogus kunnen worde opgespoord.",
+    "description4": "datacat wordt ontwikkeld aan de Hogeschool voor Techniek en Economie Dresde (HTW Dresde). Als u meer interesse heeft in het project of vragen heeft over de toepassing, neem dan gerust direct contact met ons op via de onderstaande gegevens.",
     "call_to_action": "Dit is een software-preview. Uw directe deelname als open-source ontwikkelaar of indirect door feedback te geven is zeer gewenst."
   },
   "profile": {
     "heading": "Gebruikersprofiel bewerken",
     "update_success": "Gebruikersprofiel bijgewerkt!",
-    "error": "Er is een fout opgetreden bij het openen van het gebruikersprofiel.",
+    "error": "Er is een fout opgetrede bij het openen van het gebruikersprofiel.",
     "form": {
       "first_name": "Voornaam",
       "first_name_helper": "Het opgeven van uw voornaam is verplicht. Deze wordt getoond aan andere catalogusgebruikers om items en wijzigingen toe te wijzen en samenwerking te vergemakkelijken.",
       "last_name": "Achternaam",
       "last_name_helper": "Het opgeven van uw achternaam is verplicht. Deze wordt getoond aan andere catalogusgebruikers om items en wijzigingen toe te wijzen en samenwerking te vergemakkelijken.",
       "email": "E-mail",
-      "email_helper": "Het opgeven van een geldig e-mailadres is verplicht. Dit wordt gebruikt om uw account te valideren en u op de hoogte te houden van wijzigingen in de catalogus.",
+      "email_helper": "Het opgeven van een geldig e-mailadres is verplicht. Dit wordt gebruikt om uw account te valideren en u op de hoogte te houde van wijzigingen in de catalogus.",
       "organization": "Organisatie",
       "organization_helper": "Geef indien van toepassing het bedrijf, de organisatie of het instituut op waarvoor u werkt."
     }
@@ -80,10 +98,10 @@
     "login_success": "Welkom terug!"
   },
   "signup": {
-    "username_helper": "Een gebruikersnaam is vereist. Geen spaties. Moet beginnen met een letter en minimaal 3 tekens bevatten.",
-    "password_helper": "Een wachtwoord is vereist en moet minimaal 8 tekens bevatten.",
+    "username_helper": "Een gebruikersnaam is vereist. Geen spaties. Moet beginnen met een letter en minin deaal 3 tekens bevatten.",
+    "password_helper": "Een wachtwoord is vereist en moet minin deaal 8 tekens bevatten.",
     "username_label": "Gebruikersnaam",
-    "username_error": "De gebruikersnaam kan na registratie niet worden gewijzigd.",
+    "username_error": "De gebruikersnaam kan na registratie niet worde gewijzigd.",
     "password_label": "Wachtwoord",
     "password_repeat_label": "Wachtwoord herhalen",
     "password_repeat_error": "De invoer komt niet overeen met het wachtwoord.",
@@ -100,22 +118,22 @@
     "login_button": "Inloggen"
   },
   "import": {
-    "heading": "Catalogus importeren (CSV)",
-    "description": "Via deze pagina kunnen entiteiten en hun relaties worden geïmporteerd. Vergelijkbaar met de export kunnen hier twee CSV-bestanden worden geïmporteerd. Het ene bestand bevat de entiteiten in het volgende schema:",
+    "heading": "Catalogus in deporteren (CSV)",
+    "description": "Via deze pagina kunnen entiteiten en hun relaties worde geïmporteerd. Vergelijkbaar met de export kunnen hier twee CSV-bestande worde geïmporteerd. Het ene bestand bevat de entiteiten in het volgende schema:",
     "entity_columns": "id;typ;tags;name;name_en;description;version;createdBy;created;lastModified;lastModifiedBy",
-    "entity_columns_note": "Kolommen gemarkeerd met r moeten voor elke entiteit worden ingevuld, kolommen gemarkeerd met o kunnen optioneel waarden bevatten. De overige kolommen worden tijdens de import niet in aanmerking genomen en kunnen daarom leeg blijven.",
+    "entity_columns_note": "Kolommen gemarkeerd met r moeten voor elke entiteit worde ingevuld, kolommen gemarkeerd met o kunnen optioneel waarde bevatten. De overige kolommen worde tijdes de in deport niet in aanmerking genomen en kunnen daarom leeg blijven.",
     "tags_note": "Om de entiteiten zichtbaar te maken in de datacatEditor-interface, moeten ze tags van de daar gekozen taxonomie hebben. (Referentiedocument, Vakmodel, Groep, Klasse, Kenmerkgroep, Kenmerk, Grootheid, Waarde, Maateenheid)",
     "relation_columns_note": "Het andere bestand bevat optioneel de relaties tussen entiteiten met de volgende kolommen:",
     "relation_columns": "entity1;entity1Type;relationId;relationshipType;entity2;entity2Type",
-    "relation_columns_note_2": "De entiteitstypes kunnen hier leeg gelaten worden.",
+    "relation_columns_note_2": "De entiteitstypes kunnen hier leeg gelaten worde.",
     "entities_file_button": "Entiteiten bestand selecteren",
     "relations_file_button": "Relaties bestand selecteren",
     "import_button": "Importeren",
     "import_tag_label": "Import tag (optioneel)",
     "csv_templates_button": "CSV sjablonen",
     "no_file_selected": "Geen bestand geselecteerd",
-    "note_entities_only": "LET OP: Er worden alleen entiteiten geïmporteerd, geen relaties ertussen!",
-    "note_relations_only": "LET OP: Er worden alleen relaties geïmporteerd. De entiteiten moeten al in de kenmerkserver aanwezig zijn!",
+    "note_entities_only": "LET OP: Er worde alleen entiteiten geïmporteerd, geen relaties ertussen!",
+    "note_relations_only": "LET OP: Er worde alleen relaties geïmporteerd. De entiteiten moeten al in de kenmerkserver aanwezig zijn!",
     "error_columns_mismatch": "De kolomnamen komen niet overeen met de specificatie.",
     "error_creating_record": "Fout bij het aanmaken van het record",
     "error_creating_relationship": "Fout bij het aanmaken van de relatie",
@@ -125,8 +143,8 @@
     "created_relationship": "Nieuwe relatie aangemaakt"
   },
   "import_excel": {
-    "heading": "Catalogus importeren (Excel tabel)",
-    "description": "Via deze pagina kunnen ook entiteiten en hun relaties worden geïmporteerd. Anders dan bij de CSV-import kan een externe Excel-tabel worden gebruikt. Voor een succesvolle import moeten de kolommen waarin de respectievelijke entiteiten worden vermeld correct worden gespecificeerd: Referentiedocument, Vakmodel, Groep, Klasse, Kenmerk, Grootheid (Enum), Maateenheid en Waarde.",
+    "heading": "Catalogus in deporteren (Excel tabel)",
+    "description": "Via deze pagina kunnen ook entiteiten en hun relaties worde geïmporteerd. Anders dan bij de CSV-in deport kan een externe Excel-tabel worde gebruikt. Voor een succesvolle in deport moeten de kolommen waarin de respectievelijke entiteiten worde vermeld correct worde gespecificeerd: Referentiedocument, Vakmodel, Groep, Klasse, Kenmerk, Grootheid (Enum), Maateenheid en Waarde.",
     "select_all": "Alles selecteren/deselecteren",
     "label": "Label:",
     "sheet": "Werkblad",
@@ -137,9 +155,9 @@
     "group": "Groepen",
     "class": "Klassen",
     "property": "Kenmerken",
-    "measure": "Grootheden",
-    "unit": "Maateenheden",
-    "value": "Waarden",
+    "measure": "Groothede",
+    "unit": "Maateenhede",
+    "value": "Waarde",
     "sheetName": "Werkbladnaam",
     "relations": "Relaties:",
     "rel_doc_model": "Referentiedocument - Vakmodel",
@@ -150,12 +168,12 @@
     "rel_measure_unit": "Grootheid - Maateenheid",
     "rel_measure_value": "Grootheid - Waarde",
     "validation_failed": "Validatie mislukt. Controleer de foutmeldingen.",
-    "validation_success": "Validatie succesvol. U kunt nu het Excel-bestand importeren.",
+    "validation_success": "Validatie succesvol. U kunt nu het Excel-bestand in deporteren.",
     "no_file_selected": "Geen bestand geselecteerd",
     "select_file_button": "Excel-tabel selecteren",
     "check_inputs_button": "Invoer controleren",
     "import_tag_label": "Import tag (optioneel)",
-    "import_button": "Excel-tabel importeren",
+    "import_button": "Excel-tabel in deporteren",
     "reset_button": "Invoer resetten",
     "progress": "{progress}% voltooid"
   },
@@ -178,19 +196,20 @@
     "data_templates": "Datasjablonen",
     "property_groups": "Kenmerkgroepen",
     "properties": "Kenmerken",
-    "measures": "Grootheden",
-    "units": "Maateenheden",
-    "values": "Waarden"
+    "measures": "Groothede",
+    "units": "Maateenhede",
+    "values": "Waarde",
+    "ids_export": "IDS Export"
   },
   "create_entry_form": {
     "name_label": "Naam (de)",
     "name_helper": "Benoem het concept in de vakspecifieke context en zo nauwkeurig mogelijk. Scheid synoniemen met een puntkomma.",
     "description_label": "Beschrijving (de)",
-    "description_helper": "Beschrijf het concept in zijn betekenis. Gebruik de beschrijving vooral om het te onderscheiden van mogelijk gelijknamige maar vakinhoudelijk verschillende concepten.",
+    "description_helper": "Beschrijf het concept in zijn betekenis. Gebruik de beschrijving vooral om het te onderscheide van mogelijk gelijknamige maar vakinhoudelijk verschillende concepten.",
     "comment_label": "Commentaar (de)",
-    "comment_helper": "Laat een opmerking achter over dit concept. Hier kan extra informatie worden uitgewisseld tussen bewerkers.",
+    "comment_helper": "Laat een opmerking achter over dit concept. Hier kan extra informatie worde uitgewisseld tussen bewerkers.",
     "id_label": "ID",
-    "id_helper": "De ID wordt meestal automatisch gegenereerd. Een ID kan worden opgegeven als deze al in een overkoepelende context aan het concept is toegewezen.",
+    "id_helper": "De ID wordt meestal automatisch gegenereerd. Een ID kan worde opgegeven als deze al in een overkoepelende context aan het concept is toegewezen.",
     "version_id_label": "Versie ID",
     "version_date_label": "Versiedatum",
     "save_button": "Opslaan"
@@ -206,16 +225,16 @@
     "select_entry": "{title} in de lijstweergave selecteren om eigenschappen te tonen."
   },
   "document_form": {
-    "loading": "Referentiedocument laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Referentiedocument lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Referentiedocument verwijderd.",
     "described_concepts": "Door het referentiedocument beschreven concepten",
     "delete_button": "Verwijderen"
   },
   "domain_class_form": {
-    "loading": "Klasse laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Klasse lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Klasse verwijderd.",
     "assigned_property_groups": "Aan de klasse {name} toegewezen kenmerkgroepen",
@@ -227,8 +246,8 @@
     "delete_button": "Verwijderen"
   },
   "domain_group_form": {
-    "loading": "Groep laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Groep lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Groep verwijderd.",
     "grouped_classes": "Gegroepeerde klassen",
@@ -240,8 +259,8 @@
     "delete_button": "Verwijderen"
   },
   "domain_model_form": {
-    "loading": "Vakmodel laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Vakmodel lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Vakmodel verwijderd.",
     "reference_documents": "die dit vakmodel beschrijven",
@@ -250,32 +269,44 @@
   },
   "delete_import_view": {
     "heading": "Catalogusitems met een specifieke tag verwijderen",
-    "description": "Entiteiten met een specifieke tag kunnen hier worden verwijderd. Alle relaties die aan de entiteiten hangen worden ook verwijderd.",
+    "description": "Entiteiten met een specifieke tag kunnen hier worde verwijderd. Alle relaties die aan de entiteiten hangen worde ook verwijderd.",
     "tag_label": "Tag",
     "delete_button": "Catalogusitems verwijderen",
     "tag_not_exist": "De tag {tag} bestaat niet!",
     "delete_success": "Catalogusitem {name} verwijderd",
-    "error_occurred": "Er is een fout opgetreden..."
+    "error_occurred": "Er is een fout opgetrede...",
+    "cancel": "Annuleren",
+    "confirm_delete": "Ja, verwijderen",
+    "confirm_delete_message": "Weet je zeker, dass u alle Catalogusitems mit dem Tag '{{tag}}' löschen möchten? Deze actie kaan niet ongedaaan worde gemaakt.",
+    "confirm_delete_message_simple": "Weet je zeker, dass u alle Catalogusitems mit dem Tag '{{tag}}' löschen möchten? Deze actie kaan niet ongedaaan worde gemaakt.",
+    "confirm_delete_title": "Verwijdering bevestigen",
+    "delete_error_summary": "Catalogusitems met tag '{{tag}}' konde niet worde verwijderd.",
+    "delete_summary": "Catalogusitems met tag '{{tag}}' succesvol verwijderd.",
+    "entries_to_delete": "Catalogusitems om te verwijderen gevonde:",
+    "no_entries_found": "Geen Catalogusitems mit dem Tag '{{tag}}' gevonde.",
+    "search_button": "Catalogusitems met tag suchen",
+    "search_error": "Er is een fout opgetrede bij het zoeken."
   },
   "export_view": {
     "heading": "Catalogus exporteren",
-    "description": "De volgende knop start het downloaden van een ZIP-bestand met twee CSV-bestanden erin.\nHet bestand 'Entities.csv' bevat alle catalogusitems met hun metadata.\nIn het bestand 'Relationships.csv' zijn de relaties opgeslagen die tussen de catalogusitems bestaan.\nHet resulterende bestand is UTF-8 gecodeerd, gebruikt komma (,) als scheidingsteken en dubbele aanhalingstekens (\") als tekstkwalificeerder.\nDe gegevens zijn klaar voor export zodra de knop niet meer grijs is.",
+    "description": "De volgende knop start het downloade van een ZIP-bestand met twee CSV-bestande erin.\nHet bestand 'Entities.csv' bevat alle catalogusitems met hun metadata.\nIn het bestand 'Relationships.csv' zijn de relaties opgeslagen die tussen de catalogusitems bestaan.\nHet resulterende bestand is UTF-8 gecodeerd, gebruikt komma (,) als scheidingsteken en dubbele aanhalingstekens (\") als tekstkwalificeerder.\nDe gegevens zijn klaar voor export zodra de knop niet meer grijs is.",
     "export_button": "CSV exporteren"
   },
   "tag_view": {
     "heading": "Bestaande tags",
-    "explanation": "Deze pagina wordt gebruikt om nieuwe tags aan de database toe te voegen. De tags kunnen vervolgens in de tabelweergave worden gebruikt om nieuwe tags aan bestaande items toe te voegen.",
+    "explanation": "Deze pagina wordt gebruikt om nieuwe tags aan de database toe te voegen. De tags kunnen vervolgens in de tabelweergave worde gebruikt om nieuwe tags aan bestaande items toe te voegen.",
     "new_tag_label": "Nieuwe tags aanmaken",
     "add_tag_button": "Tag toevoegen",
-    "loading": "Laden...",
-    "error_loading": "Fout bij het laden van tags: {error}",
+    "loading": "Lade...",
+    "error_loading": "Fout bij het lade van tags: {error}",
     "enter_tag_name": "Voer een tagnaam in.",
     "tag_exists": "Tag \"{tag}\" bestaat al.",
     "tag_added_success": "Tag \"{tag}\" succesvol toegevoegd.",
-    "tag_added_error": "Fout bij het toevoegen van tag \"{tag}\"."
+    "tag_added_error": "Fout bij het toevoegen van tag \"{tag}\".",
+    "system_tag_error": "Das Tag '{tag}' ist ein systeemtag en kaan niet haandmatig worde aaangemaakt."
   },
   "hierarchy": {
-    "error": "Er is een fout opgetreden bij het ophalen van de kenmerkenboom.",
+    "error": "Er is een fout opgetrede bij het ophalen van de kenmerkenboom.",
     "select_concept": "Selecteer een concept in de boomweergave om eigenschappen te tonen.",
     "edit_group": "Groep bewerken",
     "edit_class": "Klasse bewerken",
@@ -287,7 +318,7 @@
     "search_catalog": "Catalogus doorzoeken"
   },
   "grid_view": {
-    "loading": "Tabelinhoud wordt geladen",
+    "loading": "Tabelinhoud wordt gelade",
     "tag_filter_title": "Filtermogelijkheid op tags",
     "select_tag": "Tag selecteren",
     "add_tag": "Tag toevoegen",
@@ -304,37 +335,88 @@
     "classes": "Klassen",
     "property_groups": "Kenmerkgroepen",
     "properties": "Kenmerken",
-    "tag_filter_placeholder": "Tag selecteren"
+    "tag_filter_placeholder": "Tag selecteren",
+    "adding_tags": "Tags werde hintotgefügt...",
+    "adding_tags_please_wait": "Tags werde hintotgefügt, even wachten...",
+    "all_entries_already_tagged": "Alle {count} geselecteerde Einträge hebben de tag al",
+    "data_refreshed": "Gegevens succesvol bijgewerkt.",
+    "density_large": "Groot",
+    "density_medium": "Gemiddeld",
+    "density_small": "Klein",
+    "drag_to_select": "Sleep om meerdere Rijen te selecteren",
+    "error_fetching_latest_tags": "Fout bij het ophalen vaan de nieuwste Tags.",
+    "error_updating_tags": "Fout bij het bijwerken vaan de Tags.",
+    "export_csv": "CSV Export",
+    "export_csv_tooltip": "Tabelgegevens downloade als CSV-bestand",
+    "export_success": "CSV-export succesvol gedownload",
+    "for_multiple": "voor Meervoudige selectie",
+    "for_range": "voor Bereikselectie",
+    "loading_hierarchy_data": "Hiërarchische gegevens worde gelade...",
+    "loading_table_contents": "Tabelinhoud worde gelade",
+    "more_than": "meer dan",
+    "multiselect_help": "Meervoudige selectie: Ctrl + Klik",
+    "no_tags_added": "Er zijn geen Tags hintotgefügt.",
+    "no_tags_to_add": "Geen Tags nodig om toe te voegen.",
+    "of": "van",
+    "please_select_rows": "Bitte wählen u ten minste één Rij uit",
+    "please_select_tag": "Bitte wählen u ein Tag uit.",
+    "refresh": "Bijwerken",
+    "refresh_data_tooltip": "Gegevens haandmatig opnieuw lade",
+    "refresh_failed": "Aktualisierung mislukt.",
+    "refreshing_data": "Gegevens worde bijgewerkt...",
+    "rows_per_page": "Rijen per pagina:",
+    "search_placeholder": "Zoeken in tabel...",
+    "selected": "geselecteerd",
+    "selection_help": "Selectiehulp:",
+    "show_all_columns_tooltip": "Toont alle Kolommen opnieuw",
+    "show_only_classes_tooltip": "Toont alleen de Kolom voor Klassen aan",
+    "show_only_documents_tooltip": "Toont alleen de Kolom voor Referentiedocumenten aan",
+    "show_only_groups_tooltip": "Toont alleen de Kolom voor Groepen aan",
+    "show_only_models_tooltip": "Toont alleen de Kolom voor Vakmodellen aan",
+    "show_only_properties_tooltip": "Toont alleen de Kolom voor Kenmerken aan",
+    "show_only_property_groups_tooltip": "Toont alleen de Kolom voor Kenmerksgruppen aan",
+    "table_density": "Tabellendichte",
+    "tag_id_not_found": "Tag ID niet gevonde",
+    "tags_added_count": "Tag tot {count} Einträgen hintotgefügt.",
+    "tags_added_success": "Tags succesvol hintotgefügt.",
+    "tags_added_with_existing": "Tag tot {added} Einträgen hintotgefügt. {existing} Einträge hatten dieses Tag bereits.",
+    "tags_added_with_skips": "Tags toegevoegd. {count} items werde overgeslagen omdat ze het tag al hebben",
+    "tags_adding_failed": "Toevoegen vaan Tags mislukt.",
+    "tags_adding_failed_count": "Fout bein de Toevoegen vaan {count} Tags.",
+    "total_entries": "Einträge gesamt"
   },
-  "error":{
-    "error": "Er is een fout opgetreden..."
+  "error": {
+    "error": "Er is een fout opgetrede..."
   },
   "document": {
     "title": "Referentiedocument",
     "titlePlural": "Referentiedocumenten",
     "description": "Een item van het type Referentiedocument wordt gebruikt om externe documenten, boeken of andere geschreven informatie weer te geven.",
-    "loading": "Referentiedocument laden...",
+    "loading": "Referentiedocument lade...",
     "TransferList": "Door het referentiedocument beschreven ",
-    "TransferList2": "concepten"
+    "TransferList2": "concepten",
+    "delete_button": "Verwijderen",
+    "update_success": "Update succesvol.",
+    "delete_success": "Referentiedocument verwijderd."
   },
   "model": {
     "title": "Vakmodel",
     "titlePlural": "Vakmodellen",
-    "loading": "Vakmodel laden...", 
+    "loading": "Vakmodel lade...",
     "TransferList": "Door het vakmodel beschreven ",
     "TransferList2": "groepen"
   },
   "group": {
     "title": "Groep",
     "titlePlural": "Groepen",
-    "loading": "Groep laden...",
+    "loading": "Groep lade...",
     "TransferList": "Gegroepeerde ",
     "TransferList2": "klassen"
   },
   "class": {
     "title": "Klasse",
     "titlePlural": "Klassen",
-    "loading": "Klasse laden...",
+    "loading": "Klasse lade...",
     "TransferList": "Aan de klasse ",
     "TransferList2": " toegewezen ",
     "TransferList3": "kenmerkgroepen"
@@ -353,18 +435,18 @@
   },
   "measure": {
     "title": "Grootheid",
-    "titlePlural": "Grootheden"
+    "titlePlural": "Groothede"
   },
   "unit": {
     "title": "Maateenheid",
-    "titlePlural": "Maateenheden"
+    "titlePlural": "Maateenhede"
   },
   "value": {
     "title": "Waarde",
-    "titlePlural": "Waarden"
+    "titlePlural": "Waarde"
   },
   "tolerance": {
-    "description": "De tolerantie van een waarde kan absoluut en procentueel worden aangegeven."
+    "description": "De tolerantie van een waarde kan absoluut en procentueel worde aangegeven."
   },
   "translation_form": {
     "no_translations": "Nog geen vertaling beschikbaar.",
@@ -375,13 +457,13 @@
   },
   "version": {
     "title": "Versie",
-    "description": "De versie kan voor het toepassingsdomein vrij worden bepaald en geformatteerd.",
+    "description": "De versie kan voor het toepassingsdomein vrij worde bepaald en geformatteerd.",
     "date": "Datum"
   },
   "meta": {
     "title": "Meta-informatie",
     "description": "Technische informatie over het concept",
-    "keyword": "Trefwoorden",
+    "keyword": "Trefwoorde",
     "created": "Aangemaakt",
     "created_by": "Aangemaakt door",
     "updated": "Laatst bijgewerkt",
@@ -389,7 +471,7 @@
   },
   "name": {
     "title": "Naam",
-    "description": "Identificeert het concept in de respectieve taal."
+    "description": "Idetificeert het concept in de respectieve taal."
   },
   "comment": {
     "title": "Commentaar",
@@ -399,19 +481,19 @@
     "title": "Beschrijving",
     "description": "Karakteriseert het concept in zijn manifestatie en toepassingsconcept nader."
   },
-  "search":{
+  "search": {
     "search": "Zoeken",
     "search_placeholder": "Catalogus doorzoeken",
     "search_results": "Zoekresultaten"
   },
   "footer": {
     "contact": "Vragen & Contact",
-    "report_issue": "Probleem melden",
+    "report_issue": "Probleem melde",
     "version": "datacat editor {version}"
   },
   "property_group_form": {
-    "loading": "Kenmerkgroep laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Kenmerkgroep lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Kenmerkgroep verwijderd.",
     "grouped_properties": "In de kenmerkgroep gegroepeerde kenmerken",
@@ -422,8 +504,8 @@
     "delete_button": "Verwijderen"
   },
   "property_form": {
-    "loading": "Kenmerk laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Kenmerk lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Kenmerk verwijderd.",
     "property_measure": "Grootheid van het kenmerk",
@@ -436,21 +518,21 @@
     "delete_button": "Verwijderen"
   },
   "measure_form": {
-    "loading": "Grootheid laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Grootheid lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Grootheid verwijderd.",
-    "applicable_units": "Op de grootheid toepasbare maateenheden",
+    "applicable_units": "Op de grootheid toepasbare maateenhede",
     "value_range": "Waardebereik van de grootheid",
     "reference_documents": "die deze grootheid beschrijven",
     "no_reference_documents": "Niet beschreven door een referentiedocument in de datacatalogus",
-    "quantified_properties": "die door deze grootheid worden gekwantificeerd",
+    "quantified_properties": "die door deze grootheid worde gekwantificeerd",
     "no_quantified_properties": "De grootheid wordt door geen enkel kenmerk gebruikt",
     "delete_button": "Verwijderen"
   },
   "unit_form": {
-    "loading": "Maateenheid laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Maateenheid lade...",
+    "error": "Er is een fout opgetrede...",
     "delete_success": "Maateenheid verwijderd.",
     "reference_documents": "die deze eenheid beschrijven",
     "no_reference_documents": "Niet beschreven door een referentiedocument in de datacatalogus",
@@ -459,8 +541,8 @@
     "delete_button": "Verwijderen"
   },
   "value_form": {
-    "loading": "Waarde laden...",
-    "error": "Er is een fout opgetreden...",
+    "loading": "Waarde lade...",
+    "error": "Er is een fout opgetrede...",
     "update_success": "Update succesvol.",
     "delete_success": "Waarde verwijderd.",
     "reference_documents": "die deze waarde beschrijven",
@@ -485,6 +567,314 @@
     "save_button": "Opslaan",
     "delete_button": "Verwijderen",
     "reset_button": "Resetten",
-    "description": "De tolerantie van een waarde kan absoluut en procentueel worden aangegeven."
+    "description": "De tolerantie van een waarde kan absoluut en procentueel worde aangegeven."
+  },
+  "ids_export": {
+    "tag_filter": {
+      "classes": "Tag filter voor klassen:",
+      "properties": "Tag filter voor kenmerken:"
+    },
+    "actions": {
+      "add_all_with_tag": "Voeg alle met tag \"{tag}\" toe",
+      "add_all": "Alle",
+      "select_all": "Alles selecteren"
+    },
+    "success_messages": {
+      "auto_save_found": "Automatisch opgeslagen gegevens gevonde. U kunt deze herstellen via 'Opslaan & Lade'.",
+      "property_set_created": "IFC Propertyset \"{name}\" is succesvol aangemaakt en is direct beschikbaar.",
+      "specification_loaded": "Specificatie is succesvol gelade.",
+      "ids_generated": "IDS-bestand is succesvol gegenereerd en kan nu worde gedownload.",
+      "ids_downloaded": "IDS-bestand is succesvol gedownload.",
+      "ids_data_loaded": "IDS-gegevens zijn succesvol gelade.",
+      "auto_saved": "Gegevens zijn automatisch opgeslagen."
+    },
+    "error_messages": {
+      "login_required": "Log in om een IDS-bestand te maken."
+    },
+    "notifications": {
+      "classes_with_tag_added": "{count} klassen met tag '{tag}' toegevoegd.",
+      "no_classes_with_tag": "Geen klassen met tag '{tag}' gevonde.",
+      "properties_with_tag_added": "{count} kenmerken met tag '{tag}' toegevoegd.",
+      "no_properties_with_tag": "Geen kenmerken met tag '{tag}' gevonde."
+    },
+    "messages": {
+      "no_requirements": "Nog geen eisen toegevoegd. Klik op een van de knoppen hierboven om een eis toe te voegen."
+    },
+    "validation": {
+      "ready_for_export": "Alle validaties geslaagd - klaar voor export!",
+      "errors_found": "Validatiefouten gevonde",
+      "warnings": "Waarschuwingen",
+      "and_more": "en meer"
+    },
+    "requirements": {
+      "title": "IDS-titel ingevoerd",
+      "version": "IDS-versie ingevoerd",
+      "specifications": "Specificaties toegevoegd"
+    },
+    "tooltips": {
+      "export_disabled": "Export niet mogelijk: titel, versie en ten minste één specificatie vereist"
+    },
+    "tips": {
+      "title": "Export tips",
+      "filename_based_on_title": "Bestandsnaam is gebaseerd op de IDS-titel",
+      "xml_validated_before_download": "XML wordt gevalideerd voor download",
+      "save_project_before_export": "Sla uw project op voor export"
+    },
+    "errors": {
+      "unknown_facet": "Onbekende facet"
+    },
+    "labels": {
+      "local_created": "Lokaal aangemaakt",
+      "classification_system_select": "Classificatiesysteem selecteren",
+      "select_model_from_datacat": "Vakmodel uit datacat selecteren",
+      "select_classes_optional": "Klassen selecteren (optioneel)",
+      "search_classes": "Klassen zoeken...",
+      "property_group_select": "Kenmerkgroep (PropertySet)",
+      "select_property_group": "Kenmerkgroep selecteren",
+      "loading_property_groups": "Kenmerkgroepen lade...",
+      "no_property_groups_found": "Geen kenmerkgroepen gevonde",
+      "create_new_property_set": "Nieuwe IFC Propertyset (Kenmerkgroep) aanmaken",
+      "uri_automatic": "URI (automatisch)",
+      "select_properties": "Kenmerken selecteren",
+      "search_properties": "Kenmerken zoeken...",
+      "select_all_properties": "Alles selecteren",
+      "model_class_select": "Vakmodel/Referentiedocument selecteren",
+      "class_select": "Klasse selecteren",
+      "ifc_class_placeholder": "Voer IFC klasse in (bijv. IFCWALL)",
+      "ifc_classes": "IFC klassen (meervoudige selectie)",
+      "ifc_versions": "IFC versies (meervoudige selectie)",
+      "search_values": "Waarde zoeken...",
+      "ids_name": "IDS Naam",
+      "ids_version": "IDS Versie",
+      "ids_version_description": "Voer de versie van uw IDS-bestand in (bijv. 1.0, 2.1). Dit is niet de schema versie.",
+      "specification_name": "Specificatie naam",
+      "edit_specification": "Specificatie bewerken",
+      "applicability": "Toepasbaarheid",
+      "applicability_type": "Toepasbaarheid",
+      "type_ifc_class": "Type (IFC klasse)",
+      "classification": "Classificatie",
+      "ifc_class": "IFC klasse",
+      "classification_auto_ifcclassification": "Voor classificatie wordt automatisch IFCCLASSIFICATION gebruikt",
+      "requirements": "Vereisten",
+      "datatype_optional": "dataType",
+      "select_datatype": "dataType selecteren",
+      "cardinality": "Kardinaliteit",
+      "none": "Geen",
+      "entity_type_select": "IFC Entiteit type selecteren",
+      "entity_type": "Entiteit type",
+      "predefined_type_optional": "Voorgedefinieerd type (optioneel)",
+      "predefined_type": "Voorgedefinieerd type",
+      "instructions_optional": "Instructies (optioneel)",
+      "instructions": "Instructies",
+      "material_select": "Materiaal selecteren",
+      "materials": "Materialen",
+      "material_properties_optional": "Materiaaleigenschappen (optioneel)",
+      "thermal_properties": "Thermische eigenschappen",
+      "mechanical_properties": "Mechanische eigenschappen",
+      "optical_properties": "Optische eigenschappen",
+      "material_category": "Materiaalcategorie"
+    },
+    "placeholders": {
+      "ids_name_example": "bijv. Brandveiligheid-Vereisten-2024",
+      "ids_version_example": "1.0",
+      "ifc_versions_select": "IFC versies selecteren...",
+      "specification_name_example": "bijv. Brandweerstandsklassen controleren",
+      "ifc_classes_search": "IFC klassen zoeken en selecteren...",
+      "classification_system_search": "Classificatiesysteem zoeken en selecteren...",
+      "datatype_search": "Datatype zoeken en selecteren...",
+      "property_set_search": "Kenmerkgroep zoeken en selecteren...",
+      "attribute_model_search": "Vakmodel zoeken en selecteren...",
+      "attribute_class_search": "Klasse zoeken en selecteren...",
+      "entity_type_search": "Entiteit type zoeken en selecteren...",
+      "predefined_type": "bijv. WALL, COLUMN, BEAM...",
+      "instructions": "Aanvullende instructies of opmerkingen...",
+      "material_search": "Materiaal zoeken en selecteren...",
+      "thermal_properties": "bijv. Warmtegeleidingscoëfficiënt, soortelijke warmte...",
+      "mechanical_properties": "bijv. Elasticiteitsmodulus, treksterkte...",
+      "optical_properties": "bijv. Transparantie, reflectiviteit...",
+      "unnamed_ids": "Naamloze IDS",
+      "unnamed_specification": "Naamloze Specificatie"
+    },
+    "value_labels": {
+      "values_for": "Waarde voor"
+    },
+    "cardinality": {
+      "required": "vereist",
+      "optional": "optioneel",
+      "prohibited": "verbode"
+    },
+    "material_category": {
+      "none": "Geen categorie",
+      "concrete": "Beton",
+      "steel": "Staal",
+      "wood": "Hout",
+      "glass": "Glas",
+      "insulation": "Isolatie",
+      "other": "Overig"
+    },
+    "buttons": {
+      "add_by_tag": "Toevoegen",
+      "add_requirement": "Requirement hintotfügen",
+      "create_pset": "nieuw IFC PropertySet aanmaken",
+      "add_specification": "Specification hintotfügen",
+      "applicability_summary": "Applicability Zusammenfassung",
+      "attribute": "Attribute",
+      "cancel": "Annuleren",
+      "classes": "Klassen",
+      "classification": "Classification",
+      "classification_system": "Klassifikationssystem",
+      "download_ids": "IDS Datei herunterlade",
+      "entity": "Entity",
+      "export_actions": "Export Aktionen",
+      "export_requirements": "Export vereisten",
+      "exporting": "Exportiere...",
+      "facet": "Facette",
+      "generate_ids": "IDS Datei erzeugen",
+      "ifc_versions": "IFC Versionen",
+      "last_export": "Letzter Export",
+      "material": "Material",
+      "preview_xml": "XML Vorschau",
+      "property": "Property",
+      "requirement": "Requirement",
+      "save": "Opslaan",
+      "save_and_load": "Opslaaan & Lade",
+      "save_spec": "Spec speichern",
+      "select_all_properties": "Alle uitwählen",
+      "select_all_values": "Alle uitwählen",
+      "select_facet": "Selecteer facet",
+      "type": "Typ",
+      "update": "Bijwerken"
+    }
+  },
+  "create_property_set": {
+    "title": "Nieuwe IFC Propertyset (Kenmerkgroep) aanmaken",
+    "labels": {
+      "property_set_name": "IFC Propertyset naam",
+      "description_optional": "Beschrijving (optioneel)",
+      "assign_properties": "Kenmerken toewijzen",
+      "select_properties": "Kenmerken selecteren",
+      "custom_values": "[IT] [ES] Oder eigene Werte eingeben:",
+      "property_values_optional": "[IT] [ES] Werte voor Kenmerken (optional)",
+      "values_from_datacat": "[IT] [ES] Werte uit DataCat uitwählen:"
+    },
+    "actions": {
+      "cancel": "Annuleren",
+      "create": "IFC Propertyset aanmaken",
+      "add_all_with_tag": "[IT] [ES] Alle mit Tag \"{tag}\" hintotfügen",
+      "creating": "[IT] [ES] Erstelle..."
+    },
+    "help": {
+      "custom_values_format": "[IT] [ES] Mehrere Werte durch Komma trennen"
+    },
+    "info": {
+      "selection_help": "Selecteer uit de bestaande kenmerken in datacat die welke tot deze nieuwe IFC PropertySet behoren. Deze PropertySet wordt alleen lokaal gebruikt voor de IDS-creatie en wordt niet opgeslagen in de datacat kenmerkserver.",
+      "values_help": "[IT] [ES] u können voor jedes Kenmerk optional Werte festlegen. Lassen u die Felder leer, wenn geen Wertbeschränkung gewünscht ist."
+    },
+    "notifications": {
+      "properties_with_tag_added": "[IT] [ES] {count} Kenmerken mit Tag \"{tag}\" hintotgefügt",
+      "no_properties_with_tag": "[IT] [ES] Geen Kenmerken mit Tag \"{tag}\" gevonde",
+      "name_required": "[IT] [ES] Bitte geben u einen Namen voor das neue IfcPropertyset ein.",
+      "created_successfully": "[IT] [ES] Propertyset \"{name}\" wurde succesvol lokaal erstellt.",
+      "creation_error": "[IT] [ES] Fout bein de Erstellen: {error}"
+    },
+    "placeholders": {
+      "property_set_example": "[IT] [ES] z.B. Geometrische Eigenschappen",
+      "description_text": "[IT] [ES] Beschreibung des IFC Propertysets...",
+      "search_and_select": "[IT] [ES] Kenmerken suchen en uitwählen...",
+      "select_values_from_datacat": "[IT] [ES] Werte uitwählen...",
+      "enter_custom_values": "[IT] [ES] Werte kommagetrennt eingeben..."
+    },
+    "status": {
+      "properties_selected": "[IT] [ES] {count} Kenmerk{plural} geselecteerd"
+    },
+    "tag_filter": {
+      "properties": "[IT] [ES] Tag-Filter voor Kenmerken:",
+      "all": "[IT] [ES] Alle"
+    }
+  },
+  "save_load_dialog": {
+    "title": "Opslaan & Lade",
+    "buttons": {
+      "close": "Sluiten"
+    },
+    "auto_save": {
+      "found_message": "Automatisch opgeslagen gegevens gevonde van {tin deestamp}",
+      "restore": "[IT] [ES] Wiederherstellen",
+      "discard": "[IT] [ES] Verwerfen"
+    },
+    "load_section": {
+      "title": "[IT] [ES] Lade",
+      "empty_message": "Geen opgeslagen bestande gevonde"
+    },
+    "save_section": {
+      "title": "[IT] [ES] Opslaaan",
+      "name_placeholder": "[IT] [ES] Name eingeben...",
+      "save_button": "[IT] [ES] Opslaaan"
+    },
+    "tabs": {
+      "ids_files": "[IT] [ES] IDS bestande",
+      "specifications": "[IT] [ES] Spezifikationen"
+    }
+  },
+  "common": {
+    "close": "Sluiten",
+    "info": "Informatie"
+  },
+  "info_dialogs": {
+    "ids_name": {
+      "title": "IDS Naam - Help",
+      "content": "De IDS naam is de hoofdtitel van uw Information Delivery Specification.\n\nDeze naam wordt:\n• Gebruikt als titel in het gegenereerde IDS XML-bestand\n• Gebruikt als bestandsnaam bij download (speciale tekens worde verwijderd)\n• Gebruikt voor idetificatie bij opslaan en lade\n\nTip: Kies een betekenisvolle naam zoals 'Constructie-Controle-2024' of 'Brandveiligheid-Vereisten'."
+    },
+    "ids_version": {
+      "title": "IDS Versie - Help",
+      "content": "De IDS versie is het versienummer van uw specifieke IDS-bestand (niet de schema versie).\n\nVoorbeelde:\n• '1.0' voor de eerste versie\n• '2.1' voor een herziene versie\n• '3.0-beta' voor een beta versie\n\nDeze versie wordt opgeslagen in het <ids:version> element van het XML-bestand en helpt bij versiebeheer van uw IDS specificaties."
+    },
+    "ifc_versions": {
+      "title": "IFC Versies - Help",
+      "content": "Selecteer de IFC versies waarvoor deze IDS specificatie moet gelde.\n\nBeschikbare versies:\n• IFC2X3: Oudere versie, nog steeds veel gebruikt\n• IFC4: Huidige standaard versie\n• IFC4X3: Nieuwste versie met uitgebreide functies\n\nU kunt meerdere versies selecteren als uw specificatie compatibel is met verschillende IFC versies."
+    },
+    "specification_name": {
+      "title": "Specificatie Naam - Help",
+      "content": "De naam van de individuele specificatie binnen uw IDS-bestand.\n\nEen IDS-bestand kan meerdere specificaties bevatten. Elke specificatie controleert specifieke aspecten van uw BIM-modellen.\n\nVoorbeelde:\n• 'Controleer Muur Eigenschappen'\n• 'Valideer Brandweerstandsklassen'\n• 'Verificeer Constructie Elementen'\n\nDe naam moet duidelijk beschrijven wat deze specificatie controleert."
+    },
+    "applicability": {
+      "title": "Toepasbaarheid - Help",
+      "content": "Toepasbaarheid definieert op welke BIM objecten deze specificatie van toepassing is.\n\n🏗️ Type (IFC Klasse):\n• Verwijst naar specifieke IFC objecttypen (bijv. muren, deuren, ramen)\n• U kunt meerdere IFC klassen selecteren\n• Voorbeeld: IFCWALL, IFCDOOR, IFCWINDOW\n\n🏷️ Classificatie:\n• Verwijst naar geclassificeerde objecten (bijv. volgens DIN 276, OMNICLASS)\n• Gebruikt IFCCLASSIFICATION als IFC klasse\n• Voorbeeld: Objecten met specifieke kostengroepen of functionele klassen"
+    },
+    "ifc_classes": {
+      "title": "IFC Klassen - Help",
+      "content": "Selecteer de IFC entiteitstypen waarop deze specificatie betrekking heeft.\n\nVeelgebruikte klassen:\n• IFCWALL - Muren\n• IFCDOOR - Deuren\n• IFCWINDOW - Ramen\n• IFCSLAB - Vloeren/Plafonds\n• IFCBEAM - Balken\n• IFCCOLUMN - Kolommen\n• IFCSPACE - Ruin detes\n\nU kunt meerdere klassen selecteren als dezelfde vereisten gelde voor verschillende objecttypen.\n\nTip: Gebruik de zoekfunctie om snel de gewenste IFC klassen te vinde."
+    },
+    "requirements": {
+      "title": "Vereisten - Help",
+      "content": "Vereisten definiëren welke eigenschappen de geselecteerde objecten moeten hebben.\n\n🏷️ Classificatie:\n• Controleert classificatiewaarde (bijv. kostengroepen, functionele klassen)\n• Selecteer het classificatiesysteem en optioneel specifieke klassen\n\n📝 Attribuut:\n• Controleert IFC attributen van objecten\n• Voorbeeld: Naam, beschrijving, of andere directe object eigenschappen\n\n🔧 Eigenschap:\n• Controleert PropertySets en hun eigenschappen\n• Voorbeeld: Brandweerstandsklasse, U-waarde, materiaaltype\n• U kunt meerdere eigenschappen en hun toegestane waarde definiëren\n\nElke vereiste kan gemarkeerd worde als 'required' (vereist), 'optional' (optioneel) of 'prohibited' (verbode)."
+    },
+    "classification_system": {
+      "title": "Classificatiesysteem - Help",
+      "content": "Selecteer het vakmodel of referentiedocument dat de classificatie definieert.\n\nDit kan zijn:\n• Een kostenindelingssysteem (bijv. DIN 276)\n• Een functioneel classificatiesysteem\n• Een fabrikant-specifiek classificatiesysteem\n• Een project-specifiek referentiedocument\n\nHet geselecteerde systeem wordt gebruikt als 'System' in de IDS classificatie."
+    },
+    "property_group": {
+      "title": "Eigenschap Groep (PropertySet) - Help",
+      "content": "PropertySets zijn groepen van gerelateerde eigenschappen in IFC.\n\nVoorbeelde:\n• Pset_WallCommon - Algemene muur eigenschappen\n• Pset_DoorCommon - Algemene deur eigenschappen\n• Pset_SpaceFireSafetyRequirements - Brandveiligheidsvereisten voor ruin detes\n\nU kunt:\n• Bestaande PropertySets uit de catalogus selecteren\n• Nieuwe PropertySets maken met de ➕ knop\n• Meerdere eigenschappen uit een PropertySet selecteren\n\nDe URI wordt automatisch gegenereerd en verwijst naar de definitie in de catalogus."
+    },
+    "datatype": {
+      "title": "Datatype - Help",
+      "content": "Het datatype definieert welk soort waarde voor deze eigenschap verwacht worde.\n\nVeelgebruikte datatypes:\n• IFCLABEL - Korte tekst (bijv. materiaalnaam)\n• IFCTEXT - Langere tekst (bijv. beschrijving)\n• IFCBOOLEAN - Ja/Nee waarde (bijv. Dragend)\n• IFCREAL - Decin deale getallen (bijv. U-waarde: 0.24)\n• IFCINTEGER - Hele getallen (bijv. Aantal: 5)\n• IFCLENGTHMEASURE - Lengte maten (bijv. 2.5m)\n• IFCAREAMEASURE - Oppervlakte maten (bijv. 25.5m²)\n\nHet datatype is optioneel, maar aanbevolen voor precieze validatie."
+    },
+    "cardinality": {
+      "title": "Kardinaliteit - Help",
+      "content": "Kardinaliteit bepaalt of een eigenschap aanwezig moet zijn.\n\n✅ Required (Vereist):\n• De eigenschap MOET aanwezig zijn\n• Objecten zonder deze eigenschap zijn ongeldig\n• Standaard instelling voor de meeste vereisten\n\n❓ Optional (Optioneel):\n• De eigenschap KAN aanwezig zijn\n• Indien aanwezig, moet het voldoen aan gedefinieerde waarde\n• Indien niet aanwezig, is het object nog steeds geldig\n\n❌ Prohibited (Verbode):\n• De eigenschap mag NIET aanwezig zijn\n• Objecten met deze eigenschap zijn ongeldig\n• Nuttig voor uitsluitingsregels"
+    },
+    "property_values": {
+      "title": "Eigenschap Waarde - Help",
+      "content": "Hier kunt u specifieke waarde voor de geselecteerde eigenschap definiëren.\n\n🎯 Gebruik:\n• Definieer toegestane waarde voor deze eigenschap\n• Meervoudige selectie mogelijk voor alternatieve waarde\n• Voorbeelde: REI30, REI60, REI90 voor brandweerstandsklassen\n\n📋 Waarde Enumeratie:\n• Alle geselecteerde waarde worde gedefinieerd als toegestane opties in de IDS\n• Het object moet een van deze waarde hebben om geldig te zijn\n• Lege selectie betekent: Elke waarde is toegestaan (alleen eigenschap moet aanwezig zijn)"
+    }
+  },
+  "metadata": {
+    "defaultTitle": "Nieuwe IDS Specificatie",
+    "untitledSpecification": "Naamloze Specificatie",
+    "defaultDescription": "Generierte IDS-Spezifikation totr Validierung vaan Gebäudeinformationen",
+    "defaultMilestone": "Plaanung",
+    "defaultPurpose": "Entwurfsvalidierung"
   }
 }

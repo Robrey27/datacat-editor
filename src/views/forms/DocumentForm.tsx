@@ -51,12 +51,12 @@ const DocumentForm = (props: FormProps<ExternalDocumentDetailPropsFragment>) => 
 
     const handleOnUpdate = async () => {
         await refetch();
-        enqueueSnackbar("Update erfolgreich.");
+        enqueueSnackbar(<T keyName="document.update_success">Update erfolgreich.</T>);
     }
 
     const handleOnDelete = async () => {
         await deleteEntry({variables: {id}});
-        enqueueSnackbar("Referenzdokument gelöscht.")
+        enqueueSnackbar(<T keyName="document.delete_success">Referenzdokument gelöscht.</T>)
         onDelete?.();
     };
 
@@ -105,7 +105,7 @@ const DocumentForm = (props: FormProps<ExternalDocumentDetailPropsFragment>) => 
                 startIcon={<DeleteForeverIcon/>}
                 onClick={handleOnDelete}
             >
-                Löschen
+                <T keyName="document.delete_button"/>
             </Button>
         </FormView>
     );

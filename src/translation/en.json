@@ -344,7 +344,8 @@
     "confirm_delete_message": "Are you sure you want to delete all catalog entries with the tag '{{tag}}'? This action cannot be undone.",
     "cancel": "Cancel",
     "confirm_delete": "Yes, delete",
-    "search_error": "An error occurred during the search."
+    "search_error": "An error occurred during the search.",
+    "confirm_delete_message_simple": "[EN] Sind Sie sicher, dass Sie alle Katalogeinträge mit dem Tag '{{tag}}' löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden."
   },
   "export_view": {
     "heading": "Export catalog",
@@ -444,7 +445,7 @@
     "more_than": "more than",
     "multiselect_help": "Multi-select: Ctrl + Click"
   },
-  "error":{
+  "error": {
     "error": "An error occurred..."
   },
   "document": {
@@ -453,12 +454,15 @@
     "description": "An entry of the type external document is used to map external documents, books or other written information.",
     "loading": "Loading external document...",
     "TransferList": "By the external document described ",
-    "TransferList2": "concepts"
+    "TransferList2": "concepts",
+    "delete_button": "Delete",
+    "update_success": "Update successful.",
+    "delete_success": "External document deleted."
   },
   "model": {
     "title": "Domain Model",
     "titlePlural": "Domain Models",
-    "loading": "Loading Domain model...", 
+    "loading": "Loading Domain model...",
     "TransferList": "By the domain model described ",
     "TransferList2": "Groups"
   },
@@ -508,7 +512,7 @@
     "no_translations": "No translations available yet.",
     "add_translation": "Add translation",
     "add_translation_title": "Add translation",
-        "language": "Language",
+    "language": "Language",
     "language_helper": "Language in which the translation is created."
   },
   "version": {
@@ -537,7 +541,7 @@
     "title": "Description",
     "description": "Characterizes the concept in more detail in terms of its form and application concept."
   },
-  "search":{
+  "search": {
     "search": "Search",
     "search_placeholder": "Search catalog",
     "search_results": "Search Results"
@@ -581,7 +585,8 @@
       "specification_loaded": "Specification was successfully loaded.",
       "ids_generated": "IDS file was successfully generated and can now be downloaded.",
       "ids_downloaded": "IDS file was successfully downloaded.",
-      "ids_data_loaded": "IDS data was successfully loaded."
+      "ids_data_loaded": "IDS data was successfully loaded.",
+      "auto_saved": "Data was automatically saved."
     },
     "error_messages": {
       "login_required": "Please log in to create an IDS file."
@@ -591,6 +596,32 @@
       "no_classes_with_tag": "No classes with tag '{tag}' found.",
       "properties_with_tag_added": "{count} properties with tag '{tag}' were added.",
       "no_properties_with_tag": "No properties with tag '{tag}' found."
+    },
+    "messages": {
+      "no_requirements": "No requirements added yet. Click one of the buttons above to add a requirement."
+    },
+    "validation": {
+      "ready_for_export": "All validations passed - ready for export!",
+      "errors_found": "Validation errors found",
+      "warnings": "Warnings",
+      "and_more": "and more"
+    },
+    "requirements": {
+      "title": "IDS title entered",
+      "version": "IDS version entered",
+      "specifications": "Specifications added"
+    },
+    "tooltips": {
+      "export_disabled": "Export not possible: title, version, and at least one specification required"
+    },
+    "tips": {
+      "title": "Export Tips",
+      "filename_based_on_title": "Filename is based on the IDS title",
+      "xml_validated_before_download": "XML is validated before download",
+      "save_project_before_export": "Save your project before export"
+    },
+    "errors": {
+      "unknown_facet": "Unknown facet"
     },
     "labels": {
       "local_created": "Locally created",
@@ -610,18 +641,109 @@
       "model_class_select": "Select model/reference document",
       "class_select": "Select class",
       "ifc_class_placeholder": "Please enter IFC class (e.g. IFCWALL)",
-      "search_values": "Search values..."
+      "ifc_classes": "IFC Classes (Multiple Selection)",
+      "ifc_versions": "IFC Versions (Multiple Selection)",
+      "search_values": "Search values...",
+      "ids_name": "IDS Name",
+      "ids_version": "IDS Version",
+      "ids_version_description": "Enter the version of your IDS file (e.g., 1.0, 2.1). This is not the schema version.",
+      "specification_name": "Specification Name",
+      "edit_specification": "Edit Specification",
+      "applicability": "Applicability",
+      "applicability_type": "Applicability",
+      "type_ifc_class": "Type (IFC Class)",
+      "classification": "Classification",
+      "ifc_class": "IFC Class",
+      "classification_auto_ifcclassification": "For classification, IFCCLASSIFICATION is used automatically",
+      "requirements": "Requirements",
+      "datatype_optional": "dataType",
+      "select_datatype": "Select dataType",
+      "cardinality": "Cardinality",
+      "none": "None",
+      "entity_type_select": "Select IFC Entity Type",
+      "entity_type": "Entity Type",
+      "predefined_type_optional": "Predefined Type (optional)",
+      "predefined_type": "Predefined Type",
+      "instructions_optional": "Instructions (optional)",
+      "instructions": "Instructions",
+      "material_select": "Select Material",
+      "materials": "Materials",
+      "material_properties_optional": "Material Properties (optional)",
+      "thermal_properties": "Thermal Properties",
+      "mechanical_properties": "Mechanical Properties",
+      "optical_properties": "Optical Properties",
+      "material_category": "Material Category"
+    },
+    "placeholders": {
+      "ids_name_example": "e.g. Fire-Safety-Requirements-2024",
+      "ids_version_example": "1.0",
+      "ifc_versions_select": "Select IFC versions...",
+      "specification_name_example": "e.g. Check fire protection classes",
+      "ifc_classes_search": "Search and select IFC classes...",
+      "classification_system_search": "Search and select classification system...",
+      "datatype_search": "Search and select data type...",
+      "property_set_search": "Search and select Property Group...",
+      "attribute_model_search": "Search and select model...",
+      "attribute_class_search": "Search and select class...",
+      "entity_type_search": "Search and select entity type...",
+      "predefined_type": "e.g. WALL, COLUMN, BEAM...",
+      "instructions": "Additional instructions or notes...",
+      "material_search": "Search and select material...",
+      "thermal_properties": "e.g. thermal conductivity, specific heat...",
+      "mechanical_properties": "e.g. elastic modulus, tensile strength...",
+      "optical_properties": "e.g. transparency, reflectivity...",
+      "unnamed_ids": "Unnamed IDS",
+      "unnamed_specification": "Unnamed Specification"
     },
     "buttons": {
       "select_facet": "Please select facet",
+      "add_by_tag": "Add",
       "property": "Property",
       "classification": "Classification",
-      "attribute": "Attribute", 
+      "attribute": "Attribute",
       "select_all_properties": "Select all",
-      "select_all_values": "Select all"
+      "select_all_values": "Select all",
+      "add_requirement": "Add Requirement",
+      "create_pset": "create new IFC PropertySet",
+      "entity": "Entity",
+      "material": "Material",
+      "facet": "Facet",
+      "requirement": "Requirement",
+      "export_actions": "Export Actions",
+      "export_requirements": "Export Requirements",
+      "applicability_summary": "Applicability Summary",
+      "last_export": "Last Export",
+      "classes": "Classes",
+      "ifc_versions": "IFC Versions",
+      "classification_system": "Classification System",
+      "type": "Type",
+      "exporting": "Exporting...",
+      "preview_xml": "Preview XML",
+      "add_specification": "Add Specification",
+      "save_and_load": "Save & Load",
+      "generate_ids": "Generate IDS File",
+      "download_ids": "Download IDS File",
+      "cancel": "Cancel",
+      "save_spec": "Save Spec",
+      "save": "Save",
+      "update": "Update"
     },
     "value_labels": {
       "values_for": "Values for"
+    },
+    "cardinality": {
+      "required": "required",
+      "optional": "optional",
+      "prohibited": "prohibited"
+    },
+    "material_category": {
+      "none": "No Category",
+      "concrete": "Concrete",
+      "steel": "Steel",
+      "wood": "Wood",
+      "glass": "Glass",
+      "insulation": "Insulation",
+      "other": "Other"
     }
   },
   "create_property_set": {
@@ -630,15 +752,21 @@
       "property_set_name": "IFC Propertyset name",
       "description_optional": "Description (optional)",
       "assign_properties": "Assign properties",
-      "select_properties": "Select properties"
+      "select_properties": "Select properties",
+      "property_values_optional": "Property Values (optional)",
+      "values_from_datacat": "Select values from DataCat:",
+      "custom_values": "Or enter custom values:"
     },
     "placeholders": {
       "property_set_example": "e.g. Geometric Properties",
       "description_text": "Description of the IFC Propertyset...",
-      "search_and_select": "Search and select properties..."
+      "search_and_select": "Search and select properties...",
+      "select_values_from_datacat": "Select values...",
+      "enter_custom_values": "Enter values separated by commas..."
     },
     "info": {
-      "selection_help": "Select from the existing properties in datacat those that should belong to this new IFC Propertyset. This Propertyset will only be used locally for IDS creation and will not be saved in the datacat property server."
+      "selection_help": "Select from the existing properties in datacat those that should belong to this new IFC Propertyset. This Propertyset will only be used locally for IDS creation and will not be saved in the datacat property server.",
+      "values_help": "You can optionally define values for each property. Leave fields empty if no value constraint is desired."
     },
     "tag_filter": {
       "properties": "Tag filter for properties:",
@@ -650,6 +778,9 @@
       "create": "Create IFC Propertyset",
       "creating": "Creating..."
     },
+    "help": {
+      "custom_values_format": "Separate multiple values with commas"
+    },
     "notifications": {
       "properties_with_tag_added": "{count} properties with tag \"{tag}\" added",
       "no_properties_with_tag": "No properties with tag \"{tag}\" found",
@@ -660,5 +791,90 @@
     "status": {
       "properties_selected": "{count} propert{plural} selected"
     }
+  },
+  "save_load_dialog": {
+    "title": "Save & Load",
+    "tabs": {
+      "ids_files": "IDS Files",
+      "specifications": "Specifications"
+    },
+    "auto_save": {
+      "found_message": "Auto-saved data found from {timestamp}",
+      "restore": "Restore",
+      "discard": "Discard"
+    },
+    "save_section": {
+      "title": "Save",
+      "name_placeholder": "Enter name...",
+      "save_button": "Save"
+    },
+    "load_section": {
+      "title": "Load",
+      "empty_message": "No saved files found"
+    },
+    "buttons": {
+      "close": "Close"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "info": "Information"
+  },
+  "info_dialogs": {
+    "ids_name": {
+      "title": "IDS Name - Help",
+      "content": "The IDS Name is the main title of your Information Delivery Specification.\n\nThis name will be:\n• Used as the title in the generated IDS XML file\n• Used as filename when downloading (special characters will be removed)\n• Used for identification when saving and loading\n\nTip: Choose a meaningful name like 'Structural-Check-2024' or 'Fire-Safety-Requirements'."
+    },
+    "ids_version": {
+      "title": "IDS Version - Help",
+      "content": "The IDS Version is the version number of your specific IDS file (not the schema version).\n\nExamples:\n• '1.0' for the first version\n• '2.1' for a revised version\n• '3.0-beta' for a beta version\n\nThis version is stored in the <ids:version> element of the XML file and helps with version control of your IDS specifications."
+    },
+    "ifc_versions": {
+      "title": "IFC Versions - Help",
+      "content": "Select the IFC versions for which this IDS specification should apply.\n\nAvailable versions:\n• IFC2X3: Older version, still widely used\n• IFC4: Current standard version\n• IFC4X3: Latest version with extended features\n\nYou can select multiple versions if your specification is compatible with different IFC versions."
+    },
+    "specification_name": {
+      "title": "Specification Name - Help",
+      "content": "The name of the individual specification within your IDS file.\n\nAn IDS file can contain multiple specifications. Each specification checks specific aspects of your BIM models.\n\nExamples:\n• 'Check wall properties'\n• 'Validate fire protection classes'\n• 'Verify structural elements'\n\nThe name should clearly describe what this specification validates."
+    },
+    "applicability": {
+      "title": "Applicability - Help",
+      "content": "Applicability defines which BIM objects this specification applies to.\n\n🏗️ Type (IFC Class):\n• Refers to specific IFC object types (e.g. walls, doors, windows)\n• You can select multiple IFC classes\n• Example: IFCWALL, IFCDOOR, IFCWINDOW\n\n🏷️ Classification:\n• Refers to classified objects (e.g. according to DIN 276, OMNICLASS)\n• Uses IFCCLASSIFICATION as IFC class\n• Example: Objects with specific cost groups or functional classes"
+    },
+    "ifc_classes": {
+      "title": "IFC Classes - Help",
+      "content": "Select the IFC entity types this specification applies to.\n\nCommonly used classes:\n• IFCWALL - Walls\n• IFCDOOR - Doors\n• IFCWINDOW - Windows\n• IFCSLAB - Slabs/Floor plates\n• IFCBEAM - Beams\n• IFCCOLUMN - Columns\n• IFCSPACE - Spaces\n\nYou can select multiple classes if the same requirements apply to different object types.\n\nTip: Use the search function to quickly find the desired IFC classes."
+    },
+    "requirements": {
+      "title": "Requirements - Help",
+      "content": "Requirements define what properties the selected objects must have.\n\n🏷️ Classification:\n• Checks classification values (e.g. cost groups, functional classes)\n• Select the classification system and optionally specific classes\n\n📝 Attribute:\n• Checks IFC attributes of objects\n• Example: Name, Description, or other direct object properties\n\n🔧 Property:\n• Checks PropertySets and their properties\n• Example: Fire resistance class, U-value, material type\n• You can define multiple properties and their allowed values\n\nEach requirement can be marked as 'required', 'optional', or 'prohibited'."
+    },
+    "classification_system": {
+      "title": "Classification System - Help",
+      "content": "Select the model or reference document that defines the classification.\n\nThis can be:\n• A cost breakdown system (e.g. DIN 276)\n• A functional classification system\n• A manufacturer-specific classification system\n• A project-specific reference document\n\nThe selected system is used as 'System' in the IDS classification."
+    },
+    "property_group": {
+      "title": "Property Group (PropertySet) - Help",
+      "content": "PropertySets are groups of related properties in IFC.\n\nExamples:\n• Pset_WallCommon - Common wall properties\n• Pset_DoorCommon - Common door properties\n• Pset_SpaceFireSafetyRequirements - Fire safety requirements for spaces\n\nYou can:\n• Select existing PropertySets from the catalog\n• Create new PropertySets with the ➕ button\n• Select multiple properties from one PropertySet\n\nThe URI is automatically generated and references the definition in the catalog."
+    },
+    "datatype": {
+      "title": "Data Type - Help",
+      "content": "The data type defines what kind of values are expected for this property.\n\nCommon data types:\n• IFCLABEL - Short text (e.g. material name)\n• IFCTEXT - Longer text (e.g. description)\n• IFCBOOLEAN - Yes/No values (e.g. load bearing)\n• IFCREAL - Decimal numbers (e.g. U-value: 0.24)\n• IFCINTEGER - Whole numbers (e.g. count: 5)\n• IFCLENGTHMEASURE - Length measures (e.g. 2.5m)\n• IFCAREAMEASURE - Area measures (e.g. 25.5m²)\n\nThe data type is optional but recommended for precise validation."
+    },
+    "cardinality": {
+      "title": "Cardinality - Help",
+      "content": "Cardinality determines whether a property must be present.\n\n✅ Required:\n• The property MUST be present\n• Objects without this property are invalid\n• Default setting for most requirements\n\n❓ Optional:\n• The property CAN be present\n• If present, it must match the defined values\n• If not present, the object is still valid\n\n❌ Prohibited:\n• The property MUST NOT be present\n• Objects with this property are invalid\n• Useful for exclusion rules"
+    },
+    "property_values": {
+      "title": "Property Values - Help",
+      "content": "Here you can define specific values for the selected property.\n\n🎯 Usage:\n• Define allowed values for this property\n• Multiple selection possible for alternative values\n• Examples: REI30, REI60, REI90 for fire resistance classes\n\n📋 Value Enumeration:\n• All selected values are defined as allowed options in the IDS\n• The object must have one of these values to be valid\n• Empty selection means: Any value is allowed (only property must be present)"
+    }
+  },
+  "metadata": {
+    "defaultTitle": "New IDS Specification",
+    "defaultDescription": "Generated IDS specification for building information validation",
+    "defaultPurpose": "Design validation",
+    "defaultMilestone": "Planning",
+    "untitledSpecification": "Untitled Specification"
   }
 }

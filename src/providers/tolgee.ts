@@ -16,10 +16,7 @@ export const tolgee = Tolgee()
   .use(FormatSimple())
   .use(isDevelopment ? DevTools() : undefined)
   .init({
-    ...(isDevelopment && {
-      apiUrl: "http://localhost:3000",
-      apiKey: "dummy",
-    }),
+    // Nur statische Daten verwenden, keine API-Calls
     availableLanguages: ["de", "en", "es", "it", "nl", "zh"],
     defaultLanguage,
     fallbackLanguage: "en",

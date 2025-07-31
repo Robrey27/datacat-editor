@@ -9,6 +9,7 @@ type IDSRequirement = {
   baseName?: string;
   baseNames?: string[]; // Für Enumeration von Merkmalen
   valueList?: string[];
+  valueMap?: { [propertyId: string]: string[] }; // Für individuelle Werte pro Merkmal
   dataType?: string;
   uri?: string;
   cardinality?: string;
@@ -18,9 +19,10 @@ type IDSSpec = {
   id: number;
   name: string;
   applicabilityType: "type";
-  ifcVersion: string;
+  ifcVersions: string[]; // Updated to array
   requirements: IDSRequirement[];
-  ifcClass?: string;
+  ifcClasses?: string[]; // Updated to array
+  ifcClass?: string; // Keep for backward compatibility
 };
 
 type IDSInfo = {
@@ -124,6 +126,35 @@ function xmlProperty(req: IDSRequirement) {
   return xml;
 }
 
+// Neue Funktion für Properties mit individuellen Werten pro Merkmal
+function xmlPropertyWithIndividualValues(req: IDSRequirement, propertyName: string, values: string[]) {
+  let xml = `        <ids:property`;
+  if (req.dataType) xml += ` dataType="${esc(req.dataType)}"`;
+  if (req.uri) xml += ` uri="${esc(req.uri)}"`;
+  if (req.cardinality) xml += ` cardinality="${esc(req.cardinality)}"`;
+  xml += `>\n`;
+
+  // PropertySet
+  if (req.propertySet) {
+    xml += `          <ids:propertySet>\n            <ids:simpleValue>${esc(req.propertySet)}</ids:simpleValue>\n          </ids:propertySet>\n`;
+  }
+  
+  // Einzelnes Merkmal
+  xml += `          <ids:baseName>\n            <ids:simpleValue>${esc(propertyName)}</ids:simpleValue>\n          </ids:baseName>\n`;
+  
+  // Individuelle Werte für dieses Merkmal
+  if (values && values.length > 0) {
+    xml += `          <ids:value>\n            <xs:restriction base="xs:string">\n`;
+    values.forEach((val) => {
+      xml += `              <xs:enumeration value="${esc(val)}" />\n`;
+    });
+    xml += `            </xs:restriction>\n          </ids:value>\n`;
+  }
+  
+  xml += `        </ids:property>`;
+  return xml;
+}
+
 export function convertToIDSXml(
   specs: IDSSpec[],
   info: IDSInfo
@@ -151,18 +182,52 @@ export function convertToIDSXml(
   ];
 
   specs.forEach((spec, i) => {
-    const specId = esc(String(spec.id ?? `S${i + 1}`));
-    const ifcVersion = esc(spec.ifcVersion || "IFC4");
+    // Verwende sequenzielle Identifier mit "S" Prefix: S1, S2, S3, ...
+    const specId = esc(`S${i + 1}`);
+    // Handle both array and single version formats for backward compatibility
+    const ifcVersionArray = spec.ifcVersions && spec.ifcVersions.length > 0 
+      ? spec.ifcVersions 
+      : (spec as any).ifcVersion 
+        ? [(spec as any).ifcVersion] 
+        : ["IFC4"];
+    const ifcVersion = esc(ifcVersionArray.join(" "));
     const name = esc(spec.name || `Spec ${i + 1}`);
-    const applicabilityIfc = spec.requirements.some(r => r.type === "attribute")
-      ? "IFCCLASSIFICATION"
-      : esc(spec.ifcClass || "IfcRoot");
+    
+    // Determine IFC classes to use in applicability
+    let applicabilityClasses: string[] = [];
+    
+    if (spec.requirements.some(r => r.type === "attribute")) {
+      // For classification applicability, always use IFCCLASSIFICATION
+      applicabilityClasses = ["IFCCLASSIFICATION"];
+    } else {
+      // For type applicability, use selected IFC classes or fallback
+      applicabilityClasses = spec.ifcClasses && spec.ifcClasses.length > 0
+        ? spec.ifcClasses
+        : spec.ifcClass
+        ? [spec.ifcClass]
+        : ["IfcRoot"];
+    }
 
     lines.push(`    <ids:specification name="${name}" identifier="${specId}" ifcVersion="${ifcVersion}">`);
     lines.push(`      <ids:applicability maxOccurs="unbounded">`);
+    
+    // Create a single entity with enumeration for multiple IFC classes
     lines.push(`        <ids:entity>`);
-    lines.push(`          <ids:name><ids:simpleValue>${applicabilityIfc}</ids:simpleValue></ids:name>`);
+    if (applicabilityClasses.length === 1) {
+      // Single class: use simpleValue
+      lines.push(`          <ids:name><ids:simpleValue>${esc(applicabilityClasses[0])}</ids:simpleValue></ids:name>`);
+    } else {
+      // Multiple classes: use enumeration
+      lines.push(`          <ids:name>`);
+      lines.push(`            <xs:restriction base="xs:string">`);
+      applicabilityClasses.forEach((ifcClass) => {
+        lines.push(`              <xs:enumeration value="${esc(ifcClass)}" />`);
+      });
+      lines.push(`            </xs:restriction>`);
+      lines.push(`          </ids:name>`);
+    }
     lines.push(`        </ids:entity>`);
+    
     lines.push(`      </ids:applicability>`);
     lines.push(`      <ids:requirements>`);
 
@@ -208,7 +273,46 @@ export function convertToIDSXml(
         }
         lines.push(`        </ids:attribute>`);
       } else if (req.type === "property") {
-        lines.push(xmlProperty(req));
+        // Intelligente Property-Behandlung: 
+        // Wenn individuelle Werte pro Merkmal definiert sind, separate Properties erstellen
+        const hasValueMap = req.valueMap && Object.keys(req.valueMap).some(key => req.valueMap![key] && req.valueMap![key].length > 0);
+        
+        if (hasValueMap && req.baseNames && Array.isArray(req.baseNames)) {
+          // Aufspaltung: Separate Property für jedes Merkmal mit individuellen Werten
+          const propertiesWithValues: string[] = [];
+          const propertiesWithoutValues: string[] = [];
+          
+          req.baseNames.forEach((baseName: string) => {
+            const hasValues = req.valueMap && req.valueMap[baseName] && req.valueMap[baseName].length > 0;
+            if (hasValues) {
+              propertiesWithValues.push(baseName);
+            } else {
+              propertiesWithoutValues.push(baseName);
+            }
+          });
+          
+          // Properties mit individuellen Werten - jeweils separate <ids:property>
+          propertiesWithValues.forEach((baseName: string) => {
+            const values = req.valueMap![baseName] || [];
+            lines.push(xmlPropertyWithIndividualValues(req, baseName, values));
+          });
+          
+          // Properties ohne Werte - als eine Enumeration wenn mehrere, sonst einzeln
+          if (propertiesWithoutValues.length > 0) {
+            if (propertiesWithoutValues.length === 1) {
+              // Einzelnes Property ohne Werte
+              const singleReq = { ...req, baseName: propertiesWithoutValues[0], baseNames: undefined, valueList: undefined };
+              lines.push(xmlProperty(singleReq));
+            } else {
+              // Mehrere Properties ohne Werte als Enumeration
+              const enumerationReq = { ...req, baseNames: propertiesWithoutValues, valueList: undefined };
+              lines.push(xmlProperty(enumerationReq));
+            }
+          }
+        } else {
+          // Standard-Behandlung ohne individuelle Werte
+          lines.push(xmlProperty(req));
+        }
       }
     });
 

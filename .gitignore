@@ -38,3 +38,19 @@ IDS-converter/
 
 # IDS Backend im src-Ordner ignorieren
 /src/ids_backend/
+
+# Dokumentation
+IDS_KOMPONENTE_DOKUMENTATION.md
+
+# Refactoring-Dokumentation
+REFACTORING_PLAN.md
+REFACTORING_DOCUMENTATION.md
+
+# Temporäre Entwickler-Dateien
+temp_original_queries.txt
+
+# Python-Synchronisationsskripte für Übersetzungen
+sync_missing_keys.py
+remove_extra_keys.py
+verify_synchronization.py
+deep_key_comparison.py

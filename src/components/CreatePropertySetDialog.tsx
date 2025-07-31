@@ -14,12 +14,13 @@ import {
   Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import { useSnackbar } from "notistack";
 import { T, useTranslate } from "@tolgee/react";
 import { 
   usePropertyTreeQuery,
 } from "../generated/types";
-import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 
 // Tag styling components (similar to IDSExportView)
@@ -51,7 +52,7 @@ const TagFilterSection = styled(Box)(({ theme }) => ({
 interface CreatePropertySetDialogProps {
   open: boolean;
   onClose: () => void;
-  onPropertySetCreated: (propertySetName: string, propertySetId: string, selectedProperties: any[]) => void;
+  onPropertySetCreated: (propertySetName: string, propertySetId: string, selectedProperties: any[], propertyValues?: Record<string, string[]>) => void;
   availableTags?: string[];
 }
 
@@ -63,8 +64,9 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
 }) => {
   const { t } = useTranslate();
   const [propertySetName, setPropertySetName] = useState("");
-  const [description, setDescription] = useState("");
   const [selectedProperties, setSelectedProperties] = useState<any[]>([]);
+  const [propertyValues, setPropertyValues] = useState<Record<string, string[]>>({}); // Werte pro Property
+  const [rawTextValues, setRawTextValues] = useState<Record<string, string>>({}); // Rohe Texteingabe pro Property
   const [isCreating, setIsCreating] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -85,6 +87,45 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
         name: node.name || `Property ${node.id}`,
         description: node.description || "",
         tags: node.tags || [], // Tag-Informationen hinzufügen
+      }))
+      .sort((a: any, b: any) => a.name.localeCompare(b.name));
+  }, [propertyData?.hierarchy?.nodes]);
+
+  // Lade verfügbare Werte für eine Property
+  const getValuesForProperty = useMemo(() => {
+    return (propertyId: string) => {
+      if (!propertyData?.hierarchy?.nodes) return [];
+      
+      const propertyNode = propertyData.hierarchy.nodes.find((node: any) => node.id === propertyId);
+      if (!propertyNode) return [];
+      
+      // Finde alle Value-Kinder dieser Property
+      const values = propertyData.hierarchy.nodes
+        .filter((node: any) => 
+          node.recordType === "Value" && 
+          node.parentId === propertyId
+        )
+        .map((node: any) => ({
+          id: node.id,
+          name: node.name || `Value ${node.id}`,
+          description: node.description || "",
+        }))
+        .sort((a: any, b: any) => a.name.localeCompare(b.name));
+      
+      return values;
+    };
+  }, [propertyData?.hierarchy?.nodes]);
+
+  // Lade ALLE verfügbaren Werte aus DataCat (unabhängig von der Merkmal-Verbindung)
+  const allAvailableValues = useMemo(() => {
+    if (!propertyData?.hierarchy?.nodes) return [];
+    
+    return propertyData.hierarchy.nodes
+      .filter((node: any) => node.recordType === "Value")
+      .map((node: any) => ({
+        id: node.id,
+        name: node.name || `Value ${node.id}`,
+        description: node.description || "",
       }))
       .sort((a: any, b: any) => a.name.localeCompare(b.name));
   }, [propertyData?.hierarchy?.nodes]);
@@ -127,8 +168,9 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
   useEffect(() => {
     if (!open) {
       setPropertySetName("");
-      setDescription("");
       setSelectedProperties([]);
+      setPropertyValues({}); // Reset Property Values
+      setRawTextValues({}); // Reset Raw Text Values
       setIsCreating(false);
       setSelectedTag(null);
     }
@@ -155,7 +197,7 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
       );
 
       // Callback aufrufen um die neue PropertySet zu verwenden
-      onPropertySetCreated(propertySetName.trim(), newPropertySetId, selectedProperties);
+      onPropertySetCreated(propertySetName.trim(), newPropertySetId, selectedProperties, propertyValues);
       
       onClose();
     } catch (error: any) {
@@ -171,6 +213,36 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
 
   const handleRemoveProperty = (propertyToRemove: any) => {
     setSelectedProperties(prev => prev.filter(p => p.id !== propertyToRemove.id));
+    // Entferne auch die Werte für diese Property
+    setPropertyValues(prev => {
+      const newValues = { ...prev };
+      delete newValues[propertyToRemove.id];
+      return newValues;
+    });
+    // Entferne auch die Raw Text Values
+    setRawTextValues(prev => {
+      const newValues = { ...prev };
+      delete newValues[propertyToRemove.id];
+      return newValues;
+    });
+  };
+
+  // Hilfsfunktion zur Verarbeitung der Komma-getrennten Eingabe
+  const processCustomValues = (propertyId: string, inputValue: string) => {
+    const customValues = inputValue
+      .split(',')
+      .map(v => v.trim())
+      .filter((v, index, arr) => v.length > 0 && arr.indexOf(v) === index); // Duplikate entfernen
+    
+    // Behalte DataCat-Werte bei
+    const currentValues = propertyValues[propertyId] || [];
+    const datacatValues = currentValues.filter(v => allAvailableValues.some(av => av.name === v));
+    const uniqueValues = [...new Set([...datacatValues, ...customValues])]; // Weitere Duplikat-Entfernung
+    
+    setPropertyValues(prev => ({
+      ...prev,
+      [propertyId]: uniqueValues
+    }));
   };
 
   return (
@@ -189,17 +261,6 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
             required
             placeholder={t("create_property_set.placeholders.property_set_example")}
             autoFocus
-          />
-
-          {/* Beschreibung (optional) */}
-          <TextField
-            label={<T keyName="create_property_set.labels.description_optional" />}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            multiline
-            rows={2}
-            placeholder={t("create_property_set.placeholders.description_text")}
           />
 
           <Divider sx={{ my: 1 }} />
@@ -291,12 +352,193 @@ export const CreatePropertySetDialog: React.FC<CreatePropertySetDialogProps> = (
           />
 
           {selectedProperties.length > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              <T keyName="create_property_set.status.properties_selected" params={{ 
-                count: selectedProperties.length, 
-                plural: selectedProperties.length !== 1 ? "e" : "" 
-              }} />
-            </Typography>
+            <>
+              <Typography variant="body2" color="text.secondary">
+                <T keyName="create_property_set.status.properties_selected" params={{ 
+                  count: selectedProperties.length, 
+                  plural: selectedProperties.length !== 1 ? "e" : "" 
+                }} />
+              </Typography>
+
+              <Divider sx={{ my: 2 }} />
+
+              {/* Werte für jede ausgewählte Property */}
+              <Typography variant="h6" component="h3" sx={{ mb: 1 }}>
+                <T keyName="create_property_set.labels.property_values_optional" />
+              </Typography>
+              
+              <Alert severity="info" sx={{ mb: 2 }}>
+                <T keyName="create_property_set.info.values_help" />
+              </Alert>
+
+              {selectedProperties.map((property) => {
+                const propertySpecificValues = getValuesForProperty(property.id);
+                const currentValues = propertyValues[property.id] || [];
+                
+                return (
+                  <Box key={property.id} sx={{ mb: 2, p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
+                    <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'medium' }}>
+                      {property.name}
+                    </Typography>
+                    
+                    {/* Alle DataCat Werte (nicht nur merkmalsspezifische) */}
+                    <Box sx={{ mb: 2 }}>
+                      <Typography variant="body2" sx={{ mb: 1, color: 'text.secondary' }}>
+                        <T keyName="create_property_set.labels.values_from_datacat" />
+                        {propertySpecificValues.length > 0 && (
+                          <span style={{ fontSize: '0.8em', fontStyle: 'italic' }}>
+                            {' '}({propertySpecificValues.length} spezifisch für dieses Merkmal)
+                          </span>
+                        )}
+                      </Typography>
+                      <Autocomplete
+                        multiple
+                        options={allAvailableValues}
+                        getOptionLabel={(option: any) => option.name}
+                        value={allAvailableValues.filter((val: any) => currentValues.includes(val.name))}
+                        onChange={(event, newValue) => {
+                          const valueNames = newValue.map((item: any) => item.name);
+                          // Behalte auch custom values bei
+                          const customValues = currentValues.filter(v => !allAvailableValues.some(av => av.name === v));
+                          setPropertyValues(prev => ({
+                            ...prev,
+                            [property.id]: [...valueNames, ...customValues]
+                          }));
+                          
+                          // Update auch die Raw Text Values um die custom values zu erhalten
+                          setRawTextValues(prev => ({
+                            ...prev,
+                            [property.id]: customValues.join(', ')
+                          }));
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            size="small"
+                            placeholder={t("create_property_set.placeholders.select_values_from_datacat")}
+                          />
+                        )}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option: any, index: number) => {
+                            const { key, onDelete, ...otherTagProps } = getTagProps({ index });
+                            const isPropertySpecific = propertySpecificValues.some(pv => pv.name === option.name);
+                            return (
+                              <Chip
+                                key={key}
+                                label={option.name}
+                                {...otherTagProps}
+                                onDelete={() => {
+                                  const newValues = currentValues.filter(v => v !== option.name);
+                                  setPropertyValues(prev => ({
+                                    ...prev,
+                                    [property.id]: newValues
+                                  }));
+                                }}
+                                deleteIcon={<CloseIcon />}
+                                size="small"
+                                color={isPropertySpecific ? "primary" : "secondary"}
+                                variant="outlined"
+                              />
+                            );
+                          })
+                        }
+                        filterOptions={(options, { inputValue }) => {
+                          // Zeige zuerst merkmalsspezifische Werte, dann alle anderen
+                          const propertySpecificIds = propertySpecificValues.map(pv => pv.id);
+                          const filtered = options.filter((option: any) =>
+                            option.name.toLowerCase().includes(inputValue.toLowerCase())
+                          );
+                          
+                          return filtered.sort((a: any, b: any) => {
+                            const aIsSpecific = propertySpecificIds.includes(a.id);
+                            const bIsSpecific = propertySpecificIds.includes(b.id);
+                            
+                            if (aIsSpecific && !bIsSpecific) return -1;
+                            if (!aIsSpecific && bIsSpecific) return 1;
+                            return a.name.localeCompare(b.name);
+                          });
+                        }}
+                      />
+                    </Box>
+                    
+                    {/* Eigene Werte eingeben - verbesserte Komma-Trennung */}
+                    <Box>
+                      <Typography variant="body2" sx={{ mb: 1, color: 'text.secondary' }}>
+                        <T keyName="create_property_set.labels.custom_values" />
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        size="small"
+                        placeholder={t("create_property_set.placeholders.enter_custom_values")}
+                        helperText={<T keyName="create_property_set.help.custom_values_format" />}
+                        value={rawTextValues[property.id] || ''}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+                          // Speichere die rohe Eingabe
+                          setRawTextValues(prev => ({
+                            ...prev,
+                            [property.id]: inputValue
+                          }));
+                        }}
+                        onBlur={(e) => {
+                          // Verarbeite die Eingabe beim Verlassen des Feldes
+                          const inputValue = e.target.value;
+                          processCustomValues(property.id, inputValue);
+                        }}
+                        onKeyDown={(e) => {
+                          // Verarbeite die Eingabe auch bei Enter
+                          if (e.key === 'Enter') {
+                            const target = e.target as HTMLInputElement;
+                            const inputValue = target.value;
+                            processCustomValues(property.id, inputValue);
+                            e.preventDefault(); // Verhindere Form-Submit
+                          }
+                        }}
+                      />
+                      {/* Anzeige aller aktuell gesetzten Werte als Chips */}
+                      {currentValues.length > 0 && (
+                        <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {currentValues.map((value, index) => {
+                            const isFromDataCat = allAvailableValues.some(av => av.name === value);
+                            const isPropertySpecific = propertySpecificValues.some(pv => pv.name === value);
+                            return (
+                              <Chip
+                                key={`${property.id}-${value}-${index}`}
+                                label={value}
+                                size="small"
+                                color={isFromDataCat ? (isPropertySpecific ? "primary" : "secondary") : "default"}
+                                variant={isFromDataCat ? "filled" : "outlined"}
+                                onDelete={() => {
+                                  const newValues = currentValues.filter(v => v !== value);
+                                  setPropertyValues(prev => ({
+                                    ...prev,
+                                    [property.id]: newValues
+                                  }));
+                                  
+                                  // Update auch die Raw Text Values
+                                  const remainingCustomValues = newValues.filter(v => !allAvailableValues.some(av => av.name === v));
+                                  setRawTextValues(prev => ({
+                                    ...prev,
+                                    [property.id]: remainingCustomValues.join(', ')
+                                  }));
+                                }}
+                                deleteIcon={<CloseIcon />}
+                                sx={{ 
+                                  fontSize: '0.75rem',
+                                  '& .MuiChip-label': {
+                                    fontSize: '0.75rem'
+                                  }
+                                }}
+                              />
+                            );
+                          })}
+                        </Box>
+                      )}
+                    </Box>
+                  </Box>
+                );
+              })}
+            </>
           )}
         </Box>
       </DialogContent>

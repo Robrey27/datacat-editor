@@ -18,6 +18,7 @@ import {
   Divider,
   Alert
 } from '@mui/material';
+import { T, useTranslate } from "@tolgee/react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import RestoreIcon from '@mui/icons-material/Restore';
@@ -60,6 +61,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
   onLoadSpec,
   mode: initialMode
 }) => {
+  const { t } = useTranslate();
   const [activeTab, setActiveTab] = useState(0);
   const [savedIDSFiles, setSavedIDSFiles] = useState<SavedIDSData[]>([]);
   const [savedSpecs, setSavedSpecs] = useState<SavedSpecification[]>([]);
@@ -142,7 +144,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>
-        Speichern & Laden
+        <T keyName="save_load_dialog.title" />
       </DialogTitle>
       
       <DialogContent>
@@ -193,7 +195,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
                   label="Name für gespeicherte IDS"
                   value={saveName}
                   onChange={(e) => setSaveName(e.target.value)}
-                  placeholder={currentIDSTitle || 'Unbenannte IDS'}
+                  placeholder={currentIDSTitle || t('ids_export.placeholders.unnamed_ids')}
                   size="small"
                   sx={{ flex: 1 }}
                 />
@@ -269,7 +271,7 @@ export const SaveLoadDialog: React.FC<SaveLoadDialogProps> = ({
                       label="Name für gespeicherte Spezifikation"
                       value={saveName}
                       onChange={(e) => setSaveName(e.target.value)}
-                      placeholder={currentSpec.name || 'Unbenannte Spezifikation'}
+                      placeholder={currentSpec.name || t('ids_export.placeholders.unnamed_specification')}
                       size="small"
                       sx={{ flex: 1 }}
                     />

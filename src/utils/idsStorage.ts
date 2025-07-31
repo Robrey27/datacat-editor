@@ -5,6 +5,7 @@ export interface SavedIDSData {
   timestamp: number;
   data: {
     idsTitle: string;
+    idsVersion?: string; // Neue Eigenschaft für IDS Version
     specRows: any[];
     localPropertySets?: Record<string, any[]>; // Neue Eigenschaft für lokale PropertySets
   };
@@ -29,7 +30,7 @@ const SPEC_STORAGE_KEY = 'datacat_saved_specifications';
 const MAX_SAVED_ITEMS = 10;
 
 // IDS Files
-export const saveIDSData = (name: string, idsTitle: string, specRows: any[], localPropertySets?: Map<string, any[]>): string => {
+export const saveIDSData = (name: string, idsTitle: string, specRows: any[], localPropertySets?: Map<string, any[]>, idsVersion?: string): string => {
   const savedData = getSavedIDSFiles();
   const id = generateId();
   
@@ -42,6 +43,7 @@ export const saveIDSData = (name: string, idsTitle: string, specRows: any[], loc
     timestamp: Date.now(),
     data: {
       idsTitle,
+      idsVersion,
       specRows: JSON.parse(JSON.stringify(specRows)), // Deep copy
       localPropertySets: localPropertySetsObj
     }
@@ -118,7 +120,7 @@ export const deleteSpecification = (id: string): void => {
 };
 
 // Auto-save functionality
-export const autoSaveIDSData = (idsTitle: string, specRows: any[], localPropertySets?: Map<string, any[]>): void => {
+export const autoSaveIDSData = (idsTitle: string, specRows: any[], localPropertySets?: Map<string, any[]>, idsVersion?: string): void => {
   // Only auto-save if there's meaningful data
   if (specRows.length === 0 && !idsTitle.trim()) {
     return;
@@ -131,6 +133,7 @@ export const autoSaveIDSData = (idsTitle: string, specRows: any[], localProperty
     timestamp: Date.now(),
     data: {
       idsTitle,
+      idsVersion,
       specRows: JSON.parse(JSON.stringify(specRows)),
       localPropertySets: localPropertySetsObj
     }
@@ -139,7 +142,7 @@ export const autoSaveIDSData = (idsTitle: string, specRows: any[], localProperty
   localStorage.setItem(autoSaveKey, JSON.stringify(autoSaveData));
 };
 
-export const getAutoSavedIDSData = (): { timestamp: number; data: { idsTitle: string; specRows: any[]; localPropertySets?: Record<string, any[]> } } | null => {
+export const getAutoSavedIDSData = (): { timestamp: number; data: { idsTitle: string; idsVersion?: string; specRows: any[]; localPropertySets?: Record<string, any[]> } } | null => {
   try {
     const data = localStorage.getItem('datacat_autosave_ids');
     if (!data) return null;
