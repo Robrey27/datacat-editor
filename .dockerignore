@@ -1,11 +1,8 @@
 *
 !src
 !public
+!index.html
 !.env
 !nginx.conf
 !package*.json
 !tsconfig.json
-!index.html
-!vite.config.ts
-!vite-env.d.ts
-
